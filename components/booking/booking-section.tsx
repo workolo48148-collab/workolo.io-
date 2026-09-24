@@ -39,7 +39,7 @@ export function BookingWidget() {
   const currentIndex = steps.findIndex((s) => s.id === b.step);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+    <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-lg">
       <div className="grid lg:grid-cols-[18rem_minmax(0,1fr)]">
         {/* Summary */}
         <aside className="border-b border-border bg-surface-2 p-4 sm:p-6 lg:border-b-0 lg:border-r">

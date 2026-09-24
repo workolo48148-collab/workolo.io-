@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist } from "next/font/google";
+import { Geist, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import { ToastProvider } from "@/components/ui/toast";
 import { founder, plans, site } from "@/lib/content";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-bricolage", display: "swap" });
-// Only the headline font is preloaded; body text paints immediately in a size-adjusted fallback.
-const body = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap", preload: false });
+// Geist carries headings and body (one file); Instrument Serif is only the italic accent words.
+const body = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-serif-accent", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -31,8 +31,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfaf7" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0a09" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f8f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#060807" },
   ],
 };
 
@@ -75,7 +75,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${body.variable} ${serif.variable}`} data-scroll-behavior="smooth">
       <body>
         <script
           type="application/ld+json"

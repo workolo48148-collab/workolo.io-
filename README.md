@@ -30,7 +30,8 @@ Deploy: push to GitHub → import in Vercel → set env vars → done.
 | You want to change… | Edit |
 | --- | --- |
 | Any text, prices, FAQ, founder bio | [`lib/content.ts`](lib/content.ts) |
-| Add testimonials / result screenshots / VSL | `testimonials`, `results`, `vslEmbedUrl` in `lib/content.ts` (sections appear automatically when non-empty) |
+| Add or remove review / DM screenshots | drop the image in `public/proof/…`, add an entry to `reviews` or `dms` in `lib/content.ts` (width, height, title, alt text) |
+| Add the VSL | `vslEmbedUrl` in `lib/content.ts` |
 | Show the "50% OFF" strike-through prices | `SHOW_COMPARE_PRICES` in `lib/content.ts` (off by default, see audit) |
 | Meeting length, working days, start times, form questions | [`lib/booking/config.ts`](lib/booking/config.ts) |
 | Colors, type scale, radius, shadow, motion | [`app/globals.css`](app/globals.css) (tokens) |

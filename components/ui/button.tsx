@@ -4,19 +4,19 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 active:translate-y-px [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 active:translate-y-px [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         primary:
-          "bg-primary text-primary-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.35),0_1px_2px_rgb(0_0_0/0.15),0_0_0_1px_rgb(176_116_0/0.35)] hover:bg-primary-hover",
+          "bg-primary text-primary-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_1px_2px_rgb(0_0_0/0.15),0_8px_24px_-8px_rgb(var(--glow)/0.55)] hover:bg-primary-hover",
         secondary: "border border-border-strong bg-surface text-text shadow-sm hover:border-input hover:bg-surface-2",
         ghost: "text-text hover:bg-surface-2",
       },
       size: {
-        sm: "h-9 px-3.5 text-sm",
-        md: "h-11 px-5 text-sm",
-        lg: "h-13 px-7 text-base",
+        sm: "h-9 px-4 text-sm",
+        md: "h-11 px-6 text-sm",
+        lg: "h-13 px-8 text-base",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

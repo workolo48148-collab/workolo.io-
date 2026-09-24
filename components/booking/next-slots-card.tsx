@@ -31,7 +31,7 @@ export function NextSlotsCard() {
   }, [tz, service, b.availabilityVersion]);
 
   return (
-    <div className="relative rounded-xl border border-border bg-surface p-5 shadow-lg sm:p-6">
+    <div className="relative rounded-3xl border border-border bg-surface p-5 shadow-lg sm:p-6">
       <div className="flex items-center gap-3">
         <Image src={founder.photo} alt="" width={48} height={48} className="size-12 rounded-full object-cover ring-2 ring-[rgb(var(--glow)/0.5)]" />
         <div className="min-w-0">
@@ -55,7 +55,7 @@ export function NextSlotsCard() {
             key={s.start}
             type="button"
             onClick={() => b.pickFromAnywhere(s.start, "hero_card")}
-            className="group flex h-12 items-center justify-between rounded-md border border-border-strong bg-surface px-4 text-left text-sm transition-[border-color,background-color] duration-150 ease-out hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]"
+            className="group flex h-12 items-center justify-between rounded-full border border-border-strong bg-surface px-5 text-left text-sm transition-[border-color,background-color] duration-150 ease-out hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]"
           >
             <span>
               <span className="font-semibold">{formatDateKey(dateKeyInTz(new Date(s.start), tz!), { weekday: "short", month: "short", day: "numeric" })}</span>
