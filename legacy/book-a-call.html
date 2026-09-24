@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book a Call — Discovery Meeting</title>
+<meta name="description" content="Book a discovery call to see if the content system fits your business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-alt: #121110;
+    --card: #151412;
+    --text: #faf6ec;
+    --muted: #a39a86;
+    --line: #2a2620;
+    --glow: #f5b942;
+    --glow-soft: #ffd98a;
+    --glow-rgb: 245, 185, 66;
+    --btn-bg: #f5b942;
+    --btn-text: #14100a;
+    --danger: #ff8484;
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100%;
+    background: var(--bg); color: var(--text);
+    font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15.5px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header.top { text-align: center; padding: 48px 20px 30px; position: relative; overflow: hidden; }
+  header.top::before {
+    content: ""; position: absolute; left: 50%; top: -200px; transform: translateX(-50%);
+    width: 800px; max-width: 160vw; height: 460px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(var(--glow-rgb), .28), rgba(var(--glow-rgb), .06) 55%, transparent 75%);
+  }
+  header.top h1 {
+    position: relative; margin: 0; font-size: clamp(28px, 5vw, 42px); font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.01em;
+    text-shadow: 0 0 30px rgba(var(--glow-rgb), .25);
+  }
+  header.top p { position: relative; margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+  header.top p strong { color: var(--text); }
+
+  .panel {
+    max-width: 1080px; margin: 0 auto 60px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 0 60px rgba(var(--glow-rgb), .08);
+  }
+  .panel-grid { display: grid; grid-template-columns: 280px 1fr; min-height: 560px; }
+  .side {
+    border-right: 1px solid var(--line); padding: 34px 28px; background: var(--bg-alt);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .side h2 { margin: 0; font-size: 21px; font-weight: 800; text-transform: none; }
+  .side .row { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14.5px; }
+  .side .row svg { flex: 0 0 auto; width: 17px; height: 17px; stroke: var(--glow); fill: none; stroke-width: 1.8; }
+  #backBtn {
+    display: none; align-items: center; gap: 8px; background: none; border: 1px solid var(--line);
+    color: var(--muted); border-radius: 999px; padding: 8px 16px; font: inherit; font-weight: 600;
+    cursor: pointer; width: fit-content; margin-bottom: 4px;
+  }
+  #backBtn:hover { border-color: rgba(var(--glow-rgb), .5); color: var(--text); }
+
+  .main { padding: 34px 32px; }
+  .main h3 { margin: 0 0 22px; font-size: 19px; font-weight: 800; text-transform: none; }
+
+  /* Step 1 — calendar */
+  #step1 .cal-body { display: grid; grid-template-columns: 1fr 220px; gap: 30px; }
+  .cal-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 18px; font-weight: 700; }
+  .cal-nav button {
+    background: none; border: 1px solid var(--line); color: var(--text); width: 30px; height: 30px;
+    border-radius: 8px; cursor: pointer; font-size: 15px; line-height: 1;
+  }
+  .cal-nav button:hover { border-color: var(--glow); color: var(--glow-soft); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-grid .dow { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; padding-bottom: 6px; }
+  .cal-grid .day {
+    aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 14px; cursor: pointer; color: var(--text); background: none; border: none; font-family: inherit;
+  }
+  .cal-grid .day.disabled { color: #3d3a34; cursor: not-allowed; }
+  .cal-grid .day.avail:hover { background: rgba(var(--glow-rgb), .15); }
+  .cal-grid .day.selected { background: var(--glow); color: var(--btn-text); font-weight: 800; }
+  .cal-grid .day.empty { visibility: hidden; }
+  .tz { margin-top: 22px; font-size: 13.5px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .tz svg { width: 15px; height: 15px; stroke: var(--glow); fill: none; stroke-width: 1.8; }
+
+  .slots { max-height: 460px; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 10px; }
+  .slot-btn {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg-alt); color: var(--glow-soft); font: inherit; font-weight: 700; cursor: pointer; min-height: 46px;
+  }
+  .slot-btn:hover { border-color: rgba(var(--glow-rgb), .5); }
+  .slot-btn.active { background: var(--glow); color: var(--btn-text); border-color: var(--glow); }
+  .slot-btn .go {
+    display: none; background: var(--btn-text); color: var(--glow); font-size: 12px; font-weight: 800;
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .slot-btn.active .go { display: inline-block; }
+
+  /* Step 2 — form */
+  #step2 { display: none; }
+  .field { margin-bottom: 20px; }
+  .field label { display: block; font-weight: 700; font-size: 14.5px; margin-bottom: 8px; }
+  .field label .req { color: var(--glow); }
+  .field input[type=text], .field input[type=email], .field input[type=tel], .field textarea, .field select {
+    width: 100%; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; color: var(--text); font: inherit; min-height: 46px;
+  }
+  .field textarea { min-height: 90px; resize: vertical; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--glow); outline-offset: 1px; border-color: var(--glow); }
+  .field small.hint { display: block; margin-top: 6px; color: var(--muted); font-size: 12.5px; }
+  .checkline { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; font-size: 13.5px; color: var(--muted); }
+  .checkline input { margin-top: 3px; accent-color: var(--glow); width: 16px; height: 16px; flex: 0 0 auto; }
+  .checkline a { color: var(--glow-soft); }
+  .submit-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+  #scheduleBtn {
+    background: var(--btn-bg); color: var(--btn-text); border: none; font: inherit; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .03em; padding: 14px 32px; border-radius: 10px; cursor: pointer;
+    min-height: 48px; box-shadow: 0 0 26px rgba(var(--glow-rgb), .5);
+  }
+  #scheduleBtn:hover { box-shadow: 0 0 36px rgba(var(--glow-rgb), .7); }
+  #scheduleBtn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+  /* Confirmation */
+  #step3 { display: none; text-align: center; padding: 70px 30px; }
+  #step3 .check {
+    width: 74px; height: 74px; border-radius: 50%; margin: 0 auto 22px;
+    background: rgba(var(--glow-rgb), .12); border: 1px solid var(--glow);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(var(--glow-rgb), .3);
+  }
+  #step3 .check svg { width: 34px; height: 34px; stroke: var(--glow); fill: none; stroke-width: 2.4; }
+  #step3 h3 { text-transform: none; font-size: 24px; margin: 0 0 10px; }
+  #step3 p { color: var(--muted); max-width: 440px; margin: 0 auto; }
+  #step3 .details { margin-top: 22px; color: var(--glow-soft); font-weight: 700; }
+
+  footer.note { max-width: 700px; margin: 0 auto 60px; text-align: center; color: var(--muted); font-size: 12.5px; padding: 0 20px; }
+
+  @media (max-width: 860px) {
+    .panel-grid { grid-template-columns: 1fr; }
+    .side { border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .side h2 { width: 100%; }
+    #step1 .cal-body { grid-template-columns: 1fr; }
+    .main { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Book a Call</h1>
+  <p>Submit your details <strong>below</strong></p>
+</header>
+
+<div class="panel">
+  <div class="panel-grid">
+    <aside class="side">
+      <button id="backBtn" type="button" aria-label="Back to date and time">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg> Back
+      </button>
+      <h2>Discovery Meeting</h2>
+      <div class="row">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span>30 min</span>
+      </div>
+      <div class="row" id="sideDate">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+        <span>Pick a date &amp; time</span>
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18Z"/></svg>
+        <span id="sideTz">Loading time zone…</span>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- STEP 1: date & time -->
+      <div id="step1">
+        <h3>Select date &amp; time</h3>
+        <div class="cal-body">
+          <div>
+            <div class="cal-nav">
+              <button type="button" id="prevMonth" aria-label="Previous month">‹</button>
+              <span id="monthLabel"></span>
+              <button type="button" id="nextMonth" aria-label="Next month">›</button>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+            <div class="tz">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18Z"/></svg>
+              <span id="tzLine">Loading time zone…</span>
+            </div>
+          </div>
+          <div class="slots" id="slotsList"></div>
+        </div>
+      </div>
+
+      <!-- STEP 2: qualifying form -->
+      <form id="step2" novalidate>
+        <h3>Enter details</h3>
+
+        <div class="field">
+          <label for="fullName">Full Name <span class="req">*</span></label>
+          <input type="text" id="fullName" name="fullName" required autocomplete="name" placeholder="Full name">
+        </div>
+
+        <div class="field">
+          <label for="handles">Link your Instagram handle (and any other socials) <span class="req">*</span></label>
+          <textarea id="handles" name="handles" required placeholder="instagram.com/yourhandle"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="business">What do you teach or trade? Briefly describe your business <span class="req">*</span></label>
+          <textarea id="business" name="business" required placeholder="e.g. prop firm funded-account coaching, swing trading education, retail investing courses…"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="timeline">How soon are you looking to start?</label>
+          <select id="timeline" name="timeline">
+            <option value="">Choose one</option>
+            <option>Immediately (within the next 2 weeks)</option>
+            <option>Within 60 days, still exploring</option>
+            <option>No set timeline</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="outcome">What would be the best possible outcome of working together in the next 90 days? <span class="req">*</span></label>
+          <select id="outcome" name="outcome" required>
+            <option value="">Choose one</option>
+            <option>I will land retainer clients</option>
+            <option>I will get more DMs and leads</option>
+            <option>I will grow my personal brand</option>
+            <option>I will post consistently without doing it myself</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="budget">If you found a proven way to land retainer clients, how much would you invest a month? <span class="req">*</span></label>
+          <select id="budget" name="budget" required>
+            <option value="">Choose one</option>
+            <option>Under $1,299</option>
+            <option>$1,299 – $1,499</option>
+            <option>$1,500 – $2,499</option>
+            <option>$2,500 – $5,000</option>
+            <option>$5,000+</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="Phone">
+        </div>
+
+        <label class="checkline">
+          <input type="checkbox" id="sms" name="sms">
+          <span>I consent to receive SMS notifications and alerts. By providing your phone number, you consent to receive SMS notifications. Message frequency may vary, message and data rates may apply, and you may unsubscribe at any time.</span>
+        </label>
+
+        <label class="checkline">
+          <input type="checkbox" id="terms" name="terms" required>
+          <span>I agree to the <a href="#" onclick="return false">Privacy Policy</a> and <a href="#" onclick="return false">Terms &amp; Conditions</a>. <span class="req">*</span></span>
+        </label>
+
+        <div class="submit-row">
+          <button type="submit" id="scheduleBtn">Schedule meeting</button>
+        </div>
+      </form>
+
+      <!-- STEP 3: confirmation -->
+      <div id="step3">
+        <div class="check">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h3>Your details are ready</h3>
+        <p>Your email app should have opened with everything filled in. Send it and I'll confirm your slot personally.</p>
+        <p class="details" id="confirmDetails"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="note">This form collects your details and opens a pre-filled email so nothing gets lost in transit. It isn't wired to a live calendar yet — once a booking tool like Cal.com is connected, slots here will reflect real availability automatically.</footer>
+
+<script>
+  var CONTACT_EMAIL = "hello@workolo.io"; // change to your real inbox
+
+  var today = new Date();
+  var viewYear = today.getFullYear();
+  var viewMonth = today.getMonth();
+  var selectedDate = null;
+  var selectedTime = null;
+
+  var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var dowNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+  function pad(n){ return n < 10 ? "0" + n : "" + n; }
+
+  function renderCalendar() {
+    var label = document.getElementById("monthLabel");
+    label.textContent = monthNames[viewMonth] + " " + viewYear;
+
+    var grid = document.getElementById("calGrid");
+    grid.innerHTML = "";
+    dowNames.forEach(function(d){
+      var el = document.createElement("div");
+      el.className = "dow"; el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    var firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    var todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    for (var i = 0; i < firstDay; i++) {
+      var empty = document.createElement("div");
+      empty.className = "day empty";
+      grid.appendChild(empty);
+    }
+    for (var d = 1; d <= daysInMonth; d++) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      var thisDate = new Date(viewYear, viewMonth, d);
+      var isPast = thisDate < todayMid;
+      var isSunday = thisDate.getDay() === 0;
+      btn.textContent = d;
+      if (isPast || isSunday) {
+        btn.className = "day disabled";
+        btn.disabled = true;
+      } else {
+        btn.className = "day avail";
+        if (selectedDate && selectedDate.getTime() === thisDate.getTime()) {
+          btn.className += " selected";
+        }
+        btn.addEventListener("click", function () {
+          var y = viewYear, m = viewMonth, dayNum = parseInt(this.textContent, 10);
+          selectedDate = new Date(y, m, dayNum);
+          selectedTime = null;
+          renderCalendar();
+          renderSlots();
+        });
+      }
+      grid.appendChild(btn);
+    }
+  }
+
+  var allSlots = ["06:30 PM","06:45 PM","07:45 PM","08:00 PM","08:15 PM","08:30 PM","08:45 PM","09:00 PM"];
+
+  function renderSlots() {
+    var list = document.getElementById("slotsList");
+    list.innerHTML = "";
+    if (!selectedDate) {
+      var msg = document.createElement("p");
+      msg.style.color = "var(--muted)";
+      msg.textContent = "Pick a date to see open times.";
+      list.appendChild(msg);
+      return;
+    }
+    allSlots.forEach(function (t) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "slot-btn" + (selectedTime === t ? " active" : "");
+      b.innerHTML = "<span>" + t + "</span><span class='go'>Select</span>";
+      b.addEventListener("click", function () {
+        selectedTime = t;
+        renderSlots();
+        setTimeout(goToForm, 180);
+      });
+      list.appendChild(b);
+    });
+  }
+
+  function fmtDate(dt) {
+    return dowNames[dt.getDay()] === undefined ? "" : dt.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function updateSidebar() {
+    var tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || "your local time";
+    var offsetMin = -new Date().getTimezoneOffset();
+    var sign = offsetMin >= 0 ? "+" : "-";
+    var abs = Math.abs(offsetMin);
+    var offStr = "GMT" + sign + pad(Math.floor(abs/60)) + ":" + pad(abs%60);
+    document.getElementById("tzLine").textContent = offStr + " " + tzName;
+    document.getElementById("sideTz").textContent = offStr + " " + tzName;
+
+    if (selectedDate && selectedTime) {
+      document.getElementById("sideDate").querySelector("span").textContent = selectedTime + ", " + fmtDate(selectedDate);
+    } else {
+      document.getElementById("sideDate").querySelector("span").textContent = "Pick a date & time";
+    }
+  }
+
+  function goToForm() {
+    if (!selectedDate || !selectedTime) return;
+    updateSidebar();
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+    document.getElementById("backBtn").style.display = "inline-flex";
+  }
+
+  document.getElementById("backBtn").addEventListener("click", function () {
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step3").style.display = "none";
+    document.getElementById("step1").style.display = "block";
+    this.style.display = "none";
+  });
+
+  document.getElementById("prevMonth").addEventListener("click", function () {
+    viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    renderCalendar();
+  });
+  document.getElementById("nextMonth").addEventListener("click", function () {
+    viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    renderCalendar();
+  });
+
+  document.getElementById("step2").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.target;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+
+    var data = {
+      name: document.getElementById("fullName").value,
+      handles: document.getElementById("handles").value,
+      business: document.getElementById("business").value,
+      timeline: document.getElementById("timeline").value,
+      outcome: document.getElementById("outcome").value,
+      budget: document.getElementById("budget").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      when: selectedTime + ", " + fmtDate(selectedDate)
+    };
+
+    var body = [
+      "Discovery Meeting request",
+      "",
+      "Requested time: " + data.when,
+      "Name: " + data.name,
+      "Socials: " + data.handles,
+      "Business: " + data.business,
+      "Timeline: " + data.timeline,
+      "Desired outcome: " + data.outcome,
+      "Monthly budget: " + data.budget,
+      "Email: " + data.email,
+      "Phone: " + data.phone
+    ].join("\n");
+
+    var mailto = "mailto:" + CONTACT_EMAIL +
+      "?subject=" + encodeURIComponent("Discovery call request — " + data.name) +
+      "&body=" + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
+    document.getElementById("confirmDetails").textContent = data.when;
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step3").style.display = "block";
+    document.getElementById("backBtn").style.display = "none";
+  });
+
+  renderCalendar();
+  renderSlots();
+  updateSidebar();
+</script>
+</body>
+</html>
