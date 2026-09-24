@@ -7,6 +7,7 @@ const STATUS: Record<ErrorCode, number> = {
   SLOT_UNAVAILABLE: 409,
   RATE_LIMITED: 429,
   UPSTREAM_ERROR: 502,
+  NOT_CONFIGURED: 503,
   INTERNAL_ERROR: 500,
 };
 

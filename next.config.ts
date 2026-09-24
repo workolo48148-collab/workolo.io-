@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Shown at /api/health so you can tell whether a redeploy picked up new env vars.
+  env: { NEXT_PUBLIC_BUILD_TIME: new Date().toISOString() },
   images: { formats: ["image/avif", "image/webp"] },
   async headers() {
     return [

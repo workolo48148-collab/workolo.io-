@@ -75,10 +75,18 @@ Errors are always `{ error: { code, message, fieldErrors? } }`:
 | `SLOT_UNAVAILABLE` | 409 | slot taken, overlapping, or not on the schedule (double-booking guard) |
 | `RATE_LIMITED` | 429 | >5 booking attempts per IP per minute |
 | `UPSTREAM_ERROR` | 502 | calendar provider failed or timed out (10 s) |
+| `NOT_CONFIGURED` | 503 | production has no booking backend (see `/api/health`) |
 
 ### Switching the booking backend
 
-Set `BOOKING_ADAPTER` and that adapter's variables (see [`.env.example`](.env.example)), then redeploy.
+Set that adapter's variables (see [`.env.example`](.env.example)), then **redeploy** (Vercel only reads env vars when it builds).
+
+How the backend is chosen:
+1. `BOOKING_ADAPTER`, if set
+2. otherwise **Cal.com automatically** when `CALCOM_API_KEY` and `CALCOM_EVENT_TYPE_ID` are both set
+3. otherwise the mock, **except in Vercel production**, where the site shows "email us" instead of a demo calendar that would silently lose real bookings
+
+**Check what's live:** open `/api/health`. It shows the active backend, why it was chosen, which variables are present (true/false only, never values), and when the deployment was built.
 
 - **`mock`** (default). Uses the real schedule rules from the old booking page (Mon–Sat, 6:30–9:00 PM Asia/Karachi, 30 min) and marks ~35% of slots and ~1 in 8 days as taken so every UI state shows up. Bookings live in memory: fine for previews, **not for production** (serverless instances don't share memory).
 - **`calcom`**. Create a 30-min event type, copy its numeric id to `CALCOM_EVENT_TYPE_ID`, create an API key. Cal.com owns availability, confirmation emails and conflict checks. Add a "notes" booking question to receive the qualifying answers.
