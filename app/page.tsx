@@ -5,7 +5,7 @@ import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { SectionHeading } from "@/components/site/section-heading";
-import { FinalCta, Founder, HowItWorks, Included, Pricing, ProblemSolution, Proof, Section } from "@/components/site/sections";
+import { Audience, FinalCta, Founder, HowItWorks, Included, Pricing, ProblemSolution, Proof, Section } from "@/components/site/sections";
 import { StickyCta } from "@/components/site/sticky-cta";
 
 // Below the fold: split into its own chunk so hydrating the hero isn't blocked by it.
@@ -24,17 +24,23 @@ export default function Home() {
       <Header />
       <main id="main">
         <Hero />
+        {/* Personal-brand order: who it's for → proof early → problem/solution → offer → process → the person → price */}
+        <Audience />
+        <Proof />
         <ProblemSolution />
         <Included />
         <HowItWorks />
-        <Proof />
         <Founder />
         <Pricing />
         <Section id="book" labelledBy="book-title" className="scroll-mt-16">
           <SectionHeading
             id="book-title"
             eyebrow="Book a call"
-            title="Pick a time that works for you"
+            title={
+              <>
+                Pick a time that <span className="accent-serif">works for you</span>
+              </>
+            }
             lead="30 minutes to see if the content system fits your business. Times are shown in your time zone."
           />
           <div className="mt-10">

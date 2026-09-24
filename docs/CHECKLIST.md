@@ -10,7 +10,7 @@
 ## Step 2: Design system
 - ✅ Color tokens (bg, surface, text, muted, primary, primary-hover, accent, border, success, danger, plus input and ring), light + dark
 - ✅ WCAG 2.1 AA for every pairing, enforced by `npm run check:contrast` (lowest: 4.60:1 text, 3.41:1 UI)
-- ✅ One display font (Bricolage Grotesque) + one body font (Geist), fluid `clamp()` scale
+- ✅ One display font (Instrument Serif, italic accent words) + one body font (Geist, also used for headings), fluid `clamp()` scale
 - ✅ 4/8px spacing, radius, shadow and motion tokens (150/200/250 ms, ease-out)
 - ✅ Button (primary/secondary/ghost, loading, disabled), Card, Badge, Input, Select, Accordion, Toast, Modal, calendar day cell, time-slot chip: [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md)
 - ⚠️ "Real product UI screenshots": Workolo is a service with no product UI. The hero shows the **live booking widget** (real next-available times from the API) instead, plus the real founder photo. No stock illustrations.
@@ -21,7 +21,7 @@
 - ✅ Problem → solution: 3 pains, 3 outcomes (from the live FAQ answers)
 - ✅ Services / features card grid
 - ⚠️ How it works: **4** steps, not 3, because the real process has 4 (Research, Script, Film & edit, Upload). It ends in a "Book a call" band.
-- ⚠️ Proof: section is built but **hidden until real content exists** (all 14 slots on the old site were placeholders). Add items to `testimonials` / `results` in `lib/content.ts`.
+- ✅ Proof: "Wall of proof" right after the audience section, with **6 real client review screenshots** (all 5.0★) and **4 real DM screenshots**, exact images supplied by Workolo, all visible at once in one grid (labelled "Client review" / "DM"). Tapping one opens it full size (←/→ through all 10, Esc). Each image has a full-text alt transcription. Hero trust row shows "5.0 from 6 client reviews" linking to it. One supplied screenshot was a duplicate and is shown once.
 - ✅ Booking section · ✅ FAQ (price, time, results, "what happens on the call") · ⚠️ cancellation / minimum term answer **[MISSING]**, needs Workolo's actual terms
 - ✅ Final CTA band + compact footer (email, privacy, terms). ⚠️ Socials **[MISSING]**, the footer shows them once added.
 - ✅ Sticky mobile "Book now" bar after the hero scrolls out (hidden while the booking section is on screen)
@@ -54,7 +54,7 @@
 - ✅ Title, meta description, canonical, Open Graph image (generated, includes the founder photo), Twitter card, JSON-LD (Organization + Service with the 3 offers), robots.txt, sitemap.xml
 
 ## Things only Workolo can provide
-1. Real proof: client results, DM/lead screenshots, testimonials (and permission to use them)
+1. Permission to publish the review and DM screenshots. Three DMs still show the other person's profile photo, and one reply shows a first name ("tom"); blur those if you don't have consent. More proof (client before/after results) can be added to `reviews` / `dms` in `lib/content.ts`.
 2. The VSL embed URL
 3. Cancellation / minimum-commitment terms (FAQ + Terms page)
 4. Social profile URLs

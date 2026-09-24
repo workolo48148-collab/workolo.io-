@@ -2,31 +2,33 @@
 
 /* =====================================================================
    WORKOLO DESIGN TOKENS
-   Brand carry-over from the live site: warm near-black + signal gold.
-   Restrained: gold is reserved for the primary action and small accents.
+   Personal-brand look: near-black / off-white canvas, one "money green"
+   accent (emerald) reserved for actions and highlights, italic serif accent
+   words in headlines. Stars use amber so ratings read instantly.
    Every text/background pair is verified by `npm run check:contrast`.
    ===================================================================== */
 
 :root {
   /* ---- Color: light ---- */
-  --bg: #fbfaf7;
+  --bg: #f7f8f6;
   --surface: #ffffff;
-  --surface-2: #f4f1ea;
-  --text: #17140f;
-  --muted: #5e574b;
-  --primary: #f5b942;
-  --primary-hover: #e8a92a;
-  --primary-fg: #17120a;
-  --accent: #8a5b00;
-  --border: #e6e0d4;
-  --border-strong: #cfc6b4;
-  --input: #8f8777;
+  --surface-2: #eef2ef;
+  --text: #0b1411;
+  --muted: #4f5d57;
+  --primary: #047857;
+  --primary-hover: #065f46;
+  --primary-fg: #ffffff;
+  --accent: #04704f;
+  --border: #e0e7e3;
+  --border-strong: #c6d1cb;
+  --input: #808d86;
   --success: #15803d;
   --success-bg: #ecf8f0;
   --danger: #b42318;
   --danger-bg: #fdf0ee;
-  --ring: #b07400;
-  --glow: 245 185 66;
+  --ring: #047857;
+  --star: #f59e0b;
+  --glow: 16 185 129;
 
   /* ---- Radius ---- */
   --radius-sm: 8px;
@@ -50,23 +52,25 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b0a09;
-    --surface: #141210;
-    --surface-2: #1b1916;
-    --text: #f5f1e8;
-    --muted: #a69e8c;
-    --primary: #f5b942;
-    --primary-hover: #ffc95c;
-    --primary-fg: #17120a;
-    --accent: #ffd98a;
-    --border: #2a2620;
-    --border-strong: #40392f;
-    --input: #736b5d;
+    --bg: #060807;
+    --surface: #0d1110;
+    --surface-2: #131917;
+    --text: #f1f5f2;
+    --muted: #97a39d;
+    --primary: #34d399;
+    --primary-hover: #6ee7b7;
+    --primary-fg: #022c1d;
+    --accent: #6ee7b7;
+    --border: #1c2421;
+    --border-strong: #2b3632;
+    --input: #66746e;
     --success: #4ade80;
     --success-bg: #0f2418;
     --danger: #ff8a80;
     --danger-bg: #2a1311;
-    --ring: #f5b942;
+    --ring: #34d399;
+    --star: #fbbf24;
+    --glow: 52 211 153;
 
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
     --shadow-md: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -8px rgb(0 0 0 / 0.6);
@@ -95,9 +99,11 @@
   --color-danger: var(--danger);
   --color-danger-bg: var(--danger-bg);
   --color-ring: var(--ring);
+  --color-star: var(--star);
 
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-accent), ui-serif, Georgia, serif;
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -173,9 +179,18 @@ body {
 }
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.025em;
-  line-height: 1.08;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
   text-wrap: balance;
+}
+
+/* Italic serif accent word inside a sans headline ("…busy <em>finance guru</em>"). */
+.accent-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--accent);
 }
 p { text-wrap: pretty; }
 

@@ -1,13 +1,14 @@
 /**
  * Every word on the landing page lives here, and every claim is taken from the
- * live workolo.io site (see legacy/). Do not add numbers, results or
- * testimonials that aren't real. Proof sections render only when their arrays
- * below are non-empty.
+ * live workolo.io site (see legacy/) or from screenshots Workolo supplied.
+ * Do not add numbers, results or testimonials that aren't real.
  */
+
+import { SITE_URL } from "./env";
 
 export const site = {
   name: "Workolo",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://workolo.io",
+  url: SITE_URL,
   email: "hello@workolo.io",
   title: "Content Systems for Finance Gurus | Workolo",
   description:
@@ -213,11 +214,99 @@ export const faqs: FaqItem[] = [
   // [MISSING] Add a cancellation / minimum-commitment answer once the terms are decided.
 ];
 
+/** Who the service is for, from the live FAQ ("trading education, investing, wealth coaching, financial planning"). */
+export const audiences = [
+  { icon: "chart", title: "Trading educators", body: "You teach trading and want students who already trust how you think." },
+  { icon: "trend", title: "Investing creators", body: "You break down markets and want your content to bring in paying clients." },
+  { icon: "wallet", title: "Wealth coaches", body: "You coach people on money and want conversations with serious buyers." },
+  { icon: "shield", title: "Financial planners", body: "You have real expertise and want to be seen as the obvious choice." },
+] as const;
+
+export type Screenshot = { src: string; alt: string; width: number; height: number; title: string };
+
 /**
- * Proof. [MISSING] on the live site: every slot is a placeholder.
- * Add real items and the sections appear automatically; nothing ships empty.
+ * Real review screenshots supplied by Workolo (identifying details redacted by
+ * Workolo). Alt text transcribes each one so screen readers and search engines
+ * get the full review.
  */
-export const testimonials: { quote: string; name: string; role: string; avatar?: string }[] = [];
-export const results: { src: string; alt: string; caption?: string; width: number; height: number }[] = [];
+export const reviews: Screenshot[] = [
+  {
+    src: "/proof/reviews/web3-community-builder.jpg",
+    width: 1280,
+    height: 708,
+    title: "Community Builder",
+    alt: 'Client review, 5.0 stars, May 30 to June 20, 2025, project "Community Builder": "Working with Salman has been nothing short of exceptional. He\'s multifaceted, deeply knowledgeable, and brings a strategic, no-fluff approach to Web3 community building."',
+  },
+  {
+    src: "/proof/reviews/facebook-ads-expert.jpg",
+    width: 1280,
+    height: 902,
+    title: "Facebook ads expert",
+    alt: 'Client review, 5.0 stars, March 4 to 6, 2024, project "Facebook ads expert": "Salman is a great asset to assist us with our Facebook and Instagram ads. He is reliable, knowledgeable and always makes himself available to assist as needed. Would recommend him." Endorsed by client: Reliable.',
+  },
+  {
+    src: "/proof/reviews/social-media-manager.jpg",
+    width: 1280,
+    height: 946,
+    title: "Social Media Manager",
+    alt: 'Client review, 5.0 stars, February 25 to March 10, 2025, project "Social Media Manager": "His work was done with a high degree of thoughtfulness. He communicated frequently and was always timely. Highly suggested." Endorsed by client: Committed to Quality, Clear Communicator, Reliable.',
+  },
+  {
+    src: "/proof/reviews/community-manager.jpg",
+    width: 1280,
+    height: 810,
+    title: "Community Manager",
+    alt: 'Client review, 5.0 stars, April 10, 2024 to February 27, 2025, project "Experienced Community Manager": "Absolutely brilliant, multifaceted, and incredibly knowledgable. Thank you for your time, Salman :)" Endorsed by client: Committed to Quality.',
+  },
+  {
+    src: "/proof/reviews/social-media-marketer.jpg",
+    width: 1280,
+    height: 1018,
+    title: "Social media marketer and manager",
+    alt: 'Client review, 5.0 stars, April 30 to June 14, 2024, project "Social media marketer and manager": "We had good time working together in the period of this contract and I will certainly hire him again for a new job, if the need arise." Endorsed by client: Collaborative.',
+  },
+  {
+    src: "/proof/reviews/facebook-ads-leads.jpg",
+    width: 1280,
+    height: 582,
+    title: "Leads from Facebook advertising",
+    alt: 'Client review, 5.0 stars, March 9 to 18, 2024, project "Leads from Facebook advertising": "He has a lot of patience with difficulties."',
+  },
+];
+
+/** Real Instagram DM screenshots supplied by Workolo (names redacted by Workolo). */
+export const dms: Screenshot[] = [
+  {
+    src: "/proof/dms/call-request.jpg",
+    width: 1280,
+    height: 592,
+    title: "Asking for a call",
+    alt: 'Instagram DM: "hey for sure", then "I\'d also like to schedule a call with you to see if we allign". Reply: "What time is best for you?"',
+  },
+  {
+    src: "/proof/dms/youtube-creator-goals.jpg",
+    width: 1280,
+    height: 900,
+    title: "Creator sharing their goals",
+    alt: 'Instagram DM from a creator: "I run a YouTube channel where I create nutrition, health and wellness content for an Indian/Hinglish-speaking audience. My main goal right now is to grow the channel and get monetized as soon as possible, while building it consistently for the long term…"',
+  },
+  {
+    src: "/proof/dms/pricing-question-2.jpg",
+    width: 1280,
+    height: 994,
+    title: "Pricing question",
+    alt: 'Instagram DM: "What\'s your pricing?" Reply: "Before talking about pricing, we\'d like to understand your business, target audience, and goals. Share your website/Instagram or tell us your main goal in one line, and we\'ll take it from there."',
+  },
+  {
+    src: "/proof/dms/pricing-question-1.jpg",
+    width: 1280,
+    height: 504,
+    title: "Pricing question",
+    alt: 'Instagram DM: "What\'s your pricing?" Reply: "Before talking about pricing, we\'d like to understand your business, target audience, and goals."',
+  },
+];
+
+/** Derived from the screenshots above: every review is 5.0. */
+export const reviewSummary = { rating: "5.0", count: reviews.length };
 /** Paste a real VSL embed URL (YouTube/Vimeo/Wistia) to show the video block. */
 export const vslEmbedUrl: string | null = null;

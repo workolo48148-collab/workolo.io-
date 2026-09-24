@@ -199,7 +199,7 @@ export function DateTimeStep() {
                         aria-pressed={active}
                         onClick={() => b.chooseSlot(s.start)}
                         className={cn(
-                          "h-11 rounded-md border text-sm font-semibold tabular-nums transition-[background-color,border-color,color,box-shadow] duration-150 ease-out",
+                          "h-11 rounded-full border text-sm font-semibold tabular-nums transition-[background-color,border-color,color,box-shadow] duration-150 ease-out",
                           active
                             ? "border-primary bg-primary text-primary-fg shadow-sm"
                             : "border-border-strong bg-surface text-text hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]",

@@ -4,6 +4,7 @@ import { getAdapter } from "@/lib/booking/adapters";
 import { BookingError, errorResponse } from "@/lib/booking/errors";
 import { rateLimited } from "@/lib/booking/rate-limit";
 import { bookingRequestSchema } from "@/lib/booking/schema";
+import { readEnv, SITE_URL } from "@/lib/env";
 
 /** POST /api/bookings { serviceId, start, tz, name, email, phone, note, …answers } */
 export async function POST(request: NextRequest) {
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const booking = await getAdapter().createBooking(parsed.data);
-    const origin = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin;
+    const origin = readEnv(process.env.NEXT_PUBLIC_SITE_URL) ? SITE_URL : request.nextUrl.origin;
     const rescheduleUrl = booking.rescheduleUrl.startsWith("/") ? `${origin}${booking.rescheduleUrl}` : booking.rescheduleUrl;
 
     return Response.json({ booking: { ...booking, rescheduleUrl } }, { status: 201, headers: { "Cache-Control": "no-store" } });
