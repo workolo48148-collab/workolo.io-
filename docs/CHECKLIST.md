@@ -21,7 +21,7 @@
 - ✅ Problem → solution: 3 pains, 3 outcomes (from the live FAQ answers)
 - ✅ Services / features card grid
 - ⚠️ How it works: **4** steps, not 3, because the real process has 4 (Research, Script, Film & edit, Upload). It ends in a "Book a call" band.
-- ✅ Proof: "Wall of proof" right after the audience section, with **6 real client review screenshots** (all 5.0★) and **4 real DM screenshots**, exact images supplied by Workolo, in tabs. Tapping one opens it full size (←/→, Esc). Each image has a full-text alt transcription. Hero trust row shows "5.0 from 6 client reviews" linking to it. One supplied screenshot was a duplicate and is shown once.
+- ✅ Proof: "Wall of proof" right after the audience section, with **6 real client review screenshots** (all 5.0★) and **4 real DM screenshots**, exact images supplied by Workolo, all visible at once in one grid (labelled "Client review" / "DM"). Tapping one opens it full size (←/→ through all 10, Esc). Each image has a full-text alt transcription. Hero trust row shows "5.0 from 6 client reviews" linking to it. One supplied screenshot was a duplicate and is shown once.
 - ✅ Booking section · ✅ FAQ (price, time, results, "what happens on the call") · ⚠️ cancellation / minimum term answer **[MISSING]**, needs Workolo's actual terms
 - ✅ Final CTA band + compact footer (email, privacy, terms). ⚠️ Socials **[MISSING]**, the footer shows them once added.
 - ✅ Sticky mobile "Book now" bar after the hero scrolls out (hidden while the booking section is on screen)

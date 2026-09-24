@@ -68,14 +68,14 @@ export function Proof() {
             Rated <span className="accent-serif">{reviewSummary.rating}</span> by every client
           </>
         }
-        lead="Real reviews from clients Salman has worked with, and real conversations from the DMs. Tap any screenshot to read it full size."
+        lead="Real reviews from clients Salman has worked with, and real conversations from the DMs."
       />
       <p className="mt-6 flex items-center justify-center gap-2 text-sm">
         <Stars />
         <span className="font-semibold">{reviewSummary.rating}</span>
         <span className="text-muted">from {reviewSummary.count} client reviews</span>
       </p>
-      <div className="mt-10">
+      <div className="mt-6">
         <ProofWall />
       </div>
     </Section>

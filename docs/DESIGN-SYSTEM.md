@@ -59,5 +59,5 @@ Source of truth: [`app/globals.css`](../app/globals.css). Tokens are CSS variabl
 | Toast | `components/ui/toast.tsx` | `status` / `alert` live regions, auto-dismiss |
 | Calendar day cell | `components/booking/calendar.tsx` | WAI-ARIA grid, roving tabindex, arrows / Home / End / PageUp / PageDown / Enter |
 | Time-slot chip | `components/booking/datetime-step.tsx` | `aria-pressed`, grouped Morning / Afternoon / Evening |
-| Proof wall | `components/site/proof-wall.tsx` | Tabs (reviews / DMs, arrow-key switching), masonry of real screenshots, "Show all" on mobile |
+| Proof wall | `components/site/proof-wall.tsx` | Masonry of every real screenshot (reviews, then DMs), each labelled, all visible |
 | Lightbox | `components/site/proof-lightbox.tsx` | Full-size screenshot viewer: focus trap, Esc, ←/→, counter; lazy-loaded |
