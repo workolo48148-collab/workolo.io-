@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   WORKOLO DESIGN TOKENS
+   Brand carry-over from the live site: warm near-black + signal gold.
+   Restrained: gold is reserved for the primary action and small accents.
+   Every text/background pair is verified by `npm run check:contrast`.
+   ===================================================================== */
+
+:root {
+  /* ---- Color: light ---- */
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f4f1ea;
+  --text: #17140f;
+  --muted: #5e574b;
+  --primary: #f5b942;
+  --primary-hover: #e8a92a;
+  --primary-fg: #17120a;
+  --accent: #8a5b00;
+  --border: #e6e0d4;
+  --border-strong: #cfc6b4;
+  --input: #8f8777;
+  --success: #15803d;
+  --success-bg: #ecf8f0;
+  --danger: #b42318;
+  --danger-bg: #fdf0ee;
+  --ring: #b07400;
+  --glow: 245 185 66;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* ---- Shadow ---- */
+  --shadow-sm: 0 1px 2px rgb(23 20 15 / 0.06);
+  --shadow-md: 0 1px 2px rgb(23 20 15 / 0.05), 0 8px 24px -8px rgb(23 20 15 / 0.12);
+  --shadow-lg: 0 1px 2px rgb(23 20 15 / 0.05), 0 24px 48px -16px rgb(23 20 15 / 0.18);
+
+  /* ---- Motion (150-250ms, ease-out) ---- */
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 250ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0a09;
+    --surface: #141210;
+    --surface-2: #1b1916;
+    --text: #f5f1e8;
+    --muted: #a69e8c;
+    --primary: #f5b942;
+    --primary-hover: #ffc95c;
+    --primary-fg: #17120a;
+    --accent: #ffd98a;
+    --border: #2a2620;
+    --border-strong: #40392f;
+    --input: #736b5d;
+    --success: #4ade80;
+    --success-bg: #0f2418;
+    --danger: #ff8a80;
+    --danger-bg: #2a1311;
+    --ring: #f5b942;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -8px rgb(0 0 0 / 0.6);
+    --shadow-lg: 0 1px 2px rgb(0 0 0 / 0.4), 0 24px 48px -16px rgb(0 0 0 / 0.7);
+
+    color-scheme: dark;
+  }
+}
+
+/* Expose tokens to Tailwind utilities (bg-surface, text-muted, border-border ...) */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-ring: var(--ring);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --ease-out: var(--ease-out);
+}
+
+/* ---- Fluid type scale (360px to 1280px) ---- */
+@theme {
+  --text-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.07rem + 0.25vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.33rem + 0.75vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem);
+  --text-4xl: clamp(2.25rem, 1.85rem + 1.8vw, 3.5rem);
+  --text-5xl: clamp(2.5rem, 1.95rem + 2.6vw, 4.25rem);
+
+  /* 4/8px spacing scale: Tailwind's --spacing base unit = 4px */
+  --spacing: 0.25rem;
+
+  --animate-fade-up: fade-up var(--dur-slow) var(--ease-out) both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sheet-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes acc-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes acc-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+/* ---- Base ---- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection { background: rgb(var(--glow) / 0.35); }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Subtle grid + glow used behind the hero; purely decorative */
+/* Cheap on purpose: no mask/filter layers, which are costly on throttled mobile CPUs. */
+.hero-backdrop {
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgb(var(--glow) / 0.16), transparent 70%),
+    linear-gradient(to bottom, transparent 30%, var(--bg) 85%),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(0deg, var(--border) 1px, transparent 1px) 0 0 / 72px 72px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
