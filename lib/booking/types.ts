@@ -28,6 +28,7 @@ export type ErrorCode =
   | "BOOKING_NOT_FOUND"
   | "RATE_LIMITED"
   | "UPSTREAM_ERROR"
+  | "NOT_CONFIGURED"
   | "INTERNAL_ERROR";
 
 export type ApiError = {

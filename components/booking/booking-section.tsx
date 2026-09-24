@@ -102,7 +102,13 @@ export function BookingWidget() {
 
           {b.servicesError ? (
             <p role="alert" className="text-danger">
-              {b.servicesError} You can also email <a className="underline" href="mailto:hello@workolo.io">hello@workolo.io</a>.
+              {/hello@workolo\.io/.test(b.servicesError) ? (
+                b.servicesError
+              ) : (
+                <>
+                  {b.servicesError} You can also email <a className="underline" href="mailto:hello@workolo.io">hello@workolo.io</a>.
+                </>
+              )}
             </p>
           ) : b.step === "service" ? (
             <ServiceStep />

@@ -19,6 +19,8 @@ export function NextSlotsCard() {
   const [slots, setSlots] = React.useState<Slot[] | null>(null);
   const [failed, setFailed] = React.useState(false);
   const { tz, service } = b;
+  // If services can't load, slots never will: stop the skeleton and offer email instead.
+  const unavailable = failed || Boolean(b.servicesError);
 
   React.useEffect(() => {
     if (!tz || !service) return;
@@ -47,8 +49,8 @@ export function NextSlotsCard() {
         {tz && <p className="text-xs text-muted">{formatOffset(tz)}</p>}
       </div>
 
-      <div className="mt-3 grid gap-2" aria-live="polite" aria-busy={!slots && !failed}>
-        {!slots && !failed &&
+      <div className="mt-3 grid gap-2" aria-live="polite" aria-busy={!slots && !unavailable}>
+        {!slots && !unavailable &&
           Array.from({ length: 3 }, (_, i) => <div key={i} className="skeleton h-12 rounded-md" aria-hidden />)}
         {slots?.map((s) => (
           <button
@@ -65,7 +67,15 @@ export function NextSlotsCard() {
           </button>
         ))}
         {slots && !slots.length && <p className="text-sm text-muted">Fully booked right now. Check the calendar below for new openings.</p>}
-        {failed && <p className="text-sm text-muted">Times are loading slowly. Open the calendar below.</p>}
+        {unavailable && (
+          <p className="text-sm text-muted">
+            Online times aren&apos;t available right now. Email{" "}
+            <a href="mailto:hello@workolo.io" className="font-medium text-accent underline underline-offset-2">
+              hello@workolo.io
+            </a>{" "}
+            and we&apos;ll set up a call.
+          </p>
+        )}
       </div>
 
       <button
