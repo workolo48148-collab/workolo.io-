@@ -3,6 +3,7 @@ import { Geist, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import { ToastProvider } from "@/components/ui/toast";
 import { founder, plans, site } from "@/lib/content";
+import { GA4_ID, META_PIXEL_ID } from "@/lib/env";
 import "./globals.css";
 
 // Geist carries headings and body (one file); Instrument Serif is only the italic accent words.
@@ -36,8 +37,9 @@ export const viewport: Viewport = {
   ],
 };
 
-const GA_ID = process.env.NEXT_PUBLIC_GA4_ID;
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+// Validated ids only (see lib/env.ts), so a blank or malformed value can't break the page or the inline scripts.
+const GA_ID = GA4_ID;
+const PIXEL_ID = META_PIXEL_ID;
 
 const jsonLd = {
   "@context": "https://schema.org",

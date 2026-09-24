@@ -1,7 +1,8 @@
+import { readEnv } from "../../env";
 import { BookingError } from "../errors";
 
 export function requireEnv(name: string): string {
-  const v = process.env[name];
+  const v = readEnv(process.env[name]);
   if (!v) throw new Error(`Missing environment variable ${name} for the selected BOOKING_ADAPTER`);
   return v;
 }

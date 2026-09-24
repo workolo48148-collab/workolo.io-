@@ -1,4 +1,8 @@
+import { envNumber, readEnv } from "../env";
+import { isValidTimeZone } from "./tz";
 import type { Service } from "./types";
+
+const hostTz = readEnv(process.env.BOOKING_HOST_TZ);
 
 /**
  * Schedule rules, taken from the live booking page (legacy/book-a-call.html):
@@ -6,14 +10,14 @@ import type { Service } from "./types";
  * The host zone is where those times are anchored; override with BOOKING_HOST_TZ.
  */
 export const schedule = {
-  hostTz: process.env.BOOKING_HOST_TZ || "Asia/Karachi",
+  hostTz: hostTz && isValidTimeZone(hostTz) ? hostTz : "Asia/Karachi",
   /** 0 = Sunday. The live site blocks Sundays. */
   workingDays: [1, 2, 3, 4, 5, 6],
   startTimes: ["18:30", "18:45", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00"],
   /** Earliest bookable slot, in hours from now. */
-  minNoticeHours: Number(process.env.BOOKING_MIN_NOTICE_HOURS || 12),
+  minNoticeHours: envNumber(process.env.BOOKING_MIN_NOTICE_HOURS, 12, 0, 24 * 14),
   /** How far ahead people can book. */
-  horizonDays: Number(process.env.BOOKING_HORIZON_DAYS || 45),
+  horizonDays: envNumber(process.env.BOOKING_HORIZON_DAYS, 45, 1, 365),
 };
 
 export const services: Service[] = [

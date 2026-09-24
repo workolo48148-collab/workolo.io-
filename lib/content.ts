@@ -4,9 +4,11 @@
  * Do not add numbers, results or testimonials that aren't real.
  */
 
+import { SITE_URL } from "./env";
+
 export const site = {
   name: "Workolo",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://workolo.io",
+  url: SITE_URL,
   email: "hello@workolo.io",
   title: "Content Systems for Finance Gurus | Workolo",
   description:

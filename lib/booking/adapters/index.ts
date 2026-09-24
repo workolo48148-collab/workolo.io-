@@ -1,4 +1,5 @@
 import "server-only";
+import { readEnv } from "@/lib/env";
 import { calcomAdapter } from "./calcom";
 import { googleAdapter } from "./google";
 import { mockAdapter } from "./mock";
@@ -14,7 +15,7 @@ const adapters: Record<string, BookingAdapter> = {
 
 /** Selected with BOOKING_ADAPTER = mock | calcom | google | n8n (default: mock). */
 export function getAdapter(): BookingAdapter {
-  const key = (process.env.BOOKING_ADAPTER || "mock").toLowerCase();
+  const key = (readEnv(process.env.BOOKING_ADAPTER) ?? "mock").toLowerCase();
   const adapter = adapters[key];
   if (!adapter) throw new Error(`Unknown BOOKING_ADAPTER "${key}". Use one of: ${Object.keys(adapters).join(", ")}`);
   return adapter;
