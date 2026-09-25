@@ -26,11 +26,11 @@ export function AccordionItem({
 }) {
   return (
     <details name={name} open={defaultOpen} className={cn("group border-b border-border", className)}>
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md py-5 text-left text-base font-semibold text-text transition-colors duration-150 hover:text-accent sm:text-lg [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md py-6 text-left text-lg font-semibold text-text transition-colors duration-150 hover:text-accent sm:text-xl [&::-webkit-details-marker]:hidden">
         {title}
         <span
           aria-hidden
-          className="grid size-8 shrink-0 place-items-center rounded-full border border-border text-muted transition-transform duration-200 ease-out group-open:rotate-45"
+          className="grid size-9 shrink-0 place-items-center rounded-full border border-border-strong text-muted transition-[transform,background-color,color,border-color] duration-200 ease-out group-open:rotate-45 group-open:border-transparent group-open:bg-[rgb(var(--glow))] group-open:text-ink"
         >
           <Plus className="size-4" />
         </span>

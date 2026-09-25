@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Bodoni_Moda, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import Script from "next/script";
 import { ToastProvider } from "@/components/ui/toast";
 import { founder, plans, site } from "@/lib/content";
 import { GA4_ID, META_PIXEL_ID } from "@/lib/env";
 import "./globals.css";
 
-// Geist carries headings and body (one file); Instrument Serif is only the italic accent words.
-const body = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
-const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-serif-accent", display: "swap" });
+// Bodoni Moda: headlines (high-contrast luxury serif, only used large). Schibsted Grotesk: editorial body.
+// JetBrains Mono: small ticker-style labels only, so it isn't preloaded.
+const display = Bodoni_Moda({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-bodoni", display: "swap" });
+const body = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap", preload: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -32,8 +34,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f8f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#060807" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f1e9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0c" },
   ],
 };
 
@@ -77,7 +79,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${body.variable} ${serif.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} data-scroll-behavior="smooth">
       <body>
         <script
           type="application/ld+json"

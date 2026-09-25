@@ -33,7 +33,11 @@ export function NextSlotsCard() {
   }, [tz, service, b.availabilityVersion]);
 
   return (
-    <div className="relative rounded-3xl border border-border bg-surface p-5 shadow-lg sm:p-6">
+    <div className="relative rounded-[var(--radius-xl)] border border-border bg-surface p-5 shadow-lg sm:p-7">
+      <p className="label-mono mb-5 flex items-center gap-2 text-muted">
+        <span className="live-dot size-1.5 rounded-full bg-[rgb(var(--glow))]" aria-hidden />
+        Live availability
+      </p>
       <div className="flex items-center gap-3">
         <Image src={founder.photo} alt="" width={48} height={48} className="size-12 rounded-full object-cover ring-2 ring-[rgb(var(--glow)/0.5)]" />
         <div className="min-w-0">

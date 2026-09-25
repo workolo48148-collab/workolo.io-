@@ -5,13 +5,18 @@ import { SectionHeading } from "./section-heading";
 
 export function Faq() {
   return (
-    <Section id="faq" labelledBy="faq-title">
+    <Section id="faq" labelledBy="faq-title" className="border-t border-border" lazy>
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
         <SectionHeading
           id="faq-title"
+          index="08"
           align="left"
-          eyebrow="FAQ"
-          title="Questions before you book"
+          eyebrow="Straight answers"
+          title={
+            <>
+              Questions before <span className="accent-serif">you book.</span>
+            </>
+          }
           lead={
             <>
               Something else? Email{" "}

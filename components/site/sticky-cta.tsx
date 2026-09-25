@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import * as React from "react";
+import { reviewSummary } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { CtaLink } from "./cta-link";
 
@@ -30,19 +31,22 @@ export function StickyCta() {
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-lg transition-transform duration-250 ease-out md:hidden",
-        show ? "translate-y-0" : "pointer-events-none translate-y-full",
+        "fixed inset-x-3 bottom-3 z-40 rounded-2xl border border-border bg-surface/95 px-4 py-3 shadow-lg transition-[transform,opacity] duration-250 ease-out md:hidden",
+        "mb-[env(safe-area-inset-bottom)]",
+        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0",
       )}
       aria-hidden={!show}
       inert={!show}
     >
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1 text-sm leading-tight">
-          <p className="font-semibold">Discovery call</p>
-          <p className="text-muted">30 min · pick a time</p>
+          <p className="font-semibold">30-min discovery call</p>
+          <p className="mt-0.5 flex items-center gap-1 text-muted">
+            <Star className="size-3 fill-current text-star" aria-hidden /> {reviewSummary.rating} · {reviewSummary.count} client reviews
+          </p>
         </div>
         <CtaLink location="sticky_mobile" size="md" className="shrink-0">
-          Book now <ArrowRight />
+          Book <ArrowRight />
         </CtaLink>
       </div>
     </div>
