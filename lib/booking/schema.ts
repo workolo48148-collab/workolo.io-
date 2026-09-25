@@ -36,8 +36,11 @@ export const bookingRequestSchema = z.extend(detailsSchema, {
   /** Booking id being moved to a new time. */
   rescheduleId: z.optional(z.string().check(z.maxLength(128))),
   utm: z.optional(z.record(z.string().check(z.maxLength(40)), z.string().check(z.maxLength(200)))),
-  /** Honeypot. Real people never fill this in. */
-  company: z.optional(z.string().check(z.maxLength(0))),
+  /**
+   * Honeypot. Never a validation error: browser autofill can fill hidden fields,
+   * and a real lead must not be blocked. The API route flags it instead.
+   */
+  company: z.optional(z.string().check(z.maxLength(500))),
 });
 
 export type BookingRequest = z.infer<typeof bookingRequestSchema>;

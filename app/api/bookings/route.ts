@@ -23,10 +23,21 @@ export async function POST(request: NextRequest) {
 
     const parsed = bookingRequestSchema.safeParse(json);
     if (!parsed.success) {
-      throw new BookingError("VALIDATION_ERROR", "Please check the highlighted fields.", z.flattenError(parsed.error).fieldErrors);
+      const fieldErrors = z.flattenError(parsed.error).fieldErrors;
+      // Field names only (never values), so rejections are diagnosable in the Vercel logs.
+      console.warn("[booking] validation failed:", Object.keys(fieldErrors).join(", "));
+      throw new BookingError("VALIDATION_ERROR", "Please check the highlighted fields.", fieldErrors);
     }
 
-    const booking = await getAdapter().createBooking(parsed.data);
+    // Honeypot filled: flag it, but still book. Autofill can fill hidden fields, and blocking a real
+    // lead costs far more than cancelling the rare bot booking (rate limiting still applies).
+    const { company, ...input } = parsed.data;
+    if (company) {
+      console.warn("[booking] honeypot field was filled; booking anyway and flagging it");
+      input.utm = { ...(input.utm ?? {}), hp_flag: "1" };
+    }
+
+    const booking = await getAdapter().createBooking(input);
     const origin = readEnv(process.env.NEXT_PUBLIC_SITE_URL) ? SITE_URL : request.nextUrl.origin;
     const rescheduleUrl = booking.rescheduleUrl.startsWith("/") ? `${origin}${booking.rescheduleUrl}` : booking.rescheduleUrl;
 
