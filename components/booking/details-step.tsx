@@ -128,7 +128,15 @@ export function DetailsStep() {
         setServerErrors(mapped);
         const firstServer = FIELD_ORDER.find((k) => mapped[k]);
         if (firstServer) formRef.current?.querySelector<HTMLElement>(`#bk-${firstServer}`)?.focus();
-        else toast({ tone: "error", title: "Please check your details", body: err.message });
+        else {
+          // The server rejected something the visitor can't see or fix: don't point at "highlighted" fields.
+          console.error("[booking] rejected hidden fields:", Object.keys(err.fieldErrors));
+          toast({
+            tone: "error",
+            title: "We couldn't submit the form",
+            body: "Please refresh the page and try again, or email hello@workolo.io and we'll book you in.",
+          });
+        }
       } else {
         toast({ tone: "error", title: "Couldn't book that time", body: err.message });
       }
@@ -147,10 +155,22 @@ export function DetailsStep() {
         <ArrowLeft className="size-4" aria-hidden /> Change time
       </button>
 
-      {/* Honeypot: hidden from people and assistive tech */}
+      {/* Honeypot: hidden from people and assistive tech. Its id/name/label deliberately match no
+          autofill category (a "Company" label got autofilled by Chrome and blocked real bookings). */}
       <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="bk-company">Company</label>
-        <input id="bk-company" tabIndex={-1} autoComplete="off" value={values.company} onChange={(e) => set("company", e.target.value)} />
+        <label htmlFor="bk-hp">Leave this field empty</label>
+        <input
+          id="bk-hp"
+          name="hp_field"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          data-lpignore="true"
+          data-1p-ignore="true"
+          data-form-type="other"
+          value={values.company}
+          onChange={(e) => set("company", e.target.value)}
+        />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
