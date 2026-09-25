@@ -74,6 +74,13 @@ export const bookingApi = {
   next: (serviceId: string, count: number, tz: string, signal?: AbortSignal) =>
     request<{ slots: Slot[] }>(`/api/availability?${new URLSearchParams({ serviceId, next: String(count), tz })}`, { signal }),
 
+  cancel: (id: string, body: { email: string; reason?: string }) =>
+    request<{ cancelled: { id: string; start: string | null } }>(`/api/bookings/${encodeURIComponent(id)}/cancel`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }),
+
   book: (body: BookingRequest) =>
     request<{ booking: Booking }>("/api/bookings", {
       method: "POST",

@@ -3,7 +3,7 @@ import { BookingError } from "../errors";
 import { candidateStarts, overlaps } from "../schedule";
 import type { Booking } from "../types";
 import { requireEnv, upstream } from "./http";
-import type { BookingAdapter } from "./types";
+import { NOT_FOUND_MESSAGE, type BookingAdapter } from "./types";
 
 /**
  * n8n webhooks.
@@ -96,5 +96,22 @@ export const n8nAdapter: BookingAdapter = {
       id: reply.id ?? booking.id,
       rescheduleUrl: reply.rescheduleUrl ?? `/?reschedule=${reply.id ?? booking.id}#book`,
     };
+  },
+
+  /**
+   * Sends { event: "booking.cancelled", booking: { id, email }, reason }. Your workflow must
+   * check the email matches the booking and reply 404 if not, 409 if already cancelled.
+   */
+  async cancelBooking(id, { email, reason }) {
+    const res = await upstream(requireEnv("N8N_BOOKING_WEBHOOK_URL"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...secretHeader() },
+      body: JSON.stringify({ event: "booking.cancelled", booking: { id, email }, reason: reason ?? null }),
+    });
+    if (res.status === 404) throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+    if (res.status === 409) throw new BookingError("ALREADY_CANCELLED", "This booking was already cancelled.");
+    if (!res.ok) throw new BookingError("UPSTREAM_ERROR", "We couldn't cancel the booking. Please try again or email hello@workolo.io.");
+    const reply = (await res.json().catch(() => ({}))) as { start?: string };
+    return { id, start: reply.start ?? null };
   },
 };

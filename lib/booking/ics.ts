@@ -6,7 +6,13 @@ export function eventFor(booking: Booking, serviceName: string, email: string): 
   return {
     uid: `${booking.id}@workolo.io`,
     title: `${serviceName} with Workolo`,
-    description: `Your ${serviceName.toLowerCase()} with Workolo.\n\nQuestions or need to change the time? Reschedule: ${booking.rescheduleUrl}\nEmail: ${email}`,
+    description: [
+      `Your ${serviceName.toLowerCase()} with Workolo.`,
+      "",
+      `Need a different time? Reschedule: ${booking.rescheduleUrl}`,
+      ...(booking.cancelUrl ? [`Can't make it? Cancel: ${booking.cancelUrl}`] : []),
+      `Booked with: ${email}`,
+    ].join("\n"),
     start: booking.start,
     end: booking.end,
   };

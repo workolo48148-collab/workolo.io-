@@ -265,6 +265,12 @@ p { text-wrap: pretty; }
   outline-offset: 2px;
   border-radius: 6px;
 }
+/* Headings that receive focus programmatically (to announce a new step) aren't
+   interactive, so they shouldn't draw a focus ring. */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
 
 ::selection { background: rgb(var(--glow) / 0.4); color: var(--text); }
 

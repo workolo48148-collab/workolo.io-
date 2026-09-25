@@ -40,8 +40,9 @@ export async function POST(request: NextRequest) {
     const booking = await getAdapter().createBooking(input);
     const origin = readEnv(process.env.NEXT_PUBLIC_SITE_URL) ? SITE_URL : request.nextUrl.origin;
     const rescheduleUrl = booking.rescheduleUrl.startsWith("/") ? `${origin}${booking.rescheduleUrl}` : booking.rescheduleUrl;
+    const cancelUrl = `${origin}/?cancel=${encodeURIComponent(booking.id)}#book`;
 
-    return Response.json({ booking: { ...booking, rescheduleUrl } }, { status: 201, headers: { "Cache-Control": "no-store" } });
+    return Response.json({ booking: { ...booking, rescheduleUrl, cancelUrl } }, { status: 201, headers: { "Cache-Control": "no-store" } });
   } catch (err) {
     return errorResponse(err);
   }

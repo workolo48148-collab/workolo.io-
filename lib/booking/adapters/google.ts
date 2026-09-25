@@ -4,7 +4,7 @@ import { BookingError } from "../errors";
 import { candidateStarts, overlaps } from "../schedule";
 import type { Booking } from "../types";
 import { answersSummary, requireEnv, upstream } from "./http";
-import type { BookingAdapter } from "./types";
+import { NOT_FOUND_MESSAGE, sameEmail, type BookingAdapter } from "./types";
 
 /**
  * Google Calendar via a service account (no SDK dependency).
@@ -164,5 +164,13 @@ export const googleAdapter: BookingAdapter = {
       provider: "google",
     };
     return booking;
+  },
+
+  async cancelBooking(id, { email }) {
+    const ev = (await gcal(`${calendarPath()}/events/${encodeURIComponent(id)}`)) as GEvent & { status?: string };
+    if (!sameEmail(ev.extendedProperties?.private?.email, email)) throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+    if (ev.status === "cancelled") throw new BookingError("ALREADY_CANCELLED", "This booking was already cancelled.");
+    await gcal(`${calendarPath()}/events/${encodeURIComponent(id)}`, { method: "DELETE" });
+    return { id, start: ev.start?.dateTime ? new Date(ev.start.dateTime).toISOString() : null };
   },
 };

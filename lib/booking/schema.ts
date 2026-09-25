@@ -45,6 +45,12 @@ export const bookingRequestSchema = z.extend(detailsSchema, {
 
 export type BookingRequest = z.infer<typeof bookingRequestSchema>;
 
+/** POST /api/bookings/:id/cancel. The email must match the booking (checked by the adapter). */
+export const cancelRequestSchema = z.object({
+  email: z.pipe(z.string().check(z.trim(), z.maxLength(254)), z.email("Enter the email you booked with")),
+  reason: z.optional(z.string().check(z.trim(), z.maxLength(500, "Please keep it under 500 characters"))),
+});
+
 export const availabilityQuerySchema = z
   .object({
     serviceId: z.string().check(z.minLength(1), z.maxLength(64)),

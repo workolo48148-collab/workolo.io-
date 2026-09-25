@@ -32,6 +32,11 @@ type BookingContext = {
   booking: Booking | null;
   complete: (b: Booking) => void;
   rescheduleId: string | null;
+  /** Booking id from a cancel link (?cancel=…); shows the cancel form instead of the calendar. */
+  cancelId: string | null;
+  closeCancel: () => void;
+  /** Call after a successful cancellation (tracks it and frees the slot in the UI). */
+  cancelled: (id: string) => void;
   startOver: () => void;
   /** Bumped whenever availability may be stale (e.g. SLOT_UNAVAILABLE). */
   availabilityVersion: number;
@@ -64,6 +69,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
   const [step, setStep] = React.useState<Step>("datetime");
   const [booking, setBooking] = React.useState<Booking | null>(null);
   const [rescheduleId, setRescheduleId] = React.useState<string | null>(null);
+  const [cancelId, setCancelId] = React.useState<string | null>(null);
   const [availabilityVersion, setAvailabilityVersion] = React.useState(0);
 
   // Client-only initialisation: time zone, UTM capture, reschedule link.
@@ -75,8 +81,11 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
     setNow(t);
     setTzState(detected);
     setMonth(dateKeyInTz(new Date(t), detected).slice(0, 7));
-    const r = new URLSearchParams(window.location.search).get("reschedule");
+    const qs = new URLSearchParams(window.location.search);
+    const r = qs.get("reschedule");
     if (r) setRescheduleId(r.slice(0, 128));
+    const c = qs.get("cancel");
+    if (c) setCancelId(c.slice(0, 128));
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
@@ -152,6 +161,24 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
       track("booking_completed", { service: b.serviceId, slot_start: b.start, tz: b.tz, provider: b.provider });
     },
     rescheduleId,
+    cancelId,
+    closeCancel: () => {
+      setCancelId(null);
+      // Drop ?cancel= from the address bar so a refresh doesn't reopen the form.
+      const url = new URL(window.location.href);
+      url.searchParams.delete("cancel");
+      window.history.replaceState(null, "", url);
+    },
+    cancelled: (id) => {
+      track("booking_cancelled", { service: serviceId ?? undefined, via: cancelId === id ? "link" : "confirmation" });
+      setAvailabilityVersion((v) => v + 1);
+      // Done with the link: clean the address bar so a refresh doesn't reopen the form.
+      if (cancelId === id) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("cancel");
+        window.history.replaceState(null, "", url);
+      }
+    },
     startOver: () => {
       setBooking(null);
       setSlot(null);

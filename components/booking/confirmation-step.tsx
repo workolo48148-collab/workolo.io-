@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarPlus, Check, Copy, Download, RefreshCcw } from "lucide-react";
+import { CalendarPlus, CalendarX2, Check, Copy, Download, RefreshCcw } from "lucide-react";
 import * as React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
@@ -8,10 +8,12 @@ import { eventFor, googleCalendarUrl, icsFile, outlookCalendarUrl } from "@/lib/
 import { formatLongDate, formatOffset, formatTime } from "@/lib/booking/tz";
 import { cn } from "@/lib/utils";
 import { useBooking } from "./booking-provider";
+import { CancelPanel } from "./cancel-panel";
 
 export function ConfirmationStep() {
   const b = useBooking();
   const { toast } = useToast();
+  const [cancelling, setCancelling] = React.useState(false);
   const headingRef = React.useRef<HTMLHeadingElement>(null);
   const booking = b.booking!;
   const tz = booking.tz;
@@ -39,6 +41,10 @@ export function ConfirmationStep() {
   }
 
   const calBtn = cn(buttonVariants({ variant: "secondary", size: "md" }), "w-full justify-start");
+
+  if (cancelling) {
+    return <CancelPanel bookingId={booking.id} knownEmail={booking.email} onBack={() => setCancelling(false)} onBookAgain={b.startOver} />;
+  }
 
   return (
     <div className="mx-auto max-w-lg py-2 text-center" role="status" aria-live="polite">
@@ -86,7 +92,20 @@ export function ConfirmationStep() {
             <Copy className="size-4" aria-hidden />
           </button>
         </span>
+        <span aria-hidden className="hidden text-border-strong sm:inline">
+          ·
+        </span>
+        <button
+          type="button"
+          onClick={() => setCancelling(true)}
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-1 font-medium text-muted underline underline-offset-2 hover:text-danger"
+        >
+          <CalendarX2 className="size-3.5" aria-hidden /> Cancel booking
+        </button>
       </div>
+      {booking.cancelUrl && (
+        <p className="mt-2 text-xs text-muted">The cancel and reschedule links are also in your calendar invite.</p>
+      )}
     </div>
   );
 }

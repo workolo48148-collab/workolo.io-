@@ -2,7 +2,7 @@ import { services } from "../config";
 import { BookingError } from "../errors";
 import type { Booking } from "../types";
 import { answersSummary, requireEnv, upstream } from "./http";
-import type { BookingAdapter } from "./types";
+import { NOT_FOUND_MESSAGE, sameEmail, type BookingAdapter } from "./types";
 
 /**
  * Cal.com API v2. Cal.com owns availability and conflict checks.
@@ -34,6 +34,20 @@ async function failFromCal(res: Response): Promise<never> {
   throw new BookingError("UPSTREAM_ERROR", "Our calendar provider rejected the request. Please try again.");
 }
 
+type CalBooking = { uid: string; status: string; start: string; attendees?: { email: string }[] };
+
+/** Loads a booking and checks the email belongs to one of its attendees. */
+async function verifiedCalBooking(uid: string, email: string): Promise<CalBooking> {
+  const res = await upstream(`${base()}/bookings/${encodeURIComponent(uid)}`, { headers: headers("2024-08-13") });
+  if (res.status === 404 || res.status === 400) throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+  if (!res.ok) await failFromCal(res);
+  const { data } = (await res.json()) as { data: CalBooking };
+  if (!data || !(data.attendees ?? []).some((a) => sameEmail(a.email, email))) {
+    throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+  }
+  return data;
+}
+
 export const calcomAdapter: BookingAdapter = {
   name: "calcom",
 
@@ -61,6 +75,12 @@ export const calcomAdapter: BookingAdapter = {
   async createBooking(input) {
     const eventTypeId = eventTypeFor(input.serviceId);
     const start = new Date(input.start).toISOString();
+
+    // A reschedule link alone isn't enough: the email must match the original booking.
+    if (input.rescheduleId) {
+      const existing = await verifiedCalBooking(input.rescheduleId, input.email);
+      if (/cancel/i.test(existing.status)) throw new BookingError("ALREADY_CANCELLED", "That booking was cancelled. Please book a new time.");
+    }
 
     const res = input.rescheduleId
       ? await upstream(`${base()}/bookings/${encodeURIComponent(input.rescheduleId)}/reschedule`, {
@@ -101,5 +121,18 @@ export const calcomAdapter: BookingAdapter = {
       provider: "calcom",
     };
     return booking;
+  },
+
+  /** Cal.com frees the slot and emails the cancellation to both host and attendee. */
+  async cancelBooking(id, { email, reason }) {
+    const existing = await verifiedCalBooking(id, email);
+    if (/cancel/i.test(existing.status)) throw new BookingError("ALREADY_CANCELLED", "This booking was already cancelled.");
+    const res = await upstream(`${base()}/bookings/${encodeURIComponent(id)}/cancel`, {
+      method: "POST",
+      headers: headers("2024-08-13"),
+      body: JSON.stringify({ cancellationReason: reason?.trim() || "Cancelled by the attendee on workolo.io" }),
+    });
+    if (!res.ok) await failFromCal(res);
+    return { id, start: existing.start ? new Date(existing.start).toISOString() : null };
   },
 };
