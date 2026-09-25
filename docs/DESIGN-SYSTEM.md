@@ -1,63 +1,85 @@
 # Design system
 
-Direction: personal-brand landing page (solo-expert portfolio feel) on a restrained, premium SaaS base.
-Near-black / off-white canvas, one **emerald "money green"** accent reserved for actions and highlights,
-italic serif accent words inside bold sans headlines, pill buttons, generous radius, amber stars for ratings.
-The proof (real screenshots) and the founder carry the page; decoration stays quiet.
+**Direction: "Private-bank editorial × trading terminal."** A *Financial Times* weekend magazine crossed with a
+Bloomberg screen. Ink black and warm ivory, one **signal-lime** accent (a green candle on a chart), Bodoni
+headlines with italic accent words, mono ticker labels, and one piece of real 3D. The proof (real screenshots),
+the founder and the "1–2 days a month" promise carry the page. Decoration stays quiet so they don't have to compete.
 
-Idea sources (analysed, not copied): amrafarooq.com for the founder-first structure, serif accent words,
-"who it's for" grid and screenshot wall. Its countdown / "only N seats left" scarcity was deliberately left out.
+Why this direction: the audience sells finance expertise. Editorial luxury signals "premium, considered,
+trustworthy"; terminal details (ticker, mono labels, live dots) signal "this person lives in markets". The lime
+accent reads as "up", and it's rare enough in the finance-coach niche that ads and page are instantly recognisable.
 
 Source of truth: [`app/globals.css`](../app/globals.css). Tokens are CSS variables exposed to Tailwind via `@theme inline`
 (`bg-surface`, `text-muted`, `border-border`, …). Light and dark follow `prefers-color-scheme`.
 
 ## Color
 
-| Token | Light | Dark | Use |
+| Token | Light (ivory) | Dark (ink) | Use |
 | --- | --- | --- | --- |
-| `--bg` | `#f7f8f6` | `#060807` | page |
-| `--surface` | `#ffffff` | `#0d1110` | cards, inputs |
-| `--surface-2` | `#eef2ef` | `#131917` | muted panels |
-| `--text` | `#0b1411` | `#f1f5f2` | body |
-| `--muted` | `#4f5d57` | `#97a39d` | secondary text |
-| `--primary` | `#047857` | `#34d399` | primary buttons, selection |
-| `--primary-hover` | `#065f46` | `#6ee7b7` | hover |
-| `--primary-fg` | `#ffffff` | `#022c1d` | text on primary |
-| `--accent` | `#04704f` | `#6ee7b7` | accent text, serif accent words, icons |
-| `--border` / `--border-strong` | `#e0e7e3` / `#c6d1cb` | `#1c2421` / `#2b3632` | dividers, cards |
-| `--input` | `#808d86` | `#66746e` | form-control borders (≥3:1) |
-| `--success` / `--success-bg` | `#15803d` / `#ecf8f0` | `#4ade80` / `#0f2418` | confirmations |
-| `--danger` / `--danger-bg` | `#b42318` / `#fdf0ee` | `#ff8a80` / `#2a1311` | errors |
-| `--ring` | `#047857` | `#34d399` | focus outline |
-| `--star` | `#f59e0b` | `#fbbf24` | rating stars (decorative, always paired with the number) |
+| `--bg` | `#f4f1e9` | `#0a0b0c` | page |
+| `--surface` | `#fbf9f4` | `#111315` | cards, inputs |
+| `--surface-2` | `#ebe6da` | `#171a1d` | muted panels |
+| `--text` | `#0e0f10` | `#f2eee4` | body |
+| `--muted` | `#55524a` | `#a39e92` | secondary text |
+| `--primary` | `#0e0f10` | `#d7ff3a` | primary buttons, selection |
+| `--primary-fg` | `#d7ff3a` | `#0a0b0c` | text on primary (lime-on-ink / ink-on-lime) |
+| `--accent` | `#4a6900` | `#d7ff3a` | italic accent words, icons, links |
+| `--border` / `--border-strong` | `#ddd6c7` / `#c4bba8` | `#23262a` / `#33373c` | dividers, cards |
+| `--input` | `#8a8374` | `#6f737a` | form-control borders (≥3:1) |
+| `--success` / `--danger` | `#3f6b00` / `#b42318` | `#a8e05f` / `#ff8a80` | confirmations / errors |
+| `--star` | `#d98e04` | `#ffc53d` | rating stars (always paired with the number) |
+| `--glow` | lime (RGB) | lime (RGB) | tints, marker, glows, live dots |
 
-`npm run check:contrast` checks every pairing. All pass WCAG 2.1 AA in both modes: body text ≥ 4.5:1 (lowest: `success` on `success-bg`, light, 4.60:1) and UI ≥ 3:1 (lowest: `input` on `bg`, light, 3.25:1).
+**`.tone-flip`** puts a section in the opposite tone (ivory inside dark mode, ink inside light mode). It's used for
+the ticker, the proof wall, the founder feature, the featured plan and the final call to action, which gives the long
+page an editorial rhythm.
+
+`npm run check:contrast` checks every pairing in both modes; all pass WCAG 2.1 AA (lowest body pair 5.62:1,
+lowest UI pair 3.33:1). Lighthouse's contrast audit covers tinted surfaces the token check can't.
 
 ## Type
 
-- Headings + body: **Geist** (one family, semibold headings with tight −0.035em tracking). Display accent: **Instrument Serif** italic, used only for 1–3 accent words per headline via `.accent-serif`. Both via `next/font` (self-hosted, no layout shift).
-- Fluid scale with `clamp()` from 360px to 1280px: `--text-xs` 12–13px · `sm` 14–15 · `base` 16–17 · `lg` 18–20 · `xl` 20–24 · `2xl` 24–32 · `3xl` 30–42 · `4xl` 36–56 · `5xl` 40–68.
-- Headings: tracking −0.025em, line-height 1.08, `text-wrap: balance`.
+| Role | Font | Where |
+| --- | --- | --- |
+| Display | **Bodoni Moda** (roman + italic) | headlines, prices, pull quotes, footer wordmark. Only used large, where its hairlines shine |
+| Body | **Schibsted Grotesk** | everything readable |
+| Label | **JetBrains Mono** | ticker, section numbers, small caps labels (`.label-mono`). Not preloaded |
 
-## Space, radius, shadow, motion
+- `.accent-serif`: italic Bodoni in the accent colour, for 1–3 words per headline.
+- `.marker`: lime highlighter sweep under the hero accent. The headline itself never animates (it's the LCP element).
+- Fluid scale with `clamp()` from 360px to 1440px, up to `--text-6xl` (51–120px).
 
-- Spacing: 4px base unit (Tailwind `--spacing: 0.25rem`), used on the 4/8 grid (`p-4` 16, `p-6` 24, `gap-2` 8 …).
-- Radius: `sm` 8 · `md` 12 · `lg` 16 · `xl` 24.
-- Shadow: `sm` hairline · `md` card · `lg` raised panel (darker in dark mode).
-- Motion: 150 / 200 / 250 ms, `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out). All animation is disabled under `prefers-reduced-motion`.
+## 3D and motion (performance budget first)
+
+| Effect | How | Cost |
+| --- | --- | --- |
+| Hero proof stack | CSS `perspective` + `preserve-3d` layers at different `translateZ`; rig follows the pointer via `useTilt` (`components/site/tilt.tsx`) | one rAF per pointer frame, transform only |
+| Tilt cards (audience, pricing, founder photo) | same hook, per element, with a pointer-following glare | transform + opacity |
+| Review wall | tilts back 24° and flattens as it scrolls in (CSS `animation-timeline: view()`) | zero JS; static where unsupported |
+| Section reveals | CSS scroll-driven fade-up | zero JS |
+| Ticker | one CSS `translateX` loop, pauses on hover | compositor only |
+| Grain | one static SVG noise tile, fixed, no blend modes | composited once |
+
+Rules: no WebGL and no animation library. 3D engages only at ≥1024px with a fine pointer; phones get a flat
+layout. Everything turns off under `prefers-reduced-motion`. Far-below-the-fold sections use
+`content-visibility: auto`.
+
+## Space, radius, shadow
+
+- Spacing: 4px base unit; sections breathe at `py-24` / `sm:py-32`.
+- Radius: `sm` 8 · `md` 12 · `lg` 18 · `xl` 28, plus `2rem`/`2.5rem` for the big feature panels.
+- Shadow: `sm` hairline · `md` card · `lg` floating layer (much deeper in dark mode).
 
 ## Components
 
 | Component | File | Notes |
 | --- | --- | --- |
-| Button | `components/ui/button.tsx` | `primary` / `secondary` / `ghost`, `sm` / `md` / `lg`, `loading` (spinner + `aria-busy`), disabled |
-| Card | `components/ui/card.tsx` | Card, CardHeader, CardTitle, CardContent |
-| Badge | `components/ui/badge.tsx` | `neutral` / `accent` / `success` / `solid` |
-| Input, Textarea, Select, Label, Field | `components/ui/field.tsx` | Field wires label, hint, error, `aria-invalid`, `aria-describedby`; Select is native (best on mobile) |
-| Accordion | `components/ui/accordion.tsx` | Native `<details>`: zero JS, single-open via `name` |
-| Modal (Dialog) | `components/ui/dialog.tsx` | Radix: focus trap, Esc, scroll lock; bottom sheet on mobile |
-| Toast | `components/ui/toast.tsx` | `status` / `alert` live regions, auto-dismiss |
-| Calendar day cell | `components/booking/calendar.tsx` | WAI-ARIA grid, roving tabindex, arrows / Home / End / PageUp / PageDown / Enter |
-| Time-slot chip | `components/booking/datetime-step.tsx` | `aria-pressed`, grouped Morning / Afternoon / Evening |
-| Proof wall | `components/site/proof-wall.tsx` | Masonry of every real screenshot (reviews, then DMs), each labelled, all visible |
-| Lightbox | `components/site/proof-lightbox.tsx` | Full-size screenshot viewer: focus trap, Esc, ←/→, counter; lazy-loaded |
+| Button | `components/ui/button.tsx` | `primary` (lime glow, lifts on hover) / `secondary` (outline) / `ghost`; `loading`, disabled |
+| Section heading | `components/site/section-heading.tsx` | numbered mono kicker (`01 — WHO IT'S FOR`), Bodoni headline, lead |
+| Tilt / useTilt | `components/site/tilt.tsx` | pointer tilt + glare; off for touch and reduced motion |
+| Proof stack | `components/site/proof-stack.tsx` | hero 3D scene around the live booking card |
+| Ticker | `components/site/ticker.tsx` | facts-only market tape |
+| Month calendar | `components/site/sections.tsx` (`MonthCalendar`) | "your 1–2 days" visual; labelled for screen readers |
+| Card, Badge, Field, Accordion, Dialog, Toast | `components/ui/*` | as before; restyled through tokens |
+| Calendar day cell / time-slot chip | `components/booking/*` | WAI-ARIA grid, roving tabindex; `aria-pressed` chips |
+| Proof wall + lightbox | `components/site/proof-wall.tsx`, `proof-lightbox.tsx` | all 10 screenshots visible; full-size viewer |

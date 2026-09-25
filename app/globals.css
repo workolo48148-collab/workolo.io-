@@ -1,47 +1,48 @@
 @import "tailwindcss";
 
 /* =====================================================================
-   WORKOLO DESIGN TOKENS
-   Personal-brand look: near-black / off-white canvas, one "money green"
-   accent (emerald) reserved for actions and highlights, italic serif accent
-   words in headlines. Stars use amber so ratings read instantly.
+   WORKOLO — "Private-bank editorial × trading terminal"
+   Ink black + warm ivory, one signal-lime accent (a green candle on a
+   chart). Bodoni Moda headlines, Schibsted Grotesk body, JetBrains Mono
+   for ticker-style labels. Dark and light share the same system: the
+   primary action is lime-on-ink in dark mode and ink-on-ivory in light.
    Every text/background pair is verified by `npm run check:contrast`.
    ===================================================================== */
 
 :root {
-  /* ---- Color: light ---- */
-  --bg: #f7f8f6;
-  --surface: #ffffff;
-  --surface-2: #eef2ef;
-  --text: #0b1411;
-  --muted: #4f5d57;
-  --primary: #047857;
-  --primary-hover: #065f46;
-  --primary-fg: #ffffff;
-  --accent: #04704f;
-  --border: #e0e7e3;
-  --border-strong: #c6d1cb;
-  --input: #808d86;
-  --success: #15803d;
-  --success-bg: #ecf8f0;
+  /* ---- Color: light (ivory paper) ---- */
+  --bg: #f4f1e9;
+  --surface: #fbf9f4;
+  --surface-2: #ebe6da;
+  --text: #0e0f10;
+  --muted: #55524a;
+  --primary: #0e0f10;
+  --primary-hover: #26282b;
+  --primary-fg: #d7ff3a;
+  --accent: #4a6900;
+  --border: #ddd6c7;
+  --border-strong: #c4bba8;
+  --input: #8a8374;
+  --success: #3f6b00;
+  --success-bg: #eef6d9;
   --danger: #b42318;
-  --danger-bg: #fdf0ee;
-  --ring: #047857;
-  --star: #f59e0b;
-  --glow: 16 185 129;
+  --danger-bg: #fbeae6;
+  --ring: #4a6900;
+  --star: #d98e04;
+  --glow: 190 230 20;
 
   /* ---- Radius ---- */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
 
   /* ---- Shadow ---- */
-  --shadow-sm: 0 1px 2px rgb(23 20 15 / 0.06);
-  --shadow-md: 0 1px 2px rgb(23 20 15 / 0.05), 0 8px 24px -8px rgb(23 20 15 / 0.12);
-  --shadow-lg: 0 1px 2px rgb(23 20 15 / 0.05), 0 24px 48px -16px rgb(23 20 15 / 0.18);
+  --shadow-sm: 0 1px 2px rgb(14 15 16 / 0.06);
+  --shadow-md: 0 1px 2px rgb(14 15 16 / 0.05), 0 10px 30px -12px rgb(14 15 16 / 0.18);
+  --shadow-lg: 0 2px 4px rgb(14 15 16 / 0.05), 0 30px 60px -24px rgb(14 15 16 / 0.3);
 
-  /* ---- Motion (150-250ms, ease-out) ---- */
+  /* ---- Motion (150-250ms UI, longer only for ambient) ---- */
   --dur-fast: 150ms;
   --dur-base: 200ms;
   --dur-slow: 250ms;
@@ -52,31 +53,73 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #060807;
-    --surface: #0d1110;
-    --surface-2: #131917;
-    --text: #f1f5f2;
-    --muted: #97a39d;
-    --primary: #34d399;
-    --primary-hover: #6ee7b7;
-    --primary-fg: #022c1d;
-    --accent: #6ee7b7;
-    --border: #1c2421;
-    --border-strong: #2b3632;
-    --input: #66746e;
-    --success: #4ade80;
-    --success-bg: #0f2418;
+    /* ---- Color: dark (ink) ---- */
+    --bg: #0a0b0c;
+    --surface: #111315;
+    --surface-2: #171a1d;
+    --text: #f2eee4;
+    --muted: #a39e92;
+    --primary: #d7ff3a;
+    --primary-hover: #e6ff85;
+    --primary-fg: #0a0b0c;
+    --accent: #d7ff3a;
+    --border: #23262a;
+    --border-strong: #33373c;
+    --input: #6f737a;
+    --success: #a8e05f;
+    --success-bg: #18230a;
     --danger: #ff8a80;
     --danger-bg: #2a1311;
-    --ring: #34d399;
-    --star: #fbbf24;
-    --glow: 52 211 153;
+    --ring: #d7ff3a;
+    --star: #ffc53d;
+    --glow: 215 255 58;
 
-    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-    --shadow-md: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -8px rgb(0 0 0 / 0.6);
-    --shadow-lg: 0 1px 2px rgb(0 0 0 / 0.4), 0 24px 48px -16px rgb(0 0 0 / 0.7);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -12px rgb(0 0 0 / 0.7);
+    --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.5), 0 30px 60px -24px rgb(0 0 0 / 0.85);
 
     color-scheme: dark;
+  }
+}
+
+/* A section in the opposite tone (ivory inside dark mode, ink inside light
+   mode) — gives the long page an editorial rhythm. Values mirror the blocks above. */
+.tone-flip {
+  --bg: #0a0b0c;
+  --surface: #111315;
+  --surface-2: #171a1d;
+  --text: #f2eee4;
+  --muted: #a39e92;
+  --primary: #d7ff3a;
+  --primary-hover: #e6ff85;
+  --primary-fg: #0a0b0c;
+  --accent: #d7ff3a;
+  --border: #23262a;
+  --border-strong: #33373c;
+  --input: #6f737a;
+  --star: #ffc53d;
+  --glow: 215 255 58;
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+  .tone-flip {
+    --bg: #f4f1e9;
+    --surface: #fbf9f4;
+    --surface-2: #ebe6da;
+    --text: #0e0f10;
+    --muted: #55524a;
+    --primary: #0e0f10;
+    --primary-hover: #26282b;
+    --primary-fg: #d7ff3a;
+    --accent: #4a6900;
+    --border: #ddd6c7;
+    --border-strong: #c4bba8;
+    --input: #8a8374;
+    --star: #d98e04;
+    --glow: 190 230 20;
+    color-scheme: light;
   }
 }
 
@@ -100,10 +143,13 @@
   --color-danger-bg: var(--danger-bg);
   --color-ring: var(--ring);
   --color-star: var(--star);
+  --color-lime: #d7ff3a;
+  --color-ink: #0a0b0c;
+  --color-ivory: #f2eee4;
 
-  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif-accent), ui-serif, Georgia, serif;
+  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -117,7 +163,7 @@
   --ease-out: var(--ease-out);
 }
 
-/* ---- Fluid type scale (360px to 1280px) ---- */
+/* ---- Fluid type scale (360px to 1440px) ---- */
 @theme {
   --text-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);
   --text-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
@@ -125,9 +171,10 @@
   --text-lg: clamp(1.125rem, 1.07rem + 0.25vw, 1.25rem);
   --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
   --text-2xl: clamp(1.5rem, 1.33rem + 0.75vw, 2rem);
-  --text-3xl: clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem);
-  --text-4xl: clamp(2.25rem, 1.85rem + 1.8vw, 3.5rem);
-  --text-5xl: clamp(2.5rem, 1.95rem + 2.6vw, 4.25rem);
+  --text-3xl: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+  --text-4xl: clamp(2.4rem, 1.8rem + 2.6vw, 4rem);
+  --text-5xl: clamp(2.9rem, 1.9rem + 4.2vw, 5.6rem);
+  --text-6xl: clamp(3.2rem, 1.8rem + 6vw, 7.5rem);
 
   /* 4/8px spacing scale: Tailwind's --spacing base unit = 4px */
   --spacing: 0.25rem;
@@ -152,13 +199,23 @@
   from { transform: translateY(24px); opacity: 0; }
   to { transform: none; opacity: 1; }
 }
-@keyframes acc-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
+/* Hero entrance: lines rise out of a mask, staggered with --d */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(0.6em) rotateX(-35deg); }
+  to { opacity: 1; transform: none; }
 }
-@keyframes acc-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
+/* Ambient float for the 3D proof stack (transform only, GPU-cheap) */
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--glow) / 0.55); }
+  60% { box-shadow: 0 0 0 7px rgb(var(--glow) / 0); }
 }
 
 /* ---- Base ---- */
@@ -177,22 +234,31 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
-h1, h2, h3, h4 {
+h1, h2, h3 {
   font-family: var(--font-display);
-  letter-spacing: -0.035em;
-  line-height: 1.06;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
   text-wrap: balance;
 }
+h4 { font-family: var(--font-sans); letter-spacing: -0.01em; }
+p { text-wrap: pretty; }
 
-/* Italic serif accent word inside a sans headline ("…busy <em>finance guru</em>"). */
+/* Italic Bodoni accent word inside a headline ("…busy <em>finance guru</em>"). */
 .accent-serif {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  letter-spacing: -0.01em;
   color: var(--accent);
 }
-p { text-wrap: pretty; }
+
+/* Ticker-style label: mono, uppercase, tracked out */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
 :focus-visible {
   outline: 2px solid var(--ring);
@@ -200,7 +266,7 @@ p { text-wrap: pretty; }
   border-radius: 6px;
 }
 
-::selection { background: rgb(var(--glow) / 0.35); }
+::selection { background: rgb(var(--glow) / 0.4); color: var(--text); }
 
 .skeleton {
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
@@ -208,15 +274,129 @@ p { text-wrap: pretty; }
   animation: var(--animate-shimmer);
 }
 
-/* Subtle grid + glow used behind the hero; purely decorative */
-/* Cheap on purpose: no mask/filter layers, which are costly on throttled mobile CPUs. */
+/* Film grain over the whole page: one static SVG tile, no blend modes (cheap to composite). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Hero atmosphere: a lime "candle glow" + fine chart grid. Decorative only. */
 .hero-backdrop {
   background:
-    radial-gradient(60% 50% at 50% 0%, rgb(var(--glow) / 0.16), transparent 70%),
-    linear-gradient(to bottom, transparent 30%, var(--bg) 85%),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 72px 72px,
-    linear-gradient(0deg, var(--border) 1px, transparent 1px) 0 0 / 72px 72px;
+    radial-gradient(40% 55% at 78% 30%, rgb(var(--glow) / 0.16), transparent 70%),
+    radial-gradient(35% 40% at 8% 90%, rgb(var(--glow) / 0.07), transparent 70%),
+    linear-gradient(to bottom, transparent 55%, var(--bg) 96%),
+    linear-gradient(90deg, rgb(128 128 128 / 0.09) 1px, transparent 1px) 0 0 / 88px 88px,
+    linear-gradient(0deg, rgb(128 128 128 / 0.09) 1px, transparent 1px) 0 0 / 88px 88px;
 }
+
+/* ---- Hero headline entrance ---- */
+.rise-line {
+  display: block;
+  transform-origin: 50% 100%;
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* ---- 3D stage (hero proof stack) ----
+   --rx/--ry come from the pointer (see use-tilt.ts); defaults keep a gentle angle. */
+/* The 3D rig only engages on large screens; phones get a flat, fast layout. */
+@media (min-width: 1024px) {
+  .stage-3d { perspective: 1400px; }
+  .rig-3d {
+    transform-style: preserve-3d;
+    transform: rotateX(calc(var(--rx, 6) * 1deg)) rotateY(calc(var(--ry, -12) * 1deg));
+    transition: transform 700ms var(--ease-out);
+    will-change: transform;
+  }
+  .layer-3d {
+    transform-style: preserve-3d;
+    transform: translate3d(var(--x, 0), var(--y, 0), var(--z, 0)) rotateZ(var(--rz, 0deg));
+  }
+}
+
+/* Lime marker sweep under the hero accent (decorative; the text itself never waits) */
+@keyframes sweep {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.marker {
+  position: relative;
+  white-space: nowrap;
+}
+.marker::after {
+  content: "";
+  position: absolute;
+  left: -0.04em;
+  right: -0.06em;
+  bottom: 0.06em;
+  height: 0.16em;
+  background: rgb(var(--glow) / 0.55);
+  z-index: -1;
+  transform-origin: 0 50%;
+  animation: sweep 900ms var(--ease-out) 350ms both;
+}
+
+/* Staggered entrance for supporting hero elements (not the headline) */
+.enter {
+  animation: fade-up 700ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+.float-3d { animation: float 7s ease-in-out infinite; animation-delay: var(--fd, 0s); }
+
+/* ---- Tilt cards (pricing, audience): glare follows the pointer ---- */
+.tilt {
+  transform: perspective(900px) rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
+  transition: transform 450ms var(--ease-out), box-shadow 300ms var(--ease-out), border-color 200ms var(--ease-out);
+  transform-style: preserve-3d;
+}
+.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--glare, 0);
+  transition: opacity 300ms var(--ease-out);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.12), transparent 45%);
+}
+
+/* ---- Ticker tape ---- */
+.ticker-track { animation: ticker 38s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+
+.live-dot { animation: pulse-dot 2.2s ease-out infinite; }
+
+/* ---- Scroll-driven 3D (progressive: static where unsupported) ---- */
+@supports (animation-timeline: view()) {
+  @keyframes wall-flatten {
+    from { transform: perspective(1400px) rotateX(24deg) scale(0.9); opacity: 0.4; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: none; }
+  }
+  .wall-3d {
+    transform-origin: 50% 0%;
+    animation: wall-flatten linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+
+/* Skip layout/paint work for far-below-the-fold sections until they're near. */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -224,5 +404,7 @@ p { text-wrap: pretty; }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    animation-timeline: auto !important;
   }
+  .rig-3d, .tilt { transform: none !important; }
 }

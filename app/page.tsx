@@ -5,8 +5,9 @@ import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { SectionHeading } from "@/components/site/section-heading";
-import { Audience, FinalCta, Founder, HowItWorks, Included, Pricing, ProblemSolution, Proof, Section } from "@/components/site/sections";
+import { Audience, FinalCta, Founder, HowItWorks, Pricing, ProblemSolution, Proof, Section } from "@/components/site/sections";
 import { StickyCta } from "@/components/site/sticky-cta";
+import { Ticker } from "@/components/site/ticker";
 
 // Below the fold: split into its own chunk so hydrating the hero isn't blocked by it.
 const BookingWidget = dynamic(() => import("@/components/booking/booking-section").then((m) => m.BookingWidget));
@@ -23,27 +24,29 @@ export default function Home() {
       <div id="top" />
       <Header />
       <main id="main">
+        {/* Order follows a cold visitor's questions: what is it → is it for me → does it work →
+            why hasn't posting worked → how much of my time → who is behind it → what does it cost → book */}
         <Hero />
-        {/* Personal-brand order: who it's for → proof early → problem/solution → offer → process → the person → price */}
+        <Ticker />
         <Audience />
         <Proof />
         <ProblemSolution />
-        <Included />
         <HowItWorks />
         <Founder />
         <Pricing />
-        <Section id="book" labelledBy="book-title" className="scroll-mt-16">
+        <Section id="book" labelledBy="book-title" className="scroll-mt-16 border-t border-border">
           <SectionHeading
             id="book-title"
-            eyebrow="Book a call"
+            index="07"
+            eyebrow="Book your call"
             title={
               <>
-                Pick a time that <span className="accent-serif">works for you</span>
+                Your 30 minutes <span className="accent-serif">start here.</span>
               </>
             }
-            lead="30 minutes to see if the content system fits your business. Times are shown in your time zone."
+            lead="Pick a time that suits you. Times are shown in your time zone, and you can add it to your calendar in one tap."
           />
-          <div className="mt-10">
+          <div className="mt-14">
             <BookingWidget />
           </div>
         </Section>

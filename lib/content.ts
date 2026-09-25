@@ -20,12 +20,35 @@ export const site = {
 } as const;
 
 export const hero = {
-  eyebrow: "Done-for-you Instagram content for finance experts",
+  eyebrow: "Done-for-you Instagram for finance experts",
   headline: "Land retainer clients as a busy finance guru",
   subhead:
-    "A full content system: we research, script, edit and post your short-form content every month. You film 1–2 days a month.",
-  primaryCta: "Book a call",
+    "You bring the expertise and 1–2 filming days a month. We research, script, edit and post the rest: content built to turn followers into booked calls, not just views.",
+  primaryCta: "Book your discovery call",
+  primaryMicro: "30 min · pick a time that suits you",
   secondaryCta: "See how it works",
+};
+
+/** Scrolling ticker. Every line is a fact from the live site or the review screenshots. */
+export const ticker = [
+  "5.0★ from every client review",
+  "You film 1–2 days a month",
+  "10 · 15 · 30 shorts a month",
+  "Research → Script → Edit → Post",
+  "Built for trading, investing & wealth educators",
+  "We track leads and calls, not vanity metrics",
+  "Posts carry CTAs to your DMs and your calendar",
+  "30-minute discovery calls, Mon–Sat",
+];
+
+/** "Your month" visual: what a month looks like for the client vs. for Workolo (from the live FAQ). */
+export const month = {
+  yourDays: [
+    { day: 9, label: "Filming day" },
+    { day: 10, label: "Filming day" },
+  ],
+  callDay: { day: 2, label: "Monthly strategy call" },
+  weDo: ["Research the winning formats", "Script the whole month", "Edit every video", "Post with CTAs to DMs & calendar", "Report on leads and calls"],
 };
 
 export const founder = {
@@ -51,16 +74,18 @@ export const founder = {
 /** Problem → solution pairs, taken from the live FAQ answers. */
 export const painPoints = [
   {
+    tag: "Guesswork",
     pain: "You've posted consistently. A few posts hit, most flop, and you have no idea why.",
     outcome:
-      "We research winning formats in your space, post to find outliers (anything that does 5× your normal reach), then double down on the winners on purpose.",
+      "We research the winning formats in your space, post to find outliers (anything that does 5× your normal reach), then double down on the winners on purpose.",
   },
   {
-    pain: "You're already slammed. Scripting, editing and posting is a second job.",
-    outcome:
-      "You stay the expert: a few hours, 1–2 days a month, to film. We handle research, scripts, editing and uploading.",
+    tag: "Time",
+    pain: "You're already slammed. Scripting, editing and posting has become a second job.",
+    outcome: "You stay the expert: a few hours, 1–2 days a month, to film. Research, scripts, editing and posting are on us.",
   },
   {
+    tag: "Revenue",
     pain: "Views and followers that never turn into paying clients.",
     outcome:
       "Content built to attract buyers, with calls to action that send people to your DMs and your calendar. We track leads and calls, not vanity metrics.",
