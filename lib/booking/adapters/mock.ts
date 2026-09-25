@@ -4,7 +4,7 @@ import { candidateStarts, overlaps } from "../schedule";
 import { dateKeyInTz } from "../tz";
 import { schedule } from "../config";
 import type { Booking } from "../types";
-import type { BookingAdapter } from "./types";
+import { NOT_FOUND_MESSAGE, sameEmail, type BookingAdapter } from "./types";
 
 /**
  * In-memory adapter with realistic fake availability: the real schedule rules,
@@ -18,6 +18,8 @@ import type { BookingAdapter } from "./types";
 type Stored = Booking & { durationMin: number };
 const g = globalThis as unknown as { __workoloMockBookings?: Map<string, Stored> };
 const store = (g.__workoloMockBookings ??= new Map<string, Stored>());
+/** Cancelled booking id → attendee email, so a second cancel says "already cancelled". */
+const cancelled = new Map<string, string>();
 
 function hash01(s: string): number {
   let h = 0x811c9dc5;
@@ -105,5 +107,20 @@ export const mockAdapter: BookingAdapter = {
     const { durationMin: _omit, ...pub } = booking;
     void _omit;
     return pub;
+  },
+
+  async cancelBooking(id, { email }) {
+    const b = store.get(id);
+    if (!b) {
+      if (cancelled.has(id) && sameEmail(cancelled.get(id), email)) {
+        throw new BookingError("ALREADY_CANCELLED", "This booking was already cancelled.");
+      }
+      throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+    }
+    if (!sameEmail(b.email, email)) throw new BookingError("BOOKING_NOT_FOUND", NOT_FOUND_MESSAGE);
+    store.delete(id);
+    cancelled.set(id, b.email);
+    console.info("[booking:mock] cancelled", { id });
+    return { id, start: b.start };
   },
 };

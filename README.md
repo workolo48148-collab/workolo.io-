@@ -60,7 +60,8 @@ Browser ── lib/booking/client.ts ──▶  /api/services
 | `GET /api/availability?serviceId=&tz=&date=YYYY-MM-DD` | `{ date, tz, slots: [{ start }], nextAvailable }`. `nextAvailable` is set when the day is empty |
 | `GET /api/availability?serviceId=&tz=&month=YYYY-MM` | `{ month, tz, days: ["YYYY-MM-DD", …] }` (days with ≥1 slot, for the calendar) |
 | `GET /api/availability?serviceId=&tz=&next=3` | `{ tz, slots }` (next N open slots, used by the hero card) |
-| `POST /api/bookings` | `201 { booking: { id, start, end, tz, name, email, rescheduleUrl, provider } }` |
+| `POST /api/bookings` | `201 { booking: { id, start, end, tz, name, email, rescheduleUrl, cancelUrl, provider } }` |
+| `POST /api/bookings/:id/cancel` | `{ cancelled: { id, start } }`. Body `{ email, reason? }`; the email must match the booking |
 
 `POST /api/bookings` body: `{ serviceId, start, tz, name, email, phone?, note, instagram, outcome, budget, timeline?, smsConsent, termsAccepted, rescheduleId?, utm? }`.
 `start` is an ISO instant; `phone` is E.164 (the form builds it from the country picker).
@@ -71,7 +72,8 @@ Errors are always `{ error: { code, message, fieldErrors? } }`:
 | --- | --- | --- |
 | `VALIDATION_ERROR` | 400 | zod rejected the input (`fieldErrors` maps field → messages) |
 | `SERVICE_NOT_FOUND` | 404 | unknown `serviceId` |
-| `BOOKING_NOT_FOUND` | 404 | reschedule id unknown / email doesn't match |
+| `BOOKING_NOT_FOUND` | 404 | reschedule/cancel id unknown, or the email doesn't match (never says which) |
+| `ALREADY_CANCELLED` | 409 | cancelling (or rescheduling) a booking that was already cancelled |
 | `SLOT_UNAVAILABLE` | 409 | slot taken, overlapping, or not on the schedule (double-booking guard) |
 | `RATE_LIMITED` | 429 | >5 booking attempts per IP per minute |
 | `UPSTREAM_ERROR` | 502 | calendar provider failed or timed out (10 s) |
@@ -91,7 +93,7 @@ How the backend is chosen:
 - **`mock`** (default). Uses the real schedule rules from the old booking page (Mon–Sat, 6:30–9:00 PM Asia/Karachi, 30 min) and marks ~35% of slots and ~1 in 8 days as taken so every UI state shows up. Bookings live in memory: fine for previews, **not for production** (serverless instances don't share memory).
 - **`calcom`**. Create a 30-min event type, copy its numeric id to `CALCOM_EVENT_TYPE_ID`, create an API key. Cal.com owns availability, confirmation emails and conflict checks. Add a "notes" booking question to receive the qualifying answers.
 - **`google`**. Create a Google Cloud service account, share the calendar with it ("Make changes to events"), set the three `GOOGLE_*` vars. Slots come from `lib/booking/config.ts` minus busy time; bookings are inserted as events. A post-insert check backs out the later of two racing bookings. Service accounts can't email invites without domain-wide delegation, so the attendee's details go into the event description.
-- **`n8n`**. `N8N_BOOKING_WEBHOOK_URL` receives `{ event, booking, answers, utm }`; reply `2xx { id?, rescheduleUrl? }` or `409` if the slot is gone. Optional `N8N_AVAILABILITY_WEBHOOK_URL` gets `?serviceId&from&to` and returns `{ busy: [{ start, end }] }`.
+- **`n8n`**. `N8N_BOOKING_WEBHOOK_URL` receives `{ event, booking, answers, utm }`; reply `2xx { id?, rescheduleUrl? }` or `409` if the slot is gone. Cancellations arrive on the same webhook as `{ event: "booking.cancelled", booking: { id, email }, reason }`. Your workflow must check the email matches, then reply `2xx`, `404` (no match) or `409` (already cancelled). Optional `N8N_AVAILABILITY_WEBHOOK_URL` gets `?serviceId&from&to` and returns `{ busy: [{ start, end }] }`.
 
 To add a backend, implement `BookingAdapter` in [`lib/booking/adapters/types.ts`](lib/booking/adapters/types.ts) and register it in `adapters/index.ts`.
 
@@ -105,6 +107,9 @@ Set `NEXT_PUBLIC_GA4_ID` and/or `NEXT_PUBLIC_META_PIXEL_ID`. Each event goes to 
 | `booking_started` | first interaction with the booking flow (once per page view) | `Lead` |
 | `slot_selected` | a time is picked (calendar or hero card) | |
 | `booking_completed` | booking confirmed | `Schedule` |
+| `booking_cancelled` | attendee cancels (`via`: `confirmation` or `link`) | |
+
+**Cancelling:** the confirmation screen has a **Cancel booking** button. Every calendar invite (Google, Outlook, .ics) also carries a cancel link (`/?cancel=<id>#book`), which asks for the booking email before cancelling. With Cal.com, the slot is released and Cal.com emails the cancellation to host and attendee.
 
 UTM / `gclid` / `fbclid` / `ttclid` params are captured on landing, attached to every event, and saved with the booking.
 If you run EU traffic, add a consent banner (Consent Mode v2) before enabling the tags.

@@ -14,6 +14,7 @@ import { DateTimeStep } from "./datetime-step";
 const StepFallback = () => <div className="skeleton h-96 rounded-lg" aria-hidden />;
 const DetailsStep = dynamic(() => import("./details-step").then((m) => m.DetailsStep), { loading: StepFallback });
 const ConfirmationStep = dynamic(() => import("./confirmation-step").then((m) => m.ConfirmationStep), { loading: StepFallback });
+const CancelPanel = dynamic(() => import("./cancel-panel").then((m) => m.CancelPanel), { loading: StepFallback });
 
 const STEPS: { id: Step; label: string }[] = [
   { id: "datetime", label: "Date & time" },
@@ -74,6 +75,18 @@ export function BookingWidget() {
 
         {/* Steps */}
         <div className="min-w-0 p-5 sm:p-6 lg:p-8">
+          {/* Opened from a cancel link: show only the cancel form */}
+          {b.cancelId && b.step !== "done" ? (
+            <CancelPanel
+              bookingId={b.cancelId}
+              onBack={b.closeCancel}
+              onBookAgain={() => {
+                b.closeCancel();
+                b.startOver();
+              }}
+            />
+          ) : (
+          <>
           <ol className="mb-6 flex items-center gap-2 text-xs font-medium sm:text-sm" aria-label="Booking progress">
             {steps.map((s, i) => (
               <li key={s.id} className="flex items-center gap-2" aria-current={i === currentIndex ? "step" : undefined}>
@@ -118,6 +131,8 @@ export function BookingWidget() {
             <ConfirmationStep />
           ) : (
             <DateTimeStep />
+          )}
+          </>
           )}
         </div>
       </div>
