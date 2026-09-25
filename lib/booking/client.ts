@@ -13,14 +13,44 @@ export class ApiRequestError extends Error {
   }
 }
 
-async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  let res: Response;
-  try {
-    res = await fetch(url, init);
-  } catch (err) {
-    if ((err as Error).name === "AbortError") throw err;
-    throw new ApiRequestError("UPSTREAM_ERROR", "You seem to be offline. Check your connection and try again.");
+const NETWORK_MESSAGE = "We couldn't reach the calendar. Check your connection and try again.";
+/** Pauses between retries of a failed read (mobile connections drop requests briefly). */
+const RETRY_DELAYS_MS = [700, 2000];
+
+function sleep(ms: number, signal?: AbortSignal | null) {
+  return new Promise<void>((resolve, reject) => {
+    const t = setTimeout(resolve, ms);
+    signal?.addEventListener("abort", () => {
+      clearTimeout(t);
+      reject(new DOMException("Aborted", "AbortError"));
+    });
+  });
+}
+
+/**
+ * GETs are retried on network failures and gateway errors (502/504). Bookings
+ * (POST) are never retried automatically, so a slow network can't double-submit.
+ */
+async function fetchWithRetry(url: string, init?: RequestInit): Promise<Response> {
+  const retries = (init?.method ?? "GET").toUpperCase() === "GET" ? RETRY_DELAYS_MS : [];
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, init);
+      if ((res.status === 502 || res.status === 504) && attempt < retries.length) {
+        await sleep(retries[attempt], init?.signal);
+        continue;
+      }
+      return res;
+    } catch (err) {
+      if ((err as Error).name === "AbortError") throw err;
+      if (attempt >= retries.length) throw new ApiRequestError("UPSTREAM_ERROR", NETWORK_MESSAGE);
+      await sleep(retries[attempt], init?.signal);
+    }
   }
+}
+
+async function request<T>(url: string, init?: RequestInit): Promise<T> {
+  const res = await fetchWithRetry(url, init);
   const json = await res.json().catch(() => null);
   if (!res.ok) {
     const e = (json as ApiError | null)?.error;
