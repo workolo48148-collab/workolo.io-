@@ -22,9 +22,9 @@ export const site = {
 /** The label on every call-to-action button. Every CTA goes to the calendar (#book). */
 export const ctaLabel = "I'm Ready To Start";
 
-/** Cal.com inline embed: bookings go straight into this Cal.com event ("Discovery Meeting", 30 min). */
+/** Cal.com inline embed: bookings go straight into Salman's Cal.com event (cal.com/build-with-salman, 30 min). */
 export const booking = {
-  calLink: "khubaib-haider-yqobbk/30min",
+  calLink: "build-with-salman/30min",
   namespace: "strategy-call",
 };
 
