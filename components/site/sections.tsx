@@ -1,6 +1,6 @@
 import { ArrowRight, BarChart3, Check, Film, MessageCircle, PenLine, Search, Upload } from "lucide-react";
 import Image from "next/image";
-import { audienceIntro, audiences, ctaLabel, founder, included, plans, processSteps, reviewSummary, SHOW_COMPARE_PRICES } from "@/lib/content";
+import { audienceIntro, audiences, ctaLabel, founder, included, plans, processSteps, reviewSummary } from "@/lib/content";
 import { cn, formatUsd } from "@/lib/utils";
 import { CtaLink } from "./cta-link";
 import { ProofWall, Stars } from "./proof-wall";
@@ -167,7 +167,6 @@ export function Pricing() {
               </h3>
               <p className="label-mono mt-2 text-muted">{p.volume}</p>
               <p className="mt-8 flex flex-wrap items-baseline gap-x-2">
-                {SHOW_COMPARE_PRICES && <s className="text-lg text-muted">{formatUsd(p.compareAt)}</s>}
                 <span className="font-display text-[clamp(2.75rem,2rem+2.4vw,4rem)] leading-none tabular-nums tracking-tight">{formatUsd(p.price)}</span>
                 <span className="whitespace-nowrap text-sm text-muted">/ month</span>
               </p>
@@ -175,7 +174,15 @@ export function Pricing() {
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-2.5">
                     <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-                    {f}
+                    <span>
+                      {f.startsWith("BONUS:") ? (
+                        <>
+                          <strong>BONUS</strong>{f.slice(5)}
+                        </>
+                      ) : (
+                        f
+                      )}
+                    </span>
                   </li>
                 ))}
               </ul>
