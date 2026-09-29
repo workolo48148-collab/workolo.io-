@@ -59,7 +59,7 @@ Browser ── lib/booking/client.ts ──▶  /api/services
 | `GET /api/services` | `{ services: [{ id, name, durationMin, description }] }` |
 | `GET /api/availability?serviceId=&tz=&date=YYYY-MM-DD` | `{ date, tz, slots: [{ start }], nextAvailable }`. `nextAvailable` is set when the day is empty |
 | `GET /api/availability?serviceId=&tz=&month=YYYY-MM` | `{ month, tz, days: ["YYYY-MM-DD", …] }` (days with ≥1 slot, for the calendar) |
-| `GET /api/availability?serviceId=&tz=&next=3` | `{ tz, slots }` (next N open slots, used by the hero card) |
+| `GET /api/availability?serviceId=&tz=&next=3` | `{ tz, slots }` (next N open slots) |
 | `POST /api/bookings` | `201 { booking: { id, start, end, tz, name, email, rescheduleUrl, cancelUrl, provider } }` |
 | `POST /api/bookings/:id/cancel` | `{ cancelled: { id, start } }`. Body `{ email, reason? }`; the email must match the booking |
 
@@ -105,7 +105,7 @@ Set `NEXT_PUBLIC_GA4_ID` and/or `NEXT_PUBLIC_META_PIXEL_ID`. Each event goes to 
 | --- | --- | --- |
 | `cta_click` | any "Book a call" button (`location` param says which) | |
 | `booking_started` | first interaction with the booking flow (once per page view) | `Lead` |
-| `slot_selected` | a time is picked (calendar or hero card) | |
+| `slot_selected` | a time is picked in the calendar | |
 | `booking_completed` | booking confirmed | `Schedule` |
 | `booking_cancelled` | attendee cancels (`via`: `confirmation` or `link`) | |
 
@@ -119,7 +119,7 @@ If you run EU traffic, add a consent banner (Consent Mode v2) before enabling th
 ```
 app/                 page, layout (fonts, metadata, JSON-LD, tags), API routes, OG image, icon, privacy, terms
 components/ui/       Button, Card, Badge, Input/Select/Textarea/Field, Accordion, Dialog (Modal), Toast
-components/booking/  provider, calendar, time slots, details form, confirmation, time-zone picker, hero slots card
+components/booking/  provider, calendar, time slots, details form, confirmation, time-zone picker
 components/site/     header, hero, sections, FAQ, footer, sticky mobile CTA
 lib/                 content, analytics, booking (schema, schedule, tz, adapters)
 docs/                audit, design system, requirements checklist
