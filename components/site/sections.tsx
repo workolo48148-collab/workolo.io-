@@ -160,20 +160,11 @@ export function Pricing() {
 
       <div className="mt-16 grid items-stretch gap-5 lg:grid-cols-3">
         {plans.map((p) => (
-          <div
-            key={p.id}
-            className={cn(
-              "relative flex flex-col rounded-[var(--radius-xl)] border p-8",
-              p.featured ? "tone-flip border-transparent lg:-my-4 lg:py-12" : "border-border bg-surface",
-            )}
-          >
+          <div key={p.id} className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-8">
             <article aria-labelledby={`plan-${p.id}`} className="flex h-full flex-col">
-              <div className="flex items-center justify-between gap-3">
-                <h3 id={`plan-${p.id}`} className="text-3xl">
-                  {p.name}
-                </h3>
-                {p.featured && <span className="label-mono rounded-full bg-primary px-3 py-1 text-primary-fg">Best value</span>}
-              </div>
+              <h3 id={`plan-${p.id}`} className="text-3xl">
+                {p.name}
+              </h3>
               <p className="label-mono mt-2 text-muted">{p.volume}</p>
               <p className="mt-8 flex flex-wrap items-baseline gap-x-2">
                 {SHOW_COMPARE_PRICES && <s className="text-lg text-muted">{formatUsd(p.compareAt)}</s>}
@@ -188,7 +179,7 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
-              <CtaLink location={`pricing_${p.id}`} variant={p.featured ? "primary" : "secondary"} className="mt-9 w-full">
+              <CtaLink location={`pricing_${p.id}`} className="mt-9 w-full">
                 {ctaLabel} <ArrowRight />
               </CtaLink>
             </article>

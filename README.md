@@ -63,7 +63,7 @@ If you run EU traffic, add a consent banner (Consent Mode v2) before enabling th
 ```
 app/                 page, layout (fonts, metadata, JSON-LD, tags), /api/health, OG image, icon, privacy, terms
 components/ui/       Button, Card, Badge, Accordion
-components/site/     header, hero, sections, FAQ, Cal.com booking embed, footer, sticky mobile CTA
+components/site/     hero, sections, FAQ, Cal.com booking embed, footer, sticky mobile CTA
 lib/                 content, analytics, env
 docs/                audit, design system, requirements checklist
 legacy/              the original workolo.io pages, for reference

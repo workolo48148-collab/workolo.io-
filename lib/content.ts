@@ -77,7 +77,6 @@ export type Plan = {
   price: number;
   /** Strike-through price from the live site. Hidden unless SHOW_COMPARE_PRICES is true. */
   compareAt: number;
-  featured?: boolean;
   features: string[];
 };
 
@@ -103,7 +102,6 @@ export const plans: Plan[] = [
     volume: "15 shorts / month",
     price: 1499,
     compareAt: 2998,
-    featured: true,
     features: [
       "Onboarding / review calls",
       "Research",

@@ -1,7 +1,6 @@
 import { CalBooking } from "@/components/site/cal-booking";
 import { Faq } from "@/components/site/faq";
 import { Footer } from "@/components/site/footer";
-import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Audience, Founder, HowItWorks, Pricing, Proof, Section } from "@/components/site/sections";
@@ -16,19 +15,17 @@ export default function Home() {
       >
         Skip to content
       </a>
-      <div id="top" />
-      <Header />
       <main id="main">
-        {/* Order follows the client brief: Hero → Who is this for → Wall of proof → How we work together
-            → About me → FAQ → Pricing → Calendar */}
+        {/* Order follows the client brief: Hero → Wall of proof → Who is it for → About me
+            → How we work → FAQ → Packages → Calendar */}
         <Hero />
-        <Audience />
         <Proof />
-        <HowItWorks />
+        <Audience />
         <Founder />
+        <HowItWorks />
         <Faq />
         <Pricing />
-        <Section id="book" labelledBy="book-title" className="scroll-mt-16 border-t border-border">
+        <Section id="book" labelledBy="book-title" className="border-t border-border">
           <SectionHeading id="book-title" title="Book Your Strategy Call" />
           <div className="mt-14">
             <CalBooking />
