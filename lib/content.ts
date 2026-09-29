@@ -22,6 +22,12 @@ export const site = {
 /** The label on every call-to-action button. Every CTA goes to the calendar (#book). */
 export const ctaLabel = "I'm Ready To Start";
 
+/** Cal.com inline embed: bookings go straight into this Cal.com event ("Discovery Meeting", 30 min). */
+export const booking = {
+  calLink: "khubaib-haider-yqobbk/30min",
+  namespace: "strategy-call",
+};
+
 export const hero = {
   headline: "Land Retainer Clients From Your Personal Brand on Instagram",
   subhead:

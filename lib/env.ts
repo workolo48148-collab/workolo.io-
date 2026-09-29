@@ -39,8 +39,3 @@ function matchOrUndefined(raw: string | undefined, pattern: RegExp) {
   const v = readEnv(raw);
   return v && pattern.test(v) ? v : undefined;
 }
-
-export function envNumber(raw: string | undefined, fallback: number, min: number, max: number): number {
-  const n = Number(readEnv(raw));
-  return Number.isFinite(n) && n >= min && n <= max ? n : fallback;
-}
