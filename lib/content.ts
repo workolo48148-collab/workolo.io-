@@ -59,7 +59,7 @@ export const included = [
   { icon: "pen", title: "Scripting", body: "A full month of short-form scripts, plus direction on what to film and how to batch it." },
   { icon: "film", title: "Editing", body: "You film the scripts. We edit every video." },
   { icon: "upload", title: "Uploading", body: "We post to your Instagram with calls to action that send people to your DMs and calendar." },
-  { icon: "message", title: "Sales-focused stories", body: "Instagram stories built to move followers toward a conversation. Gold & Diamond." },
+  { icon: "message", title: "Sales-focused stories", body: "Instagram stories built to move followers toward a conversation." },
   { icon: "chart", title: "Reporting & review calls", body: "Onboarding and monthly strategy/review calls, plus a monthly report." },
 ] as const;
 
@@ -75,63 +75,27 @@ export type Plan = {
   name: string;
   volume: string;
   price: number;
-  /** Strike-through price from the live site. Hidden unless SHOW_COMPARE_PRICES is true. */
-  compareAt: number;
   features: string[];
 };
 
-/**
- * The live site shows each plan at "50% OFF" a crossed-out price. Unsubstantiated
- * reference prices are a Meta/Google ad-policy and FTC risk, so they're hidden
- * by default. Flip this only if the discount is real and time-bound.
- */
-export const SHOW_COMPARE_PRICES = false;
-
-export const plans: Plan[] = [
-  {
-    id: "silver",
-    name: "Silver",
-    volume: "10 shorts / month",
-    price: 1299,
-    compareAt: 2598,
-    features: ["Onboarding / review calls", "Research", "Scripting", "Editing", "Uploading", "Monthly reports"],
-  },
-  {
-    id: "gold",
-    name: "Gold",
-    volume: "15 shorts / month",
-    price: 1499,
-    compareAt: 2998,
-    features: [
-      "Onboarding / review calls",
-      "Research",
-      "Scripting",
-      "Editing",
-      "Uploading",
-      "Sales-focused Instagram stories",
-      "Monthly reports",
-    ],
-  },
-  {
-    id: "diamond",
-    name: "Diamond",
-    volume: "30 shorts / month",
-    price: 2499,
-    compareAt: 4998,
-    features: [
-      "Onboarding / review calls",
-      "Research",
-      "Scripting",
-      "Editing",
-      "Uploading",
-      "Sales-focused Instagram stories",
-      "Priority weekday email support",
-      "Monthly reports",
-      "Bonus: profile optimization checklist",
-    ],
-  },
+/** Package details from the client's pricing table, word for word. */
+const planFeatures = (stories: number) => [
+  "Onboarding/Review Calls",
+  "Research",
+  "Scripting",
+  "Editing",
+  "Uploading",
+  `${stories} Sales Focused Instagram Stories`,
+  "24/7 Weekday Email Support",
+  "Monthly Reports",
+  "BONUS: Optimize Your Profile Checklist",
 ];
 
+export const plans: Plan[] = [
+  { id: "silver", name: "Silver", volume: "10 shorts/month", price: 1495, features: planFeatures(7) },
+  { id: "gold", name: "Gold", volume: "20 shorts/month", price: 2495, features: planFeatures(10) },
+  { id: "diamond", name: "Diamond", volume: "30 shorts/month", price: 2995, features: planFeatures(15) },
+];
 export type FaqItem = { q: string; a: (string | { list: string[]; ordered?: boolean; title?: string })[] };
 
 /** FAQ copy from the client brief, word for word. */

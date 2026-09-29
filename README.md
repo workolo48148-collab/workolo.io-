@@ -32,7 +32,6 @@ Deploy: push to GitHub → import in Vercel → set env vars → done.
 | Any text, prices, FAQ, founder bio | [`lib/content.ts`](lib/content.ts) |
 | Add or remove review / DM screenshots | drop the image in `public/proof/…`, add an entry to `reviews` or `dms` in `lib/content.ts` (width, height, title, alt text) |
 | Add the VSL | `vslEmbedUrl` in `lib/content.ts` |
-| Show the "50% OFF" strike-through prices | `SHOW_COMPARE_PRICES` in `lib/content.ts` (off by default, see audit) |
 | Which Cal.com event people book | `booking.calLink` in `lib/content.ts`; length, hours, form questions live in Cal.com |
 | Colors, type scale, radius, shadow, motion | [`app/globals.css`](app/globals.css) (tokens) |
 | Social links | `site.socials` in `lib/content.ts` |
