@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Shown at /api/health so you can tell which build is live.
   env: { NEXT_PUBLIC_BUILD_TIME: new Date().toISOString() },
-  images: { formats: ["image/avif", "image/webp"] },
+  // WebP only: AVIF processing (sharp/libheif) was the path for GHSA-2xp9-vwfh-vxw4, a critical RCE.
+  images: { formats: ["image/webp"] },
   async headers() {
     return [
       {
