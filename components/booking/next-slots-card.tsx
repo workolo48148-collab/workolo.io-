@@ -19,7 +19,7 @@ export function NextSlotsCard() {
   const [slots, setSlots] = React.useState<Slot[] | null>(null);
   const [failed, setFailed] = React.useState(false);
   const { tz, service } = b;
-  // If services can't load, slots never will: stop the skeleton and offer email instead.
+  // If services can't load, slots never will: stop loading and offer email instead.
   const unavailable = failed || Boolean(b.servicesError);
 
   React.useEffect(() => {
@@ -34,12 +34,11 @@ export function NextSlotsCard() {
 
   return (
     <div className="relative rounded-[var(--radius-xl)] border border-border bg-surface p-5 shadow-lg sm:p-7">
-      <p className="label-mono mb-5 flex items-center gap-2 text-muted">
-        <span className="live-dot size-1.5 rounded-full bg-[rgb(var(--glow))]" aria-hidden />
+      <p className="label-mono mb-5 text-muted">
         Live availability
       </p>
       <div className="flex items-center gap-3">
-        <Image src={founder.photo} alt="" width={48} height={48} className="size-12 rounded-full object-cover ring-2 ring-[rgb(var(--glow)/0.5)]" />
+        <Image src={founder.photo} alt="" width={48} height={48} className="size-12 rounded-full object-cover" />
         <div className="min-w-0">
           <p className="font-semibold">{service?.name ?? "Discovery Meeting"} with {founder.name}</p>
           <p className="text-sm text-muted">{service?.durationMin ?? 30} min · see if the system fits your business</p>
@@ -55,19 +54,19 @@ export function NextSlotsCard() {
 
       <div className="mt-3 grid gap-2" aria-live="polite" aria-busy={!slots && !unavailable}>
         {!slots && !unavailable &&
-          Array.from({ length: 3 }, (_, i) => <div key={i} className="skeleton h-12 rounded-md" aria-hidden />)}
+          <p className="text-sm text-muted">Loading…</p>}
         {slots?.map((s) => (
           <button
             key={s.start}
             type="button"
             onClick={() => b.pickFromAnywhere(s.start, "hero_card")}
-            className="group flex h-12 items-center justify-between rounded-full border border-border-strong bg-surface px-5 text-left text-sm transition-[border-color,background-color] duration-150 ease-out hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]"
+            className="group flex h-12 items-center justify-between rounded-full border border-border-strong bg-surface px-5 text-left text-sm hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]"
           >
             <span>
               <span className="font-semibold">{formatDateKey(dateKeyInTz(new Date(s.start), tz!), { weekday: "short", month: "short", day: "numeric" })}</span>
               <span className="text-muted"> · {formatTime(s.start, tz!)}</span>
             </span>
-            <ArrowRight className="size-4 text-muted transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden />
+            <ArrowRight className="size-4 text-muted group-hover:text-accent" aria-hidden />
           </button>
         ))}
         {slots && !slots.length && <p className="text-sm text-muted">Fully booked right now. Check the calendar below for new openings.</p>}

@@ -11,7 +11,7 @@ import { useBooking, type Step } from "./booking-provider";
 import { DateTimeStep } from "./datetime-step";
 
 // Loaded on demand: the details form carries zod, the confirmation carries .ics helpers.
-const StepFallback = () => <div className="skeleton h-96 rounded-lg" aria-hidden />;
+const StepFallback = () => <p className="py-10 text-center text-sm text-muted">Loading…</p>;
 const DetailsStep = dynamic(() => import("./details-step").then((m) => m.DetailsStep), { loading: StepFallback });
 const ConfirmationStep = dynamic(() => import("./confirmation-step").then((m) => m.ConfirmationStep), { loading: StepFallback });
 const CancelPanel = dynamic(() => import("./cancel-panel").then((m) => m.CancelPanel), { loading: StepFallback });
@@ -151,7 +151,7 @@ function ServiceStep() {
           role="radio"
           aria-checked={b.service?.id === s.id}
           onClick={() => b.chooseService(s.id)}
-          className="rounded-lg border border-border-strong p-4 text-left transition-colors hover:border-ring hover:bg-[rgb(var(--glow)/0.08)]"
+          className="rounded-lg border border-border-strong p-4 text-left hover:border-ring hover:bg-[rgb(var(--glow)/0.08)]"
         >
           <span className="font-semibold">{s.name}</span>
           <span className="ml-2 text-sm text-muted">{s.durationMin} min</span>

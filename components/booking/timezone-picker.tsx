@@ -23,7 +23,7 @@ export function TimezonePicker({ tz, onChange }: { tz: string; onChange: (tz: st
           setRequested(true);
           setOpen(true);
         }}
-        className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-sm text-muted transition-colors hover:bg-surface-2 hover:text-text"
+        className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-sm text-muted hover:bg-surface-2 hover:text-text"
       >
         <Globe className="size-4 text-accent" aria-hidden />
         <span>

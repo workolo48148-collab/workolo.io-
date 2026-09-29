@@ -4,7 +4,7 @@ import { ArrowLeft, Lock } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Field, Input, Select, Textarea } from "@/components/ui/field";
+import { Field, FieldError, Input, Select, Textarea } from "@/components/ui/field";
 import { useToast } from "@/components/ui/toast";
 import { getUtm } from "@/lib/analytics";
 import { ApiRequestError, bookingApi } from "@/lib/booking/client";
@@ -309,7 +309,7 @@ export function DetailsStep() {
                 set("termsAccepted", e.target.checked);
                 setTouched((t) => ({ ...t, termsAccepted: true }));
               }}
-              className="mt-0.5 size-5 shrink-0 accent-[var(--primary)]"
+              className="mt-0.5 size-5 shrink-0 accent-[var(--primary)] aria-invalid:outline-2 aria-invalid:outline-offset-2 aria-invalid:outline-accent"
             />
             <span>
               I agree to the{" "}
@@ -324,14 +324,14 @@ export function DetailsStep() {
             </span>
           </label>
           {errorFor("termsAccepted") && (
-            <p id="bk-terms-error" className="mt-1.5 pl-8 text-xs font-medium text-danger">
+            <FieldError id="bk-terms-error" className="pl-8">
               {errorFor("termsAccepted")}
-            </p>
+            </FieldError>
           )}
         </div>
       </div>
 
-      <Button type="submit" size="lg" className="w-full" loading={submitting} loadingText="Booking your call…">
+      <Button type="submit" size="lg" className="w-full" loading={submitting} loadingText="Booking…">
         {b.rescheduleId ? "Confirm new time" : "Confirm booking"}
       </Button>
       <p id="bk-privacy" className="flex items-center justify-center gap-1.5 text-center text-xs text-muted">

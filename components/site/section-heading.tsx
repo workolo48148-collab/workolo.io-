@@ -1,8 +1,7 @@
 import { cn } from "@/lib/utils";
 
-/** Editorial section header: numbered mono kicker, Bodoni headline, optional lead. */
+/** Section header: optional mono kicker, Bodoni headline, optional lead. */
 export function SectionHeading({
-  index,
   eyebrow,
   title,
   lead,
@@ -10,7 +9,6 @@ export function SectionHeading({
   align = "center",
   className,
 }: {
-  index?: string;
   eyebrow?: string;
   title: React.ReactNode;
   lead?: React.ReactNode;
@@ -20,13 +18,7 @@ export function SectionHeading({
 }) {
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      {eyebrow && (
-        <p className={cn("label-mono mb-5 flex items-center gap-3 text-muted", align === "center" && "justify-center")}>
-          {index && <span className="text-accent">{index}</span>}
-          {index && <span aria-hidden className="h-px w-8 bg-border-strong" />}
-          {eyebrow}
-        </p>
-      )}
+      {eyebrow && <p className="label-mono mb-5 text-muted">{eyebrow}</p>}
       <h2 id={id} className="text-4xl">
         {title}
       </h2>

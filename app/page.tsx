@@ -5,9 +5,8 @@ import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { SectionHeading } from "@/components/site/section-heading";
-import { Audience, FinalCta, Founder, HowItWorks, Pricing, ProblemSolution, Proof, Section } from "@/components/site/sections";
+import { Audience, Founder, HowItWorks, Pricing, Proof, Section } from "@/components/site/sections";
 import { StickyCta } from "@/components/site/sticky-cta";
-import { Ticker } from "@/components/site/ticker";
 
 // Below the fold: split into its own chunk so hydrating the hero isn't blocked by it.
 const BookingWidget = dynamic(() => import("@/components/booking/booking-section").then((m) => m.BookingWidget));
@@ -24,20 +23,18 @@ export default function Home() {
       <div id="top" />
       <Header />
       <main id="main">
-        {/* Order follows a cold visitor's questions: what is it → is it for me → does it work →
-            why hasn't posting worked → how much of my time → who is behind it → what does it cost → book */}
+        {/* Order follows the client brief: Hero → Who is this for → Wall of proof → How we work together
+            → About me → FAQ → Pricing → Calendar */}
         <Hero />
-        <Ticker />
         <Audience />
         <Proof />
-        <ProblemSolution />
         <HowItWorks />
         <Founder />
+        <Faq />
         <Pricing />
         <Section id="book" labelledBy="book-title" className="scroll-mt-16 border-t border-border">
           <SectionHeading
             id="book-title"
-            index="07"
             eyebrow="Book your call"
             title={
               <>
@@ -50,8 +47,6 @@ export default function Home() {
             <BookingWidget />
           </div>
         </Section>
-        <Faq />
-        <FinalCta />
       </main>
       <Footer />
       <StickyCta />

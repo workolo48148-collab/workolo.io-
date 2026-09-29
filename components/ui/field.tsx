@@ -1,9 +1,20 @@
-import { ChevronDown } from "lucide-react";
+import { AlertCircle, ChevronDown } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+// Invalid fields get a 2px accent border (no red); the message below adds an icon and bold text.
 const control =
-  "w-full rounded-md border border-input bg-surface px-3.5 text-base text-text shadow-sm transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-muted/80 hover:border-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[rgb(var(--glow)/0.35)] aria-invalid:border-danger aria-invalid:focus-visible:ring-[color-mix(in_srgb,var(--danger)_30%,transparent)] disabled:cursor-not-allowed disabled:opacity-60";
+  "w-full rounded-md border border-input bg-surface px-3.5 text-base text-text shadow-sm placeholder:text-muted/80 hover:border-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[rgb(var(--glow)/0.35)] aria-invalid:border-2 aria-invalid:border-accent aria-invalid:hover:border-accent disabled:cursor-not-allowed disabled:opacity-60";
+
+/** Error line under a field: the alert icon + bold text, so it's obvious without colour. */
+export function FieldError({ id, className, children }: { id?: string; className?: string; children: React.ReactNode }) {
+  return (
+    <p id={id} className={cn("mt-1.5 flex items-start gap-1.5 text-xs font-bold text-danger", className)}>
+      <AlertCircle className="mt-px size-3.5 shrink-0 text-accent" aria-hidden />
+      <span>{children}</span>
+    </p>
+  );
+}
 
 export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(function Input(
   { className, ...props },
@@ -77,11 +88,7 @@ export function Field({
           {hint}
         </p>
       )}
-      {error && (
-        <p id={errId} className="mt-1.5 text-xs font-medium text-danger">
-          {error}
-        </p>
-      )}
+      {error && <FieldError id={errId}>{error}</FieldError>}
     </div>
   );
 }

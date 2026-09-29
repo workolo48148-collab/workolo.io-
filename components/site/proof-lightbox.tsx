@@ -23,7 +23,7 @@ export function ProofLightbox({
   return (
     <DialogPrimitive.Root open onOpenChange={(o) => !o && onClose()}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/85 data-[state=open]:animate-[fade-in_200ms_var(--ease-out)]" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/85" />
         <DialogPrimitive.Content
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 outline-none sm:p-10"
           onKeyDown={(e) => {
@@ -51,7 +51,7 @@ export function ProofLightbox({
               width={item.width}
               height={item.height}
               sizes="(min-width: 1024px) 896px, 100vw"
-              className="max-h-full w-auto animate-fade-up rounded-xl bg-white object-contain shadow-2xl"
+              className="max-h-full w-auto rounded-xl bg-white object-contain shadow-2xl"
             />
           </div>
 

@@ -86,13 +86,14 @@ export function Calendar({ month, today, minMonth, maxMonth, available, loading,
       <div className="mb-3 flex items-center justify-between">
         <h4 className="font-sans text-base font-semibold tracking-normal" id="cal-label" aria-live="polite">
           {label}
+          {loading && <span className="ml-2 text-sm font-normal text-muted">Loading…</span>}
         </h4>
         <div className="flex gap-1">
           <button
             type="button"
             onClick={() => onMonthChange(shiftMonth(month, -1))}
             disabled={!canPrev}
-            className="grid size-9 place-items-center rounded-md text-muted transition-colors hover:bg-surface-2 hover:text-text disabled:opacity-30"
+            className="grid size-9 place-items-center rounded-md text-muted hover:bg-surface-2 hover:text-text disabled:opacity-30"
             aria-label="Previous month"
           >
             <ChevronLeft className="size-4" />
@@ -101,7 +102,7 @@ export function Calendar({ month, today, minMonth, maxMonth, available, loading,
             type="button"
             onClick={() => onMonthChange(shiftMonth(month, 1))}
             disabled={!canNext}
-            className="grid size-9 place-items-center rounded-md text-muted transition-colors hover:bg-surface-2 hover:text-text disabled:opacity-30"
+            className="grid size-9 place-items-center rounded-md text-muted hover:bg-surface-2 hover:text-text disabled:opacity-30"
             aria-label="Next month"
           >
             <ChevronRight className="size-4" />
@@ -141,12 +142,11 @@ export function Calendar({ month, today, minMonth, maxMonth, available, loading,
                       onFocus={() => setFocusKey(key)}
                       onClick={() => isAvail && onSelect(key)}
                       className={cn(
-                        "relative mx-auto grid aspect-square w-full max-w-11 place-items-center rounded-md text-sm tabular-nums transition-[background-color,color,box-shadow] duration-150 ease-out",
+                        "relative mx-auto grid aspect-square w-full max-w-11 place-items-center rounded-md text-sm tabular-nums",
                         isAvail && !isSelected && "bg-[rgb(var(--glow)/0.12)] font-semibold text-text hover:bg-[rgb(var(--glow)/0.24)]",
                         !isAvail && "cursor-default text-muted/60",
                         isPast && "line-through decoration-muted/40",
                         isSelected && "bg-primary font-semibold text-primary-fg shadow-sm",
-                        loading && !isPast && "skeleton text-transparent",
                       )}
                     >
                       {Number(key.slice(8))}

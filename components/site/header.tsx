@@ -1,3 +1,4 @@
+import { ctaLabel } from "@/lib/content";
 import { CtaLink } from "./cta-link";
 import { Logo } from "./logo";
 
@@ -10,12 +11,9 @@ export function Header() {
           <Logo />
         </a>
         <div className="flex items-center gap-5">
-          <p className="label-mono hidden items-center gap-2 text-muted md:flex">
-            <span className="live-dot size-1.5 rounded-full bg-[rgb(var(--glow))]" aria-hidden />
-            Taking calls Mon–Sat
-          </p>
+          <p className="label-mono hidden text-muted md:block">Taking calls Mon–Sat</p>
           <CtaLink location="header" size="sm">
-            Book a call
+            {ctaLabel}
           </CtaLink>
         </div>
       </div>

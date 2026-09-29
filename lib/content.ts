@@ -19,36 +19,13 @@ export const site = {
   socials: [] as { label: string; href: string }[],
 } as const;
 
+/** The label on every call-to-action button. Every CTA goes to the calendar (#book). */
+export const ctaLabel = "I'm Ready To Start";
+
 export const hero = {
-  eyebrow: "Done-for-you Instagram for finance experts",
-  headline: "Land retainer clients as a busy finance guru",
+  headline: "Land Retainer Clients From Your Personal Brand on Instagram",
   subhead:
-    "You bring the expertise and 1–2 filming days a month. We research, script, edit and post the rest: content built to turn followers into booked calls, not just views.",
-  primaryCta: "Book your discovery call",
-  primaryMicro: "30 min · pick a time that suits you",
-  secondaryCta: "See how it works",
-};
-
-/** Scrolling ticker. Every line is a fact from the live site or the review screenshots. */
-export const ticker = [
-  "5.0★ from every client review",
-  "You film 1–2 days a month",
-  "10 · 15 · 30 shorts a month",
-  "Research → Script → Edit → Post",
-  "Built for trading, investing & wealth educators",
-  "We track leads and calls, not vanity metrics",
-  "Posts carry CTAs to your DMs and your calendar",
-  "30-minute discovery calls, Mon–Sat",
-];
-
-/** "Your month" visual: what a month looks like for the client vs. for Workolo (from the live FAQ). */
-export const month = {
-  yourDays: [
-    { day: 9, label: "Filming day" },
-    { day: 10, label: "Filming day" },
-  ],
-  callDay: { day: 2, label: "Monthly strategy call" },
-  weDo: ["Research the winning formats", "Script the whole month", "Edit every video", "Post with CTAs to DMs & calendar", "Report on leads and calls"],
+    "Done-for-you content strategy for busy finance experts who want more high-value clients without doing social media themselves.",
 };
 
 export const founder = {
@@ -70,27 +47,6 @@ export const founder = {
   close:
     "My goal isn't to make your Instagram look busy. It's to make your content contribute to your business.",
 };
-
-/** Problem → solution pairs, taken from the live FAQ answers. */
-export const painPoints = [
-  {
-    tag: "Guesswork",
-    pain: "You've posted consistently. A few posts hit, most flop, and you have no idea why.",
-    outcome:
-      "We research the winning formats in your space, post to find outliers (anything that does 5× your normal reach), then double down on the winners on purpose.",
-  },
-  {
-    tag: "Time",
-    pain: "You're already slammed. Scripting, editing and posting has become a second job.",
-    outcome: "You stay the expert: a few hours, 1–2 days a month, to film. Research, scripts, editing and posting are on us.",
-  },
-  {
-    tag: "Revenue",
-    pain: "Views and followers that never turn into paying clients.",
-    outcome:
-      "Content built to attract buyers, with calls to action that send people to your DMs and your calendar. We track leads and calls, not vanity metrics.",
-  },
-];
 
 export const included = [
   { icon: "search", title: "Research", body: "We study the top finance creators and best-performing content in your niche on Instagram." },
@@ -174,78 +130,166 @@ export const plans: Plan[] = [
 
 export type FaqItem = { q: string; a: (string | { list: string[]; ordered?: boolean; title?: string })[] };
 
+/** FAQ copy from the client brief, word for word. */
 export const faqs: FaqItem[] = [
   {
-    q: "Does this actually work in my niche?",
+    q: "Does this actually work for finance professionals?",
     a: [
-      "Finance is a trust game. People follow you for the edge, but they only pay you when they believe you. So the system is built around one thing: content that shows how you think and turns that into conversations with buyers.",
-      "If you already have a solid offer and real expertise (trading education, investing, wealth coaching, financial planning), this will work for you too.",
-    ],
-  },
-  {
-    q: "What does it cost?",
-    a: [
-      "Packages start at $1,299/month for Silver (10 shorts), $1,499/month for Gold (15 shorts) and $2,499/month for Diamond (30 shorts). On the discovery call we'll tell you which one fits, or whether it's a fit at all.",
+      "Yes. The same content system can be adapted to financial advisors, wealth managers, mortgage brokers, CPAs, insurance advisors, and other finance experts.",
+      "The strategy is simple:",
+      "We study what is already working in your market, find the topics your ideal clients care about, and turn your expertise into content that builds trust and creates opportunities for conversations.",
+      {
+        title: "We focus on:",
+        list: [
+          "Your ideal clients and their biggest questions",
+          "Content formats already performing in your niche",
+          "Your own expertise, stories, opinions, and experience",
+          "Topics that can attract the type of clients you actually want",
+          "CTAs that move people toward DMs, calls, or your offer",
+        ],
+      },
+      "You don't need to become a full-time creator. You just need to be the expert. We build the content system around you.",
     ],
   },
   {
     q: "How much work is this for me? I'm already slammed.",
     a: [
-      "You stay the expert. We become your content team.",
-      { title: "Your part", list: ["A few hours, 1–2 days a month, to film", "A monthly strategy and review call", "Quick approvals so everything stays in your voice"] },
+      "You stay focused on running your finance business. We become your content team.",
       {
-        title: "Our part",
+        title: "Your responsibilities:",
         list: [
-          "Research: we study the best-performing finance content on Instagram.",
-          "Scripting: a full month of short-form content, plus direction on what to film and how to batch it.",
-          "Editing & uploading: we edit, post, and send you basic reporting.",
+          "A few focused hours to film each month",
+          "One monthly strategy/review call",
+          "Quick approvals when needed",
+          "Share your expertise, ideas, and feedback",
         ],
       },
+      {
+        title: "Our responsibilities:",
+        list: [
+          "Research your niche, audience, and competitors",
+          "Find topics and formats that are already working",
+          "Create your monthly content strategy",
+          "Write your scripts and filming directions",
+          "Tell you what to film and how to batch it efficiently",
+          "Edit and prepare your content",
+          "Publish your content",
+          "Create sales-focused stories and CTAs",
+          "Review performance and improve the strategy",
+        ],
+      },
+      "You send us the raw videos. We handle the rest.",
     ],
   },
   {
-    q: "I've already tried posting and it didn't work. Why would this be different?",
+    q: "I've already tried posting on social media and it didn't work. What's different?",
     a: [
-      "Social media is just a different beast. Most finance creators have posted consistently, seen a few posts hit and most flop, and have no idea why.",
+      "Posting more isn't the strategy.",
       {
-        title: "What we do",
+        title: "Many finance professionals have already tried:",
+        list: [
+          "Posting whenever they have time",
+          "Sharing generic financial tips",
+          "Reposting news and market updates",
+          "Making a few videos and then stopping",
+          "Posting without knowing what actually worked",
+        ],
+      },
+      "Our approach is different.",
+      {
+        title: "We use a simple process:",
         ordered: true,
         list: [
-          "Research winning formats in your space and see what already works on your account.",
-          "Post to find outliers (anything that does 5× your normal reach).",
-          "Double down on the winners on purpose: same angles, same topics, new variations.",
+          "Research: We study your audience, niche, competitors, and content that is already getting attention.",
+          "Test: We create different topics, hooks, angles, and formats to see what your audience responds to.",
+          "Find the outliers: When a piece of content performs much better than normal, we study why.",
+          "Double down: We create new variations around the topics, angles, and formats that are working.",
         ],
       },
+      "You don't need to guess what to post every week. We build the system around what your audience is actually responding to.",
     ],
   },
   {
-    q: "Is this about followers or actual retainer clients?",
+    q: "Is this about followers, or will it help me generate clients?",
     a: [
-      "Clients. Unless it turns into revenue, it doesn't matter. So we create content that attracts buyers, use calls to action that send people to your DMs, free resources and calendar, and track milestones around leads and calls, not vanity metrics.",
+      "The goal is not to collect followers just for the sake of it.",
+      "Your content should help the right people:",
+      "See you → Trust you → Follow you → Start a conversation → Become a lead → Become a client",
+      {
+        title: "That's why we create a mix of:",
+        list: [
+          "Educational content",
+          "Authority content",
+          "Personal stories",
+          "Client-focused content",
+          "Problem-aware content",
+          "Sales-focused CTAs",
+        ],
+      },
+      "And we can direct people toward:",
+      "DMs, calls, lead magnets, or your website.",
+      "Followers are useful. But the real goal is building an audience that can eventually become business.",
     ],
   },
   {
-    q: "How long until I see results?",
+    q: "Why do I need 90 days?",
     a: [
-      "Building an audience that buys takes time to test, find your outliers, and scale what works. That's why we work in months, not weeks. We don't promise trading or investment results, and we don't give financial advice.",
+      "Because we're building a content asset, not looking for one viral video.",
+      "The first few weeks are about understanding your market and testing different ideas.",
+      "Then we identify the topics, hooks, and formats that perform best.",
+      "After that, we create more of what is working and improve the system over time.",
+      "90 days gives us enough time to research, test, learn, and build a repeatable content system around your personal brand.",
+      "No guaranteed follower or revenue numbers. The goal is to build a stronger personal brand and a content engine that consistently creates opportunities.",
     ],
   },
-  {
-    q: "What happens on the discovery call?",
-    a: [
-      "It's a 30-minute call to see if the content system fits your business. We'll look at your account, your offer and your goals, and tell you honestly whether we can help.",
-    ],
-  },
-  // [MISSING] Add a cancellation / minimum-commitment answer once the terms are decided.
 ];
 
-/** Who the service is for, from the live FAQ ("trading education, investing, wealth coaching, financial planning"). */
+/** "Who is this for?" copy from the client brief, word for word. */
+export const audienceIntro =
+  "If you're a finance expert with valuable knowledge but don't have the time to create content consistently, this is for you.";
+
 export const audiences = [
-  { icon: "chart", title: "Trading educators", body: "You teach trading and want students who already trust how you think." },
-  { icon: "trend", title: "Investing creators", body: "You break down markets and want your content to bring in paying clients." },
-  { icon: "wallet", title: "Wealth coaches", body: "You coach people on money and want conversations with serious buyers." },
-  { icon: "shield", title: "Financial planners", body: "You have real expertise and want to be seen as the obvious choice." },
-] as const;
+  {
+    title: "Financial Advisors",
+    body: "Build trust, educate your audience, and turn your expertise into content that brings in potential clients.",
+  },
+  {
+    title: "Wealth Managers",
+    body: "Use your personal brand to stand out, build authority, and attract high-value investors.",
+  },
+  {
+    title: "Mortgage Brokers",
+    body: "Turn your mortgage knowledge into simple content that builds trust and generates qualified enquiries.",
+  },
+  {
+    title: "Insurance Advisors",
+    body: "Educate your audience on insurance while building a personal brand people remember and trust.",
+  },
+  {
+    title: "CPAs & Tax Advisors",
+    body: "Turn complex tax topics into simple content that attracts business owners and high-value clients.",
+  },
+  {
+    title: "Financial Coaches",
+    body: "Grow your audience, build authority, and turn your expertise into demand for your coaching services.",
+  },
+  {
+    title: "Accounting Firm Owners",
+    body: "Show your expertise online and use content to attract businesses looking for ongoing accounting support.",
+  },
+  {
+    title: "Business Finance Consultants",
+    body: "Share practical financial advice that positions you as the expert and creates new client opportunities.",
+  },
+  {
+    title: "Lending & Loan Professionals",
+    body: "Create educational content that answers common questions, builds credibility, and generates leads.",
+  },
+  {
+    title: "Investment & Trading Educators",
+    body: "Turn your knowledge and market insights into content that grows your audience and builds your personal brand.",
+  },
+];
 
 export type Screenshot = { src: string; alt: string; width: number; height: number; title: string };
 
@@ -333,5 +377,5 @@ export const dms: Screenshot[] = [
 
 /** Derived from the screenshots above: every review is 5.0. */
 export const reviewSummary = { rating: "5.0", count: reviews.length };
-/** Paste a real VSL embed URL (YouTube/Vimeo/Wistia) to show the video block. */
+/** Paste a real VSL embed URL (YouTube/Vimeo/Wistia) to show the video in the hero. Don't add autoplay. */
 export const vslEmbedUrl: string | null = null;
