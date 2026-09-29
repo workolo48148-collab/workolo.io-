@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import Script from "next/script";
-import { ToastProvider } from "@/components/ui/toast";
 import { founder, plans, site } from "@/lib/content";
 import { GA4_ID, META_PIXEL_ID } from "@/lib/env";
 import "./globals.css";
@@ -83,7 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           // JSON-LD is static data built from lib/content.ts; escape "<" so it can't close the tag.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
-        <ToastProvider>{children}</ToastProvider>
+        {children}
 
         {GA_ID && (
           <>

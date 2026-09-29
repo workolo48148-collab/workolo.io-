@@ -7,7 +7,7 @@
  * All targets are optional; missing ones are skipped.
  */
 
-export type AnalyticsEvent = "cta_click" | "booking_started" | "slot_selected" | "booking_completed" | "booking_cancelled";
+export type AnalyticsEvent = "cta_click" | "booking_started" | "booking_completed";
 
 type Params = Record<string, string | number | boolean | undefined>;
 

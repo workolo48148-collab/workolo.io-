@@ -22,6 +22,12 @@ export const site = {
 /** The label on every call-to-action button. Every CTA goes to the calendar (#book). */
 export const ctaLabel = "I'm Ready To Start";
 
+/** Cal.com inline embed: bookings go straight into this Cal.com event ("Discovery Meeting", 30 min). */
+export const booking = {
+  calLink: "khubaib-haider-yqobbk/30min",
+  namespace: "strategy-call",
+};
+
 export const hero = {
   headline: "Land Retainer Clients From Your Personal Brand on Instagram",
   subhead:
@@ -71,7 +77,6 @@ export type Plan = {
   price: number;
   /** Strike-through price from the live site. Hidden unless SHOW_COMPARE_PRICES is true. */
   compareAt: number;
-  featured?: boolean;
   features: string[];
 };
 
@@ -97,7 +102,6 @@ export const plans: Plan[] = [
     volume: "15 shorts / month",
     price: 1499,
     compareAt: 2998,
-    featured: true,
     features: [
       "Onboarding / review calls",
       "Research",
