@@ -2,8 +2,9 @@
  * Conversion events for paid traffic. Each call fans out to:
  *  - window.dataLayer (GTM)
  *  - GA4 via gtag('event', …)
- *  - Meta Pixel via fbq — trackCustom for every event, plus standard
- *    events Meta can optimise for (Lead on booking_started, Schedule on booking_completed).
+ *  - Meta Pixel via fbq — trackCustom for every event, plus the standard
+ *    events Meta optimises for (Lead + Schedule) only when a booking is confirmed.
+ *    booking_started fires when the Cal.com calendar loads, so it must not count as a Lead.
  * All targets are optional; missing ones are skipped.
  */
 
@@ -19,9 +20,8 @@ declare global {
   }
 }
 
-const META_STANDARD: Partial<Record<AnalyticsEvent, string>> = {
-  booking_started: "Lead",
-  booking_completed: "Schedule",
+const META_STANDARD: Partial<Record<AnalyticsEvent, string[]>> = {
+  booking_completed: ["Lead", "Schedule"],
 };
 
 const fired = new Set<string>();
@@ -37,8 +37,7 @@ export function track(event: AnalyticsEvent, params: Params = {}, opts: { once?:
     window.dataLayer?.push({ event, ...clean });
     window.gtag?.("event", event, clean);
     window.fbq?.("trackCustom", event, clean);
-    const standard = META_STANDARD[event];
-    if (standard) window.fbq?.("track", standard, clean);
+    for (const standard of META_STANDARD[event] ?? []) window.fbq?.("track", standard, clean);
   } catch {
     // Analytics must never break booking.
   }
