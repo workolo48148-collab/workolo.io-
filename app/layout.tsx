@@ -7,7 +7,7 @@ import { GA4_ID, META_PIXEL_ID } from "@/lib/env";
 import "./globals.css";
 
 // Bodoni Moda: headlines (high-contrast luxury serif, only used large). Schibsted Grotesk: editorial body.
-// JetBrains Mono: small ticker-style labels only, so it isn't preloaded.
+// JetBrains Mono: small labels only, so it isn't preloaded.
 const display = Bodoni_Moda({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-bodoni", display: "swap" });
 const body = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap", preload: false });
@@ -33,10 +33,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f1e9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0b0c" },
-  ],
+  themeColor: "#0A0A0A",
 };
 
 // Validated ids only (see lib/env.ts), so a blank or malformed value can't break the page or the inline scripts.
@@ -79,7 +76,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <script
           type="application/ld+json"

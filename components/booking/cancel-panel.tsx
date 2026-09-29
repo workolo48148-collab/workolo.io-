@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, CalendarX2, Check } from "lucide-react";
+import { AlertCircle, ArrowLeft, CalendarX2, Check } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Textarea } from "@/components/ui/field";
@@ -133,8 +133,9 @@ export function CancelPanel({
       </Field>
 
       {error && !error.field && (
-        <p role="alert" className="rounded-md bg-danger-bg p-3 text-sm text-danger">
-          {error.message}
+        <p role="alert" className="flex items-start gap-2 rounded-md border-2 border-accent bg-danger-bg p-3 text-sm font-bold text-danger">
+          <AlertCircle className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+          <span>{error.message}</span>
         </p>
       )}
 

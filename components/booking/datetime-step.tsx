@@ -89,7 +89,7 @@ export function DateTimeStep() {
 
   const day: DayState = !dayKey ? { status: "idle" } : dayResult?.key === dayKey ? dayResult.state : { status: "loading" };
 
-  if (!tz || !month || !now) return <DateTimeSkeleton />;
+  if (!tz || !month || !now) return <DateTimeLoading />;
 
   const grouped =
     day.status === "ready"
@@ -145,11 +145,9 @@ export function DateTimeStep() {
         {!date && <p className="text-sm text-muted">Choose a highlighted day to see open times.</p>}
 
         {day.status === "loading" && (
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-1" aria-hidden>
-            {Array.from({ length: 6 }, (_, i) => (
-              <div key={i} className="skeleton h-11 rounded-md" />
-            ))}
-          </div>
+          <p className="text-sm text-muted" aria-hidden>
+            Loading…
+          </p>
         )}
 
         {day.status === "error" && (
@@ -199,7 +197,7 @@ export function DateTimeStep() {
                         aria-pressed={active}
                         onClick={() => b.chooseSlot(s.start)}
                         className={cn(
-                          "h-11 rounded-full border text-sm font-semibold tabular-nums transition-[background-color,border-color,color,box-shadow] duration-150 ease-out",
+                          "h-11 rounded-full border text-sm font-semibold tabular-nums",
                           active
                             ? "border-primary bg-primary text-primary-fg shadow-sm"
                             : "border-border-strong bg-surface text-text hover:border-ring hover:bg-[rgb(var(--glow)/0.1)]",
@@ -216,7 +214,7 @@ export function DateTimeStep() {
         )}
 
         {slot && (
-          <Button size="lg" className="mt-5 w-full animate-fade-up" onClick={() => b.goTo("details")}>
+          <Button size="lg" className="mt-5 w-full" onClick={() => b.goTo("details")}>
             Continue with {formatTime(slot, tz)}
             <ArrowRight />
           </Button>
@@ -226,22 +224,6 @@ export function DateTimeStep() {
   );
 }
 
-function DateTimeSkeleton() {
-  return (
-    <div className="grid gap-8 md:grid-cols-[1fr_15rem]" aria-hidden>
-      <div className="space-y-2">
-        <div className="skeleton h-6 w-40 rounded" />
-        <div className="grid grid-cols-7 gap-1">
-          {Array.from({ length: 35 }, (_, i) => (
-            <div key={i} className="skeleton aspect-square rounded-md" />
-          ))}
-        </div>
-      </div>
-      <div className="space-y-2">
-        {Array.from({ length: 5 }, (_, i) => (
-          <div key={i} className="skeleton h-11 rounded-md" />
-        ))}
-      </div>
-    </div>
-  );
+function DateTimeLoading() {
+  return <p className="py-10 text-center text-sm text-muted">Loading…</p>;
 }

@@ -11,18 +11,18 @@ export function Footer() {
           <p className="mt-4 text-sm leading-relaxed text-muted">{site.disclaimer}</p>
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-7 gap-y-3 text-sm">
-          <a href={`mailto:${site.email}`} className="text-muted transition-colors hover:text-text">
+          <a href={`mailto:${site.email}`} className="text-muted hover:text-text">
             {site.email}
           </a>
           {site.socials.map((s) => (
-            <a key={s.href} href={s.href} className="text-muted transition-colors hover:text-text" target="_blank" rel="noopener noreferrer">
+            <a key={s.href} href={s.href} className="text-muted hover:text-text" target="_blank" rel="noopener noreferrer">
               {s.label}
             </a>
           ))}
-          <Link href="/privacy" className="text-muted transition-colors hover:text-text">
+          <Link href="/privacy" className="text-muted hover:text-text">
             Privacy
           </Link>
-          <Link href="/terms" className="text-muted transition-colors hover:text-text">
+          <Link href="/terms" className="text-muted hover:text-text">
             Terms
           </Link>
         </nav>

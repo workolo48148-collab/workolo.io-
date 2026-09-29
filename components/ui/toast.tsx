@@ -39,8 +39,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             key={t.id}
             role={t.tone === "error" ? "alert" : "status"}
             className={cn(
-              "pointer-events-auto flex w-full max-w-sm animate-fade-up items-start gap-3 rounded-lg border bg-surface p-4 shadow-lg",
-              t.tone === "error" ? "border-[color-mix(in_srgb,var(--danger)_40%,var(--border))]" : "border-border",
+              "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border bg-surface p-4 shadow-lg",
+              t.tone === "error" ? "border-2 border-accent" : "border-border",
             )}
           >
             {t.tone === "error" ? (
@@ -49,7 +49,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold">{t.title}</p>
+              <p className={cn("text-sm", t.tone === "error" ? "font-bold" : "font-semibold")}>{t.title}</p>
               {t.body && <p className="mt-0.5 text-sm text-muted">{t.body}</p>}
             </div>
             <button onClick={() => dismiss(t.id)} className="-m-1 grid size-7 place-items-center rounded text-muted hover:text-text" aria-label="Dismiss">

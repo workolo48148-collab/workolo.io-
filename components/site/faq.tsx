@@ -7,26 +7,7 @@ export function Faq() {
   return (
     <Section id="faq" labelledBy="faq-title" className="border-t border-border" lazy>
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-        <SectionHeading
-          id="faq-title"
-          index="08"
-          align="left"
-          eyebrow="Straight answers"
-          title={
-            <>
-              Questions before <span className="accent-serif">you book.</span>
-            </>
-          }
-          lead={
-            <>
-              Something else? Email{" "}
-              <a href="mailto:hello@workolo.io" className="font-medium text-accent underline underline-offset-2">
-                hello@workolo.io
-              </a>
-              .
-            </>
-          }
-        />
+        <SectionHeading id="faq-title" align="left" title="FAQ" />
         <Accordion>
           {faqs.map((f, i) => (
             <AccordionItem key={f.q} name="faq" title={f.q} defaultOpen={i === 0}>

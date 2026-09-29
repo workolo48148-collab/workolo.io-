@@ -54,7 +54,7 @@ export function useBooking() {
 export function scrollToBooking() {
   const el = document.getElementById("book");
   if (!el) return;
-  el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  el.scrollIntoView({ block: "start" });
 }
 
 export function BookingProvider({ children }: { children: React.ReactNode }) {
