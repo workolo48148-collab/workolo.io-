@@ -29,7 +29,11 @@ export const booking = {
 };
 
 export const hero = {
-  headline: "Land Retainer Clients From Your Personal Brand on Instagram",
+  /** Shown as two lines; `highlight` is set in the brand blue. */
+  headline: {
+    lines: ["Land Retainer Clients From Your", "Personal Brand on Instagram"],
+    highlight: "Personal Brand",
+  },
   subhead:
     "Done-for-you content strategy for busy finance experts who want more high-value clients without doing social media themselves.",
 };
