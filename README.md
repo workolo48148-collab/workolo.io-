@@ -52,8 +52,8 @@ Set `NEXT_PUBLIC_GA4_ID` and/or `NEXT_PUBLIC_META_PIXEL_ID`. Each event goes to 
 | Event | Fires when | Meta standard event |
 | --- | --- | --- |
 | `cta_click` | any "I'm Ready To Start" button (`location` param says which) | |
-| `booking_started` | the Cal.com calendar has loaded (`linkReady`, once per page view) | `Lead` |
-| `booking_completed` | Cal.com confirms a booking (`bookingSuccessfulV2`) | `Schedule` |
+| `booking_started` | the Cal.com calendar has loaded (`linkReady`, once per page view) | |
+| `booking_completed` | Cal.com confirms a booking (`bookingSuccessfulV2`) | `Lead` + `Schedule` |
 
 UTM / `gclid` / `fbclid` / `ttclid` params are captured on landing and attached to every event.
 If you run EU traffic, add a consent banner (Consent Mode v2) before enabling the tags.
