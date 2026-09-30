@@ -10,10 +10,10 @@ import { booking } from "@/lib/content";
 /** Site blue. Cal.com uses it for its buttons and selected dates. */
 const BRAND_BLUE = "#2563eb";
 
-type BookingContext = { open: () => void };
+type BookingContext = { open: () => void; prewarm: () => void };
 const Ctx = React.createContext<BookingContext | null>(null);
 
-/** Open the booking pop-up from any CTA. */
+/** Open (or pre-warm) the booking pop-up from any CTA. */
 export function useBooking() {
   const ctx = React.useContext(Ctx);
   if (!ctx) throw new Error("useBooking must be used within <BookingProvider>");
@@ -22,21 +22,40 @@ export function useBooking() {
 
 /**
  * Holds the booking calendar in a pop-up dialog instead of inline on the page.
- * Every CTA calls `open()`; the Cal.com embed is only mounted the first time
- * the dialog opens, so the calendar never loads (or shows) while scrolling.
+ *
+ * The embed is rendered only while the dialog is open (rendering it hidden makes
+ * Cal initialise at zero size). To still make the first open feel instant, we
+ * warm Cal in the background — load its runtime and call `cal("preload")` for
+ * this booking — when the browser goes idle or a visitor shows intent (hovers /
+ * focuses a CTA). Opening then reuses the preloaded data instead of fetching it.
  */
 export function BookingProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
-  // Only mount the heavy Cal embed once the user has asked for it.
-  const [mounted, setMounted] = React.useState(false);
+  // Warm Cal's runtime + preload this booking (does not render the calendar).
+  const [warm, setWarm] = React.useState(false);
 
+  const prewarm = React.useCallback(() => setWarm(true), []);
   const openBooking = React.useCallback(() => {
-    setMounted(true);
+    setWarm(true);
     setOpen(true);
   }, []);
 
+  // Warm on idle so even a fast click finds the calendar prepared.
   React.useEffect(() => {
-    if (!mounted) return;
+    const w = window as typeof window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(() => setWarm(true), { timeout: 4000 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const id = window.setTimeout(() => setWarm(true), 2500);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  React.useEffect(() => {
+    if (!warm) return;
     // Keep ad-click params (utm_*, gclid, fbclid…) for the analytics events below.
     captureUtm();
 
@@ -48,15 +67,17 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
         layout: "month_view",
         cssVarsPerTheme: { dark: { "cal-brand": BRAND_BLUE }, light: { "cal-brand": BRAND_BLUE } },
       });
+      // Fetch the booking page + availability ahead of time so opening is instant.
+      cal("preload", { calLink: booking.calLink });
       cal("on", { action: "linkReady", callback: () => track("booking_started", { provider: "calcom" }, { once: true }) });
       cal("on", { action: "bookingSuccessfulV2", callback: () => track("booking_completed", { provider: "calcom" }) });
     });
     return () => {
       cancelled = true;
     };
-  }, [mounted]);
+  }, [warm]);
 
-  const value = React.useMemo(() => ({ open: openBooking }), [openBooking]);
+  const value = React.useMemo(() => ({ open: openBooking, prewarm }), [openBooking, prewarm]);
 
   return (
     <Ctx.Provider value={value}>
@@ -83,7 +104,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
                 </DialogPrimitive.Close>
               </div>
               <div className="min-h-0 flex-1 bg-bg">
-                {mounted && (
+                {open && (
                   <Cal
                     namespace={booking.namespace}
                     calLink={booking.calLink}

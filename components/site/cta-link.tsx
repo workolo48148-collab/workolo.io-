@@ -23,12 +23,16 @@ export function CtaLink({
   className,
   children,
 }: VariantProps<typeof buttonVariants> & { location: string; className?: string; children: React.ReactNode }) {
-  const { open } = useBooking();
+  const { open, prewarm } = useBooking();
   return (
     <a
       href={BOOKING_URL}
       target="_blank"
       rel="noopener noreferrer"
+      // Start loading the calendar the moment a visitor shows intent, so the
+      // pop-up opens instantly on click.
+      onPointerEnter={prewarm}
+      onFocus={prewarm}
       onClick={(e) => {
         // With JS: keep them on the page and open the calendar pop-up.
         e.preventDefault();

@@ -76,6 +76,12 @@ const jsonLd = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <head>
+        {/* Warm up the connection to Cal.com so the booking pop-up loads fast. */}
+        <link rel="preconnect" href="https://app.cal.com" />
+        <link rel="dns-prefetch" href="https://app.cal.com" />
+        <link rel="preconnect" href="https://cal.com" />
+      </head>
       <body>
         <script
           type="application/ld+json"

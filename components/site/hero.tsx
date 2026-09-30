@@ -20,7 +20,7 @@ export function Hero() {
           className="rise-in max-w-[16ch] text-balance text-[clamp(2rem,7.2vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] sm:max-w-[20ch] lg:max-w-none"
           style={{ animationDelay: "60ms" }}
         >
-          {hero.headline.lines.map((line, i) => {
+          {hero.headline.lines.map((line) => {
             const [before, after] = line.split(hero.headline.highlight);
             return (
               <span key={line} className="block">
