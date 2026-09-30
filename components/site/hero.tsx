@@ -8,22 +8,22 @@ export function Hero() {
       {/* Soft brand glow behind the headline — the one atmospheric touch on the flat black hero. */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-[420px] max-w-4xl rounded-full bg-primary/20 blur-[120px]" />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-20 pt-16 text-center sm:px-6 sm:pt-24 lg:pb-28 lg:pt-28">
-        <p className="label-mono rise-in mb-6 inline-flex items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-accent" style={{ animationDelay: "0ms" }}>
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-16 text-center sm:px-6 sm:pt-24 lg:pb-28 lg:pt-28">
+        <p className="label-mono rise-in mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-center text-accent" style={{ animationDelay: "0ms" }}>
           Done-for-you content · Finance experts
         </p>
 
-        {/* Two lines from tablet up (each line never wraps); phones let each line wrap on its own. */}
+        {/* Renders as two lines, each wrapping on its own when the viewport is too
+            narrow to hold it — sized to fit the container so it never overflows. */}
         <h1
           id="hero-title"
-          className="rise-in text-[clamp(2.6rem,7vw_-_0.2rem,5.25rem)] font-black uppercase leading-[0.95] tracking-[-0.035em]"
+          className="rise-in max-w-[16ch] text-balance text-[clamp(2rem,7.2vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] sm:max-w-[20ch] lg:max-w-none"
           style={{ animationDelay: "60ms" }}
         >
           {hero.headline.lines.map((line, i) => {
             const [before, after] = line.split(hero.headline.highlight);
             return (
-              <span key={line} className="block sm:whitespace-nowrap">
-                {i > 0 && " "}
+              <span key={line} className="block">
                 {after === undefined ? (
                   line
                 ) : (
