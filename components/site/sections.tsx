@@ -43,8 +43,11 @@ export function Audience() {
       <SectionHeading id="audience-title" title="WHO IS THIS FOR?" lead={audienceIntro} />
       <ul className="mt-14 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {audiences.map((a) => (
-          <li key={a.title} className="h-full rounded-[var(--radius-lg)] border border-border bg-surface p-6">
-            <h3 className="text-xl">{a.title}</h3>
+          <li
+            key={a.title}
+            className="h-full rounded-[var(--radius-lg)] border-2 border-border bg-surface p-6 transition-colors hover:border-primary"
+          >
+            <h3 className="text-xl font-extrabold tracking-tight">{a.title}</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted">{a.body}</p>
           </li>
         ))}
@@ -139,8 +142,8 @@ export function Founder() {
               <p key={i}>{p}</p>
             ))}
           </div>
-          <blockquote className="mt-10 border-l-2 border-accent pl-6">
-            <p className="font-display text-3xl italic leading-tight">&ldquo;{founder.close}&rdquo;</p>
+          <blockquote className="mt-10 border-l-4 border-primary pl-6">
+            <p className="font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">&ldquo;{founder.close}&rdquo;</p>
           </blockquote>
         </div>
       </div>
@@ -159,13 +162,26 @@ export function Pricing() {
       />
 
       <div className="mt-16 grid items-stretch gap-5 lg:grid-cols-3">
-        {plans.map((p) => (
-          <div key={p.id} className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-8">
+        {plans.map((p) => {
+          const popular = p.id === "gold";
+          return (
+          <div
+            key={p.id}
+            className={cn(
+              "relative flex flex-col rounded-[var(--radius-xl)] border-2 bg-surface p-8",
+              popular ? "border-primary lg:-my-3 lg:shadow-lg" : "border-border",
+            )}
+          >
+            {popular && (
+              <span className="label-mono absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-primary-fg">
+                Most popular
+              </span>
+            )}
             <article aria-labelledby={`plan-${p.id}`} className="flex h-full flex-col">
-              <h3 id={`plan-${p.id}`} className="text-3xl">
+              <h3 id={`plan-${p.id}`} className="text-3xl font-black uppercase tracking-tight">
                 {p.name}
               </h3>
-              <p className="label-mono mt-2 text-muted">{p.volume}</p>
+              <p className="label-mono mt-2 text-accent">{p.volume}</p>
               <p className="mt-8 flex flex-wrap items-baseline gap-x-2">
                 <span className="font-display text-[clamp(2.75rem,2rem+2.4vw,4rem)] leading-none tabular-nums tracking-tight">{formatUsd(p.price)}</span>
                 <span className="whitespace-nowrap text-sm text-muted">/ month</span>
@@ -186,12 +202,13 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
-              <CtaLink location={`pricing_${p.id}`} className="mt-9 w-full">
+              <CtaLink location={`pricing_${p.id}`} variant={popular ? "primary" : "secondary"} className="mt-9 w-full">
                 {ctaLabel} <ArrowRight />
               </CtaLink>
             </article>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-16 border-t border-border pt-10">

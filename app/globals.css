@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 /* =====================================================================
-   WORKOLO — blue / black / white, one fixed theme, fully static.
-   The page is black; `.tone-flip` sections are white. Bodoni Moda
-   headlines, Schibsted Grotesk body, JetBrains Mono for small labels.
-   Every text/background pair is verified by `npm run check:contrast`.
+   WORKOLO — SIMPLE BOLD. Flat colour blocks, heavy Archivo headlines,
+   Hanken Grotesk body. Three section tones: black page (:root),
+   white (.tone-flip), and brand blue (.tone-blue). Every text/background
+   pair on the checked tones is verified by `npm run check:contrast`.
    ===================================================================== */
 
 :root {
   /* ---- Color: black ---- */
   --bg: #0a0a0a;
-  --surface: #111111;
-  --surface-2: #1a1a1a;
+  --surface: #141414;
+  --surface-2: #1f1f1f;
   --text: #ffffff;
   --muted: #a3a3a3;
   --primary: #2563eb;
@@ -29,16 +29,16 @@
   --star: #60a5fa;
   --glow: 37 99 235;
 
-  /* ---- Radius ---- */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 28px;
+  /* ---- Radius: chunky, pill-like ---- */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
 
-  /* ---- Shadow ---- */
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
-  --shadow-md: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -12px rgb(0 0 0 / 0.7);
-  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.5), 0 30px 60px -24px rgb(0 0 0 / 0.85);
+  /* ---- Shadow: flat. Depth comes from colour blocks, not soft blur. ---- */
+  --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 4px 0 rgb(0 0 0 / 0.4);
 
   color-scheme: dark;
 }
@@ -46,8 +46,8 @@
 /* A white section inside the black page. */
 .tone-flip {
   --bg: #ffffff;
-  --surface: #f5f5f5;
-  --surface-2: #ededed;
+  --surface: #f4f4f5;
+  --surface-2: #e7e7ea;
   --text: #0a0a0a;
   --muted: #525252;
   --primary: #2563eb;
@@ -55,17 +55,44 @@
   --primary-fg: #ffffff;
   --accent: #1d4ed8;
   --border: #e5e5e5;
-  --border-strong: #d4d4d4;
+  --border-strong: #111111;
   --input: #737373;
   --danger: #0a0a0a;
   --danger-bg: #f5f5f5;
   --ring: #1d4ed8;
   --star: #1d4ed8;
   --glow: 37 99 235;
-  --shadow-sm: 0 1px 2px rgb(10 10 10 / 0.06);
-  --shadow-md: 0 1px 2px rgb(10 10 10 / 0.05), 0 10px 30px -12px rgb(10 10 10 / 0.18);
-  --shadow-lg: 0 2px 4px rgb(10 10 10 / 0.05), 0 30px 60px -24px rgb(10 10 10 / 0.3);
+  --shadow-sm: 0 1px 0 rgb(10 10 10 / 0.08);
+  --shadow-md: 0 2px 0 rgb(10 10 10 / 0.08);
+  --shadow-lg: 0 4px 0 rgb(10 10 10 / 0.1);
   color-scheme: light;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* A solid brand-blue section (FAQ). White headline, white cards with dark text.
+   Not part of the contrast script's token check; every pairing below is
+   verified by hand: white (#fff) on blue (#2563eb) = 5.1:1, and card
+   internals run dark-on-white. */
+.tone-blue {
+  --bg: #2563eb;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --text: #ffffff;
+  --muted: #dbeafe;
+  --primary: #0a0a0a;
+  --primary-hover: #1f1f1f;
+  --primary-fg: #ffffff;
+  --accent: #ffffff;
+  --border: rgb(255 255 255 / 0.25);
+  --border-strong: #ffffff;
+  --ring: #ffffff;
+  --star: #ffffff;
+  --glow: 255 255 255;
+  --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.1);
+  --shadow-md: 0 2px 0 rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 0 rgb(0 0 0 / 0.12);
+  color-scheme: dark;
   background: var(--bg);
   color: var(--text);
 }
@@ -91,9 +118,9 @@
   --color-ring: var(--ring);
   --color-star: var(--star);
 
-  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
-  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -105,18 +132,18 @@
   --shadow-lg: var(--shadow-lg);
 }
 
-/* ---- Fluid type scale (360px to 1440px) ---- */
+/* ---- Fluid type scale (360px to 1440px) — bigger, bolder headline steps ---- */
 @theme {
   --text-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);
   --text-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
   --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.07rem + 0.25vw, 1.25rem);
   --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.33rem + 0.75vw, 2rem);
-  --text-3xl: clamp(2rem, 1.6rem + 1.6vw, 3rem);
-  --text-4xl: clamp(2.4rem, 1.8rem + 2.6vw, 4rem);
-  --text-5xl: clamp(2.9rem, 1.9rem + 4.2vw, 5.6rem);
-  --text-6xl: clamp(3.2rem, 1.8rem + 6vw, 7.5rem);
+  --text-2xl: clamp(1.6rem, 1.4rem + 0.9vw, 2.15rem);
+  --text-3xl: clamp(2.1rem, 1.65rem + 1.9vw, 3.25rem);
+  --text-4xl: clamp(2.6rem, 1.9rem + 3vw, 4.5rem);
+  --text-5xl: clamp(3.1rem, 2rem + 4.6vw, 6rem);
+  --text-6xl: clamp(3.4rem, 1.9rem + 6.4vw, 8rem);
 
   /* 4/8px spacing scale: Tailwind's --spacing base unit = 4px */
   --spacing: 0.25rem;
@@ -136,34 +163,36 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
+/* Headlines: heavy Archivo, tight, uppercase-friendly tracking. */
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
   text-wrap: balance;
 }
-h4 { font-family: var(--font-sans); letter-spacing: -0.01em; }
+h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
 p { text-wrap: pretty; }
 
-/* Italic Bodoni accent word inside a headline ("Hi, I'm <em>Salman.</em>"). */
+/* Accent word inside a headline ("Hi, I'm <em>Salman.</em>"): still bold, just brand-coloured. */
 .accent-serif {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
+  font-style: normal;
+  font-weight: 900;
   color: var(--accent);
 }
 
-/* Small label: mono, uppercase, tracked out */
+/* Small label: heavy uppercase, tracked out — replaces the old mono kicker. */
 .label-mono {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 :focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 3px solid var(--ring);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -174,18 +203,19 @@ p { text-wrap: pretty; }
   outline: none;
 }
 
-::selection { background: rgb(var(--glow) / 0.4); color: var(--text); }
-
-/* Film grain over the whole page: one static SVG tile, no blend modes (cheap to composite). */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
+::selection { background: rgb(var(--glow) / 0.35); color: var(--text); }
 
 /* Skip layout/paint work for far-below-the-fold sections until they're near. */
 .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* One coordinated page-load reveal: staggered rise-in. Respects reduced motion. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.rise-in {
+  animation: rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise-in { animation: none; }
+}

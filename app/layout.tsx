@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
+import { Archivo, Hanken_Grotesk } from "next/font/google";
 import Script from "next/script";
+import { BookingProvider } from "@/components/site/booking-modal";
 import { founder, plans, site } from "@/lib/content";
 import { GA4_ID, META_PIXEL_ID } from "@/lib/env";
 import "./globals.css";
 
-// Bodoni Moda: headlines (high-contrast luxury serif, only used large). Schibsted Grotesk: editorial body.
-// JetBrains Mono: small labels only, so it isn't preloaded.
-const display = Bodoni_Moda({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-bodoni", display: "swap" });
-const body = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted", display: "swap" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap", preload: false });
+// SIMPLE BOLD: Archivo (heavy, architectural grotesque) for every headline, label and button.
+// Hanken Grotesk for body copy. Both carry weight without the old editorial serif.
+const display = Archivo({ subsets: ["latin"], weight: ["500", "600", "700", "800", "900"], style: ["normal", "italic"], variable: "--font-archivo", display: "swap" });
+const body = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-hanken", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -75,14 +75,14 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
         <script
           type="application/ld+json"
           // JSON-LD is static data built from lib/content.ts; escape "<" so it can't close the tag.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
-        {children}
+        <BookingProvider>{children}</BookingProvider>
 
         {GA_ID && (
           <>
