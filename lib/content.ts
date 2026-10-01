@@ -29,13 +29,11 @@ export const booking = {
 };
 
 export const hero = {
-  /** Shown as two lines; `highlight` is set in the brand blue. */
-  headline: {
-    lines: ["Land Retainer Clients From Your", "Personal Brand on Instagram"],
-    highlight: "Personal Brand",
-  },
+  /** Headline reads "<prefix> <rotating role>"; `roles` cycle in the brand blue. */
+  headlinePrefix: "Land Retainer Clients & Build Your Personal Brand on Social Media as a Busy",
+  roles: ["Financial Coach", "Day Trader", "Real Estate Agent", "Wealth Manager", "Personal Finance Manager"],
   subhead:
-    "Done-for-you content strategy for busy finance experts who want more high-value clients without doing social media themselves.",
+    "Done-For-You content system built for busy financial professionals who want to grow their authority, attract qualified leads, and turn social media into a client acquisition channel.",
 };
 
 export const founder = {
