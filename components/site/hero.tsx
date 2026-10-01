@@ -9,17 +9,13 @@ export function Hero() {
       {/* Soft brand glow behind the headline — the one atmospheric touch on the flat black hero. */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-[420px] max-w-4xl rounded-full bg-primary/20 blur-[120px]" />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-16 text-center sm:px-6 sm:pt-24 lg:pb-28 lg:pt-28">
-        <p className="label-mono rise-in mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-center text-accent" style={{ animationDelay: "0ms" }}>
-          Done-for-you content · Finance experts
-        </p>
-
-        {/* Fixed prefix, then a rotating role that rolls through hero.roles. Sized
-            for the longer copy and balanced so it never overflows the viewport. */}
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-20 text-center sm:px-6 sm:pt-28 lg:pb-28 lg:pt-32">
+        {/* Fixed prefix (sits on two lines from tablet up), then a rotating role
+            that rolls through hero.roles. Balanced so it never overflows. */}
         <h1
           id="hero-title"
-          className="rise-in max-w-[22ch] text-balance text-[clamp(1.75rem,5.4vw,3.25rem)] font-black uppercase leading-[1.02] tracking-[-0.02em] lg:max-w-5xl"
-          style={{ animationDelay: "60ms" }}
+          className="rise-in max-w-[20ch] text-balance text-[clamp(1.6rem,4.4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em] sm:max-w-3xl lg:max-w-5xl"
+          style={{ animationDelay: "0ms" }}
         >
           <span className="block">{hero.headlinePrefix}</span>
           <span className="mt-2 block text-primary">
