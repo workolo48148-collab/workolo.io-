@@ -1,6 +1,7 @@
 import { ArrowRight, Star } from "lucide-react";
 import { ctaLabel, hero, reviewSummary, vslEmbedUrl } from "@/lib/content";
 import { CtaLink } from "./cta-link";
+import { RotatingWord } from "./rotating-word";
 
 export function Hero() {
   return (
@@ -13,29 +14,17 @@ export function Hero() {
           Done-for-you content · Finance experts
         </p>
 
-        {/* Renders as two lines, each wrapping on its own when the viewport is too
-            narrow to hold it — sized to fit the container so it never overflows. */}
+        {/* Fixed prefix, then a rotating role that rolls through hero.roles. Sized
+            for the longer copy and balanced so it never overflows the viewport. */}
         <h1
           id="hero-title"
-          className="rise-in max-w-[16ch] text-balance text-[clamp(2rem,7.2vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] sm:max-w-[20ch] lg:max-w-none"
+          className="rise-in max-w-[22ch] text-balance text-[clamp(1.75rem,5.4vw,3.25rem)] font-black uppercase leading-[1.02] tracking-[-0.02em] lg:max-w-5xl"
           style={{ animationDelay: "60ms" }}
         >
-          {hero.headline.lines.map((line) => {
-            const [before, after] = line.split(hero.headline.highlight);
-            return (
-              <span key={line} className="block">
-                {after === undefined ? (
-                  line
-                ) : (
-                  <>
-                    {before}
-                    <span className="text-primary">{hero.headline.highlight}</span>
-                    {after}
-                  </>
-                )}
-              </span>
-            );
-          })}
+          <span className="block">{hero.headlinePrefix}</span>
+          <span className="mt-2 block text-primary">
+            <RotatingWord words={hero.roles} />
+          </span>
         </h1>
 
         <p className="rise-in mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl" style={{ animationDelay: "120ms" }}>
