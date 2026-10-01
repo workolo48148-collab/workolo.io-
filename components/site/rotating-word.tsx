@@ -4,19 +4,17 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Slot-machine word roller: the words are stacked in a column that slides up one
- * slot at a time, so the current word rolls out of view as the next rolls in.
+ * Rotating word: shows ONE complete role at a time and fades/slides the next in.
  *
- * Each slot is two lines tall on narrow screens (so a long role like "Personal
- * Finance Manager" can wrap without being clipped) and one line from `sm` up,
- * where every role fits. The slide distance tracks that height via --rw-row.
- *
- * The column is decorative (aria-hidden); `srLabel` gives assistive tech one
- * stable phrase instead of the whole list. Honors reduced motion.
+ * Only the active word is in the visual flow (the column/clip approach let two
+ * words overlap), so the text is always shown in full. Height is reserved — two
+ * lines on narrow screens so a long role like "Personal Finance Manager" can
+ * wrap without clipping or shifting the layout, one line from `sm` up. The slide
+ * is gated by `motion-safe`, so reduced-motion users get an instant swap.
  */
 export function RotatingWord({
   words,
-  interval = 2200,
+  interval = 2400,
   srLabel = "financial professional",
   className,
 }: {
@@ -26,15 +24,6 @@ export function RotatingWord({
   className?: string;
 }) {
   const [index, setIndex] = React.useState(0);
-  const [reduced, setReduced] = React.useState(false);
-
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(mq.matches);
-    sync();
-    mq.addEventListener?.("change", sync);
-    return () => mq.removeEventListener?.("change", sync);
-  }, []);
 
   React.useEffect(() => {
     if (words.length <= 1) return;
@@ -43,18 +32,10 @@ export function RotatingWord({
   }, [words.length, interval]);
 
   return (
-    <span className="block h-[var(--rw-row)] overflow-hidden [--rw-row:2.3em] sm:[--rw-row:1.2em]">
+    <span className={cn("flex min-h-[2.3em] items-center justify-center text-center lg:min-h-[1.2em]", className)}>
       <span className="sr-only">{srLabel}</span>
-      <span
-        aria-hidden
-        className={cn("flex flex-col", !reduced && "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]")}
-        style={{ transform: `translateY(calc(${index} * var(--rw-row) * -1))` }}
-      >
-        {words.map((w) => (
-          <span key={w} className={cn("flex h-[var(--rw-row)] items-center justify-center text-center leading-[1.1]", className)}>
-            {w}
-          </span>
-        ))}
+      <span key={index} aria-hidden className="block motion-safe:animate-[word-in_0.45s_cubic-bezier(0.22,1,0.36,1)]">
+        {words[index]}
       </span>
     </span>
   );
