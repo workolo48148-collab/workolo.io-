@@ -1,7 +1,8 @@
 import { Faq } from "@/components/site/faq";
 import { Footer } from "@/components/site/footer";
 import { Hero } from "@/components/site/hero";
-import { Audience, Founder, HowItWorks, Pricing, Proof } from "@/components/site/sections";
+import { Audience, FinalCta, Founder, HowItWorks, Pricing, Proof } from "@/components/site/sections";
+import { SiteHeader } from "@/components/site/site-header";
 import { StickyCta } from "@/components/site/sticky-cta";
 
 export default function Home() {
@@ -13,10 +14,11 @@ export default function Home() {
       >
         Skip to content
       </a>
+      <SiteHeader />
       <main id="main">
         {/* Order follows the client brief: Hero → Wall of proof → Who is it for → About me
-            → How we work → FAQ → Packages. Booking lives in a pop-up (see BookingProvider),
-            opened by every CTA — it no longer sits inline while scrolling. */}
+            → How we work → FAQ → Packages → Book a call. Booking lives in a pop-up (see
+            BookingProvider), opened by every CTA — it no longer sits inline while scrolling. */}
         <Hero />
         <Proof />
         <Audience />
@@ -24,6 +26,7 @@ export default function Home() {
         <HowItWorks />
         <Faq />
         <Pricing />
+        <FinalCta />
       </main>
       <Footer />
       <StickyCta />
