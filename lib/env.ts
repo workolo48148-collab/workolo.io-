@@ -32,8 +32,8 @@ export const SITE_URL =
 /** GA4 measurement id (G-XXXXXXX); anything else is ignored. */
 export const GA4_ID = matchOrUndefined(process.env.NEXT_PUBLIC_GA4_ID, /^G-[A-Z0-9]{4,20}$/i);
 
-/** Meta Pixel id (digits only); anything else is ignored. */
-export const META_PIXEL_ID = matchOrUndefined(process.env.NEXT_PUBLIC_META_PIXEL_ID, /^\d{6,20}$/);
+/** Meta Pixel id (digits only). Env override wins; otherwise the client's pixel. */
+export const META_PIXEL_ID = matchOrUndefined(process.env.NEXT_PUBLIC_META_PIXEL_ID, /^\d{6,20}$/) ?? "1415544679928560";
 
 function matchOrUndefined(raw: string | undefined, pattern: RegExp) {
   const v = readEnv(raw);

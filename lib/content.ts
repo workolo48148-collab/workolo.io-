@@ -10,9 +10,9 @@ export const site = {
   name: "Workolo",
   url: SITE_URL,
   email: "hello@workolo.io",
-  title: "Content Systems for Finance Gurus | Workolo",
+  title: "Build Your Personal Brand on Social Media | Workolo",
   description:
-    "Land retainer clients as a busy finance guru. Done-for-you Instagram content system: we research, script, edit and upload your content every month. Book a 30-minute discovery call.",
+    "Land retainer clients & build your personal brand on social media as a busy financial professional. Done-For-You content system — we research, script, edit and post for you. Book a free 30-minute discovery call.",
   disclaimer:
     "We create marketing content. We don't give financial advice, and we don't promise trading or investment results.",
   /** [MISSING] Add real profile URLs to show them in the footer. */

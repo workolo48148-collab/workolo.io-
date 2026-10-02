@@ -36,7 +36,6 @@ export function Hero() {
               src={vslEmbedUrl}
               title="Workolo video"
               allow="encrypted-media; fullscreen; picture-in-picture"
-              allowFullScreen
               loading="lazy"
               className="size-full"
             />
