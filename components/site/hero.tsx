@@ -9,7 +9,7 @@ export function Hero() {
       {/* Soft brand glow behind the headline — the one atmospheric touch on the flat black hero. */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-[420px] max-w-4xl rounded-full bg-primary/20 blur-[120px]" />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-20 text-center sm:px-6 sm:pt-28 lg:pb-28 lg:pt-32">
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-8 text-center sm:px-6 sm:pt-12 lg:pb-28 lg:pt-16">
         {/* Fixed prefix, then a rotating role. Uses the full width on phones so
             the long line wraps tighter (fewer lines), and balances to two lines
             from tablet up. Sized by clamp so it never overflows any screen. */}
@@ -30,7 +30,7 @@ export function Hero() {
 
         {vslEmbedUrl && (
           <div
-            className="rise-in mx-auto mt-10 aspect-video w-full max-w-3xl overflow-hidden rounded-[var(--radius-lg)] border-2 border-border-strong bg-surface shadow-lg"
+            className="rise-in mx-auto mt-10 aspect-video w-full max-w-4xl overflow-hidden rounded-[var(--radius-lg)] border-2 border-border-strong bg-surface shadow-lg"
             style={{ animationDelay: "160ms" }}
           >
             <iframe
