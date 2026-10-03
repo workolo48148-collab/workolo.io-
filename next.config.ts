@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   env: { NEXT_PUBLIC_BUILD_TIME: new Date().toISOString() },
   // WebP only: AVIF processing (sharp/libheif) was the path for GHSA-2xp9-vwfh-vxw4, a critical RCE.
   images: { formats: ["image/webp"] },
+  // Serve the generated WRKL icon at the legacy /favicon.ico path. Google and some
+  // crawlers request /favicon.ico directly; without this it 404s and they fall back
+  // to a generic globe. The <link rel="icon"> in <head> still points at /icon.
+  async redirects() {
+    return [{ source: "/favicon.ico", destination: "/icon", permanent: true }];
+  },
   async headers() {
     return [
       {
