@@ -157,9 +157,8 @@ export function Pricing() {
     <Section id="pricing" labelledBy="pricing-title" className="border-t border-border" lazy>
       <SectionHeading
         id="pricing-title"
-        eyebrow="Limited time · 50% off"
         title="Content Strategy Management Packages"
-        lead="For a limited time, every plan is 50% off. Same system, different volume — not sure which fits? That's exactly what the discovery call is for."
+        lead="Same system, different volume. Not sure which fits? That's exactly what the discovery call is for."
       />
 
       <div className="mt-16 grid items-stretch gap-5 lg:grid-cols-3">
@@ -184,13 +183,9 @@ export function Pricing() {
               </h3>
               <p className="label-mono mt-2 text-accent">{p.volume}</p>
               <p className="mt-8 flex flex-wrap items-baseline gap-x-2">
-                <span className="font-display text-[clamp(2.75rem,2rem+2.4vw,4rem)] leading-none tabular-nums tracking-tight">{formatUsd(Math.round(p.price / 2))}</span>
+                <span className="font-display text-[clamp(2.75rem,2rem+2.4vw,4rem)] leading-none tabular-nums tracking-tight">{formatUsd(p.price)}</span>
                 <span className="whitespace-nowrap text-sm text-muted">/ month</span>
-                <span className="text-lg text-muted line-through tabular-nums" aria-label={`Was ${formatUsd(p.price)} per month`}>
-                  {formatUsd(p.price)}
-                </span>
               </p>
-              <p className="label-mono mt-2 inline-flex w-fit rounded-full bg-primary px-3 py-1 text-primary-fg">50% off</p>
               <ul className="mt-8 flex-1 space-y-3 border-t border-border pt-7 text-sm">
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-2.5">

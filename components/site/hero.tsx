@@ -10,11 +10,12 @@ export function Hero() {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-[420px] max-w-4xl rounded-full bg-primary/20 blur-[120px]" />
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pb-20 pt-20 text-center sm:px-6 sm:pt-28 lg:pb-28 lg:pt-32">
-        {/* Fixed prefix (sits on two lines from tablet up), then a rotating role
-            that rolls through hero.roles. Balanced so it never overflows. */}
+        {/* Fixed prefix, then a rotating role. Uses the full width on phones so
+            the long line wraps tighter (fewer lines), and balances to two lines
+            from tablet up. Sized by clamp so it never overflows any screen. */}
         <h1
           id="hero-title"
-          className="rise-in max-w-[20ch] text-balance text-[clamp(1.6rem,4.4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em] sm:max-w-3xl lg:max-w-5xl"
+          className="rise-in text-balance text-[clamp(1.55rem,5vw,2.6rem)] font-black uppercase leading-[1.08] tracking-[-0.02em] sm:max-w-3xl sm:leading-[1.04] lg:max-w-5xl"
           style={{ animationDelay: "0ms" }}
         >
           <span className="block">{hero.headlinePrefix}</span>
