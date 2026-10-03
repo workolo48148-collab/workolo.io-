@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const size = { width: 64, height: 64 };
+// 96×96 (a multiple of 48) so Google accepts and shows the favicon in search results.
+export const size = { width: 96, height: 96 };
 export const contentType = "image/png";
 
 /** WRKL logomark (white), as an SVG data URI so ImageResponse renders the exact vector. */
@@ -18,11 +19,11 @@ export default function Icon() {
           alignItems: "center",
           justifyContent: "center",
           background: "#0A0A0A",
-          borderRadius: 14,
+          borderRadius: 20,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse needs a plain img */}
-        <img src={wrklSrc} width={40} height={37} alt="" />
+        <img src={wrklSrc} width={60} height={55} alt="" />
       </div>
     ),
     size,
