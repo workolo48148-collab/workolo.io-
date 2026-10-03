@@ -10,7 +10,7 @@ export const site = {
   name: "Workolo",
   url: SITE_URL,
   email: "hello@workolo.io",
-  title: "Build Your Personal Brand on Social Media | Workolo",
+  title: "Build Your Personal Brand on Social Media as a Busy Finance Pro | Workolo",
   description:
     "Land retainer clients & build your personal brand on social media as a busy financial professional. Done-For-You content system — we research, script, edit and post for you. Book a free 30-minute discovery call.",
   disclaimer:
