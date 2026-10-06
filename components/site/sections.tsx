@@ -172,11 +172,6 @@ export function Pricing() {
               popular ? "border-primary lg:-my-3 lg:shadow-lg" : "border-border",
             )}
           >
-            {popular && (
-              <span className="label-mono absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-primary-fg">
-                Most popular
-              </span>
-            )}
             <article aria-labelledby={`plan-${p.id}`} className="flex h-full flex-col">
               <h3 id={`plan-${p.id}`} className="text-3xl font-black uppercase tracking-tight">
                 {p.name}
@@ -202,7 +197,7 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
-              <CtaLink location={`pricing_${p.id}`} variant={popular ? "primary" : "secondary"} className="mt-9 w-full">
+              <CtaLink location={`pricing_${p.id}`} variant="primary" className="mt-9 w-full">
                 {ctaLabel} <ArrowRight />
               </CtaLink>
             </article>
